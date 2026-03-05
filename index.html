@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZipCode Green Edition - ประเทศจำลอง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #059669; /* เขียวมรกต */
+            --light-green: #ecfdf5;
+            --dark-green: #064e3b;
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f0fdf4; /* พื้นหลังเขียวอ่อนมาก */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(5, 150, 105, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--dark-green);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        h2 span {
+            display: block;
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 300;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #d1fae5;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #f9fafb;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .result-card {
+            margin-top: 30px;
+            background: var(--gradient-green);
+            padding: 30px 20px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2);
+            position: relative;
+        }
+
+        .result-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        #zipcode {
+            font-size: 56px;
+            font-weight: 600;
+            margin: 10px 0;
+            letter-spacing: 5px;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .copy-btn:hover {
+            background: white;
+            color: var(--primary-green);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* แจ้งเตือนเมื่อคัดลอก */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: var(--dark-green);
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>
+        ระบบค้นหารหัสไปรษณีย์
+        <span>Virtual Green Service</span>
+    </h2>
+    
+    <div class="form-group">
+        <label>จังหวัด (เหนี่ยวทรัพย์)</label>
+        <select id="province" onchange="updateDistricts()">
+            <option value="">-- โปรดระบุจังหวัด --</option>
+            <optgroup label="ภาค 1">
+                <option value="1|01">พระบรมมหาราชวัง</option>
+                <option value="1|02">วังเหลี่ยมนอก</option>
+            </optgroup>
+            <optgroup label="ภาค 2">
+                <option value="2|03">สลัมคลองเจ๋ง</option>
+                <option value="2|04">เขาเจ๋ง</option>
+                <option value="2|05">ต้มยำไก่</option>
+                <option value="2|06">โอ้ลลิ่ง</option>
+                <option value="2|07">เลิกโง่</option>
+                <option value="2|08">โยดก</option>
+                <option value="2|09">กรุงเจ๋ง</option>
+            </optgroup>
+            <optgroup label="ภาค 3">
+                <option value="3|10">งอ</option>
+                <option value="3|11">พรศรี</option>
+                <option value="3|12">ทม</option>
+                <option value="3|13">ยากส์</option>
+                <option value="3|14">ประปาแตก</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>เขต / พื้นที่</label>
+        <select id="district" onchange="calculateZipcode()">
+            <option value="">-- โปรดเลือกเขต --</option>
+        </select>
+    </div>
+
+    <div class="result-card">
+        <span class="result-label">POSTAL CODE</span>
+        <div id="zipcode">00000</div>
+        <button class="copy-btn" onclick="copyToClipboard()">คัดลอกรหัส</button>
+    </div>
+</div>
+
+<div id="toast">คัดลอกรหัสไปรษณีย์สำเร็จ! ◯</div>
+
+<script>
+    const data = {
+        "1|01": ["01|วังฯ", "02|เวียง", "03|คลัง", "04|ประชาธิปไตย", "05|วัง", "06|โรงพยาบาล", "07|รถราง", "08|ไฟฟ้าสถิต", "09|รัฐสภาเก่า"],
+        "1|02": ["10|บางแตงโม", "11|บางแมวโต", "12|มาลีวง", "13|ยูเรนัส", "14|สัมพันธไมตรี", "15|พระอาทิตย์", "16|วงรี", "17|ตลาดวงรี", "18|ผีเปรต", "19|พันเก้าเล่า", "20|เรือนจำ", "21|ธนาคารกลาง", "22|เสรีฝาแตก", "23|ชาตินิยม", "24|สังคมนิยม", "25|อนุรักษนิยม"],
+        "2|03": ["26|กะสี", "27|สลัมคลองเจ๋ง", "28|คลองเจ๋ง", "29|เขต 49", "30|ทะเลเปรี้ยว", "31|กล้วยแตก"],
+        "2|04": ["32|บายาโดลิด", "33|หลุมริม", "34|ด้านขนาน"],
+        "2|05": ["35|กลีเจ๋ง", "36|กลีดำ", "37|กลีโอ้ล", "38|กลีเปรี้ยว", "39|กลีแดง"],
+        "2|06": ["40|หลอกูด", "41|หลอสู้", "42|โอ้ลซิง", "43|โอ้ลวิง"],
+        "2|07": ["44|เลิกโง่", "45|เลิกเหลี่ยม", "46|ประหารชีวิต"],
+        "2|08": ["47|ไส้ติ่งแตก", "48|สมองแตก"],
+        "2|09": ["49|กรุงเจ๋ง", "50|อาณานิคม", "51|ส้มปอด"],
+        "3|10": ["52|งอ", "53|งอลวง"],
+        "3|11": ["54|พระพร", "55|ศรีบุแม่", "56|มุมปาน"],
+        "3|12": ["57|ทมตะวันตก", "58|ทมตะวันออก"],
+        "3|13": ["59|ยากส์ฉิบหาย", "60|เมืองกรุงเขา"],
+        "3|14": ["61|เกาะประปาแตก"]
+    };
+
+    function updateDistricts() {
+        const provinceSelect = document.getElementById("province");
+        const districtSelect = document.getElementById("district");
+        const selectedProvince = provinceSelect.value;
+
+        districtSelect.innerHTML = '<option value="">-- โปรดเลือกเขต --</option>';
+        document.getElementById("zipcode").innerText = "00000";
+
+        if (selectedProvince && data[selectedProvince]) {
+            data[selectedProvince].forEach(item => {
+                const [code, name] = item.split('|');
+                const option = document.createElement("option");
+                option.value = code;
+                option.text = name;
+                districtSelect.add(option);
+            });
+        }
+    }
+
+    function calculateZipcode() {
+        const provinceVal = document.getElementById("province").value;
+        const districtCode = document.getElementById("district").value;
+        const display = document.getElementById("zipcode");
+
+        if (provinceVal && districtCode) {
+            const provinceParts = provinceVal.split('|');
+            display.innerText = provinceParts[0] + provinceParts[1] + districtCode;
+        } else {
+            display.innerText = "00000";
+        }
+    }
+
+    function copyToClipboard() {
+        const zipcode = document.getElementById("zipcode").innerText;
+        if (zipcode === "00000") return;
+
+        navigator.clipboard.writeText(zipcode).then(() => {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        });
+    }
+</script>
+
+</body>
+</html>
