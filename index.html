@@ -3,149 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZipCode Green Edition - ประเทศจำลอง</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>ZipCode Master v2.0 - ประเทศจำลอง</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-green: #059669; /* เขียวมรกต */
-            --light-green: #ecfdf5;
+            --primary-green: #10b981; /* Emerald Green */
             --dark-green: #064e3b;
-            --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --bg-color: #f0fdf4;
             --card-bg: #ffffff;
+            --shadow-md: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(16, 185, 129, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: #f0fdf4; /* พื้นหลังเขียวอ่อนมาก */
+            background-color: var(--bg-color);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            overflow-x: hidden;
             padding: 20px;
+            box-sizing: border-box;
         }
 
-        .container {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 25px -5px rgba(5, 150, 105, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        /* ส่วนควบคุมโหมดสไลด์ */
+        .mode-wrapper {
             width: 100%;
             max-width: 450px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 30px;
+        }
+
+        .mode-container {
+            display: flex;
+            transition: var(--transition);
+            width: 200%; /* รองรับ 2 โหมด */
+            cursor: grab;
+        }
+
+        .mode-container:active { cursor: grabbing; }
+
+        .card {
+            width: 50%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .card-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-md);
+            min-height: 560px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .card-content:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
         }
 
         h2 {
             text-align: center;
             color: var(--dark-green);
-            margin-bottom: 30px;
+            margin: 0 0 35px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
         }
+        
+        h2 .material-icons { margin-right: 12px; font-size: 32px; color: var(--primary-green); }
 
-        h2 span {
-            display: block;
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 300;
-            margin-top: 5px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
+        .form-group { margin-bottom: 25px; position: relative; }
         label {
-            display: block;
+            display: flex;
+            align-items: center;
             margin-bottom: 10px;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--dark-green);
+            font-weight: 500;
+            color: #4b5563;
         }
-
-        select {
+        label .material-icons { font-size: 18px; margin-right: 8px; color: #9ca3af; }
+        
+        select, input {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #d1fae5;
-            border-radius: 12px;
+            padding: 14px 18px 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
             font-size: 16px;
             font-family: inherit;
+            color: #1f2937;
             background-color: #f9fafb;
             cursor: pointer;
             outline: none;
-            transition: all 0.2s;
+            transition: var(--transition);
+            box-sizing: border-box;
         }
 
-        select:focus {
+        select:focus, input:focus {
             border-color: var(--primary-green);
+            background-color: #fff;
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
         }
 
-        .result-card {
-            margin-top: 30px;
-            background: var(--gradient-green);
-            padding: 30px 20px;
+        /* ปุ่มสลับโหมดตรงกลาง */
+        .switch-btn-container {
+            margin: 20px 0;
+            z-index: 20;
+        }
+
+        .switch-btn {
+            background: #fff;
+            color: var(--dark-green);
+            border: 2px solid #e5e7eb;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .switch-btn:hover {
+            background: var(--dark-green);
+            color: #fff;
+            border-color: var(--dark-green);
+            transform: scale(1.03);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .switch-btn .material-icons { font-size: 20px; }
+
+        /* ผลลัพธ์ */
+        .result-box {
+            margin-top: auto;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 25px;
             border-radius: 20px;
             color: white;
             text-align: center;
-            box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2);
+            box-shadow: 0 10px 15px rgba(16, 185, 129, 0.2);
             position: relative;
         }
 
-        .result-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.9;
-        }
-
-        #zipcode {
-            font-size: 56px;
-            font-weight: 600;
-            margin: 10px 0;
-            letter-spacing: 5px;
-        }
-
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 14px;
+        #zip-display { font-size: 48px; font-weight: 600; letter-spacing: 5px; margin: 10px 0; }
+        
+        .copy-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            text-decoration: none;
             cursor: pointer;
-            transition: all 0.2s;
-            backdrop-filter: blur(5px);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+            padding-bottom: 2px;
+            transition: var(--transition);
         }
+        .copy-link:hover { color: white; border-bottom-style: solid; }
+        .copy-link .material-icons { font-size: 16px; }
 
-        .copy-btn:hover {
-            background: white;
-            color: var(--primary-green);
+        /* โหมดถอดรหัส */
+        .decode-info {
+            background: #f9fafb;
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            border-left: 4px solid #e5e7eb;
+            font-size: 14px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            transition: var(--transition);
         }
+        
+        .decode-info:hover { border-left-color: var(--primary-green); background: #f0fdf4; }
+        .decode-info .material-icons { font-size: 20px; color: var(--primary-green); margin-top: 2px; }
+        .decode-info div b { color: var(--primary-green); display: block; margin-bottom: 4px; font-weight: 500; }
+        .decode-info div span { color: #4b5563; }
 
-        .copy-btn:active {
-            transform: scale(0.95);
+        .read-info {
+            background: #e0f2fe;
+            border-color: #3b82f6;
+            margin-top: 10px;
         }
+        .read-info .material-icons { color: #3b82f6; }
+        .read-info div b { color: #1d4ed8; }
 
         /* แจ้งเตือนเมื่อคัดลอก */
         #toast {
             visibility: hidden;
-            min-width: 200px;
-            background-color: var(--dark-green);
+            min-width: 250px;
+            background-color: #1f2937;
             color: #fff;
             text-align: center;
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 16px;
             position: fixed;
-            z-index: 1;
+            z-index: 100;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-
         #toast.show {
             visibility: visible;
             animation: fadein 0.5s, fadeout 0.5s 2.5s;
         }
+        #toast .material-icons { font-size: 20px; color: #10b981; }
 
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
@@ -153,116 +240,206 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>
-        ระบบค้นหารหัสไปรษณีย์
-        <span>Virtual Green Service</span>
-    </h2>
-    
-    <div class="form-group">
-        <label>จังหวัด (เหนี่ยวทรัพย์)</label>
-        <select id="province" onchange="updateDistricts()">
-            <option value="">-- โปรดระบุจังหวัด --</option>
-            <optgroup label="ภาค 1">
-                <option value="1|01">พระบรมมหาราชวัง</option>
-                <option value="1|02">วังเหลี่ยมนอก</option>
-            </optgroup>
-            <optgroup label="ภาค 2">
-                <option value="2|03">สลัมคลองเจ๋ง</option>
-                <option value="2|04">เขาเจ๋ง</option>
-                <option value="2|05">ต้มยำไก่</option>
-                <option value="2|06">โอ้ลลิ่ง</option>
-                <option value="2|07">เลิกโง่</option>
-                <option value="2|08">โยดก</option>
-                <option value="2|09">กรุงเจ๋ง</option>
-            </optgroup>
-            <optgroup label="ภาค 3">
-                <option value="3|10">งอ</option>
-                <option value="3|11">พรศรี</option>
-                <option value="3|12">ทม</option>
-                <option value="3|13">ยากส์</option>
-                <option value="3|14">ประปาแตก</option>
-            </optgroup>
-        </select>
+    <div class="switch-btn-container">
+        <button class="switch-btn" onclick="toggleMode()">
+            <span class="material-icons">swap_calls</span>
+            สลับโหมดการทำงาน
+        </button>
     </div>
 
-    <div class="form-group">
-        <label>เขต / พื้นที่</label>
-        <select id="district" onchange="calculateZipcode()">
-            <option value="">-- โปรดเลือกเขต --</option>
-        </select>
+    <div class="mode-wrapper" id="touch-area">
+        <div class="mode-container" id="main-slider">
+            
+            <div class="card">
+                <div class="card-content">
+                    <h2><span class="material-icons">location_on</span>สร้างรหัสไปรษณีย์</h2>
+                    
+                    <div class="form-group">
+                        <label><span class="material-icons">map</span>เลือกจังหวัด (ตามภูมิภาค)</label>
+                        <select id="p-select" onchange="updateD()"></select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><span class="material-icons">signpost</span>เลือกเขต / พื้นที่</label>
+                        <select id="d-select" onchange="genZip()"></select>
+                    </div>
+
+                    <div class="result-box">
+                        <small>POSTAL CODE</small>
+                        <div id="zip-display">00000</div>
+                        <span class="copy-link" onclick="copyZip()">
+                            <span class="material-icons">content_copy</span>
+                            คัดลอกรหัส
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <h2><span class="material-icons">barcode_reader</span>ถอดรหัสไปรษณีย์</h2>
+                    
+                    <div class="form-group">
+                        <label><span class="material-icons">numbers</span>วางรหัส 5 หลัก</label>
+                        <input type="number" id="zip-input" placeholder="เช่น 10210" oninput="decodeZip()">
+                    </div>
+                    
+                    <div id="decode-result" style="display:none;">
+                        <div class="decode-info">
+                            <span class="material-icons">explore</span>
+                            <div><b>หลักที่ 1 (เขตภูมิภาค):</b> <span id="res-zone"></span></div>
+                        </div>
+                        <div class="decode-info">
+                            <span class="material-icons">apartment</span>
+                            <div><b>หลักที่ 2-3 (จังหวัด):</b> <span id="res-prov"></span></div>
+                        </div>
+                        <div class="decode-info">
+                            <span class="material-icons">house_siding</span>
+                            <div><b>หลักที่ 4-5 (พื้นที่):</b> <span id="res-dist"></span></div>
+                        </div>
+                        <div class="decode-info read-info">
+                            <span class="material-icons">record_voice_over</span>
+                            <div><b>วิธีการอ่าน:</b> <span id="res-read"></span></div>
+                        </div>
+                    </div>
+                    
+                    <div id="decode-empty" style="text-align:center; color:#9ca3af; margin-top:50px;">
+                        <span class="material-icons" style="font-size:64px; margin-bottom:15px; display:block;">search</span>
+                        ใส่รหัสให้ครบ 5 หลักเพื่อดูข้อมูล
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="result-card">
-        <span class="result-label">POSTAL CODE</span>
-        <div id="zipcode">00000</div>
-        <button class="copy-btn" onclick="copyToClipboard()">คัดลอกรหัส</button>
+    <div id="toast">
+        <span class="material-icons">check_circle</span>
+        คัดลกรหัสไปรษณีย์สำเร็จ+ ◯
     </div>
-</div>
-
-<div id="toast">คัดลอกรหัสไปรษณีย์สำเร็จ! ◯</div>
 
 <script>
-    const data = {
-        "1|01": ["01|วังฯ", "02|เวียง", "03|คลัง", "04|ประชาธิปไตย", "05|วัง", "06|โรงพยาบาล", "07|รถราง", "08|ไฟฟ้าสถิต", "09|รัฐสภาเก่า"],
-        "1|02": ["10|บางแตงโม", "11|บางแมวโต", "12|มาลีวง", "13|ยูเรนัส", "14|สัมพันธไมตรี", "15|พระอาทิตย์", "16|วงรี", "17|ตลาดวงรี", "18|ผีเปรต", "19|พันเก้าเล่า", "20|เรือนจำ", "21|ธนาคารกลาง", "22|เสรีฝาแตก", "23|ชาตินิยม", "24|สังคมนิยม", "25|อนุรักษนิยม"],
-        "2|03": ["26|กะสี", "27|สลัมคลองเจ๋ง", "28|คลองเจ๋ง", "29|เขต 49", "30|ทะเลเปรี้ยว", "31|กล้วยแตก"],
-        "2|04": ["32|บายาโดลิด", "33|หลุมริม", "34|ด้านขนาน"],
-        "2|05": ["35|กลีเจ๋ง", "36|กลีดำ", "37|กลีโอ้ล", "38|กลีเปรี้ยว", "39|กลีแดง"],
-        "2|06": ["40|หลอกูด", "41|หลอสู้", "42|โอ้ลซิง", "43|โอ้ลวิง"],
-        "2|07": ["44|เลิกโง่", "45|เลิกเหลี่ยม", "46|ประหารชีวิต"],
-        "2|08": ["47|ไส้ติ่งแตก", "48|สมองแตก"],
-        "2|09": ["49|กรุงเจ๋ง", "50|อาณานิคม", "51|ส้มปอด"],
-        "3|10": ["52|งอ", "53|งอลวง"],
-        "3|11": ["54|พระพร", "55|ศรีบุแม่", "56|มุมปาน"],
-        "3|12": ["57|ทมตะวันตก", "58|ทมตะวันออก"],
-        "3|13": ["59|ยากส์ฉิบหาย", "60|เมืองกรุงเขา"],
-        "3|14": ["61|เกาะประปาแตก"]
+    const rawData = {
+        "1|01": { name: "พระบรมมหาราชวัง", districts: {"01":"วังฯ", "02":"เวียง", "03":"คลัง", "04":"ประชาธิปไตย", "05":"วัง", "06":"โรงพยาบาล", "07":"รถราง", "08":"ไฟฟ้าสถิต", "09":"รัฐสภาเก่า"} },
+        "1|02": { name: "วังเหลี่ยมนอก", districts: {"10":"บางแตงโม", "11":"บางแมวโต", "12":"มาลีวง", "13":"ยูเรนัส", "14":"สัมพันธไมตรี", "15":"พระอาทิตย์", "16":"วงรี", "17":"ตลาดวงรี", "18":"ผีเปรต", "19":"พันเก้าเล่า", "20":"เรือนจำ", "21":"ธนาคารกลาง", "22":"เสรีฝาแตก", "23":"ชาตินิยม", "24":"สังคมนิยม", "25":"อนุรักษนิยม"} },
+        "2|03": { name: "สลัมคลองเจ๋ง", districts: {"26":"กะสี", "27":"สลัมคลองเจ๋ง", "28":"คลองเจ๋ง", "29":"เขต 49", "30":"ทะเลเปรี้ยว", "31":"กล้วยแตก"} },
+        "2|04": { name: "เขาเจ๋ง", districts: {"32":"บายาโดลิด", "33":"หลุมริม", "34":"ด้านขนาน"} },
+        "2|05": { name: "ต้มยำไก่", districts: {"35":"กลีเจ๋ง", "36":"กลีดำ", "37":"กลีโอ้ล", "38":"กลีเปรี้ยว", "39":"กลีแดง"} },
+        "2|06": { name: "โอ้ลลิ่ง", districts: {"40":"หลอกูด", "41":"หลอสู้", "42":"โอ้ลซิง", "43":"โอ้ลวิง"} },
+        "2|07": { name: "เลิกโง่", districts: {"44":"เลิกโง่", "45":"เลิกเหลี่ยม", "46":"ประหารชีวิต"} },
+        "2|08": { name: "โยดก", districts: {"47":"ไส้ติ่งแตก", "48":"สมองแตก"} },
+        "2|09": { name: "กรุงเจ๋ง", districts: {"49":"กรุงเจ๋ง", "50":"อาณานิคม", "51":"ส้มปอด"} },
+        "3|10": { name: "งอ", districts: {"52":"งอ", "53":"งอลวง"} },
+        "3|11": { name: "พรศรี", districts: {"54":"พระพร", "55":"ศรีบุแม่", "56":"มุมปาน"} },
+        "3|12": { name: "ทม", districts: {"57":"ทมตะวันตก", "58":"ทมตะวันออก"} },
+        "3|13": { name: "ยากส์", districts: {"59":"ยากส์ฉิบหาย", "60":"เมืองกรุงเขา"} },
+        "3|14": { name: "ประปาแตก", districts: {"61":"เกาะประปาแตก"} }
     };
 
-    function updateDistricts() {
-        const provinceSelect = document.getElementById("province");
-        const districtSelect = document.getElementById("district");
-        const selectedProvince = provinceSelect.value;
+    let currentMode = 0; // 0 = หน้าแรก, 1 = หน้าสอง
+    const slider = document.getElementById('main-slider');
 
-        districtSelect.innerHTML = '<option value="">-- โปรดเลือกเขต --</option>';
-        document.getElementById("zipcode").innerText = "00000";
+    // ฟังก์ชันสลับโหมด
+    function toggleMode() {
+        currentMode = currentMode === 0 ? 1 : 0;
+        slider.style.transform = `translateX(-${currentMode * 50}%)`;
+    }
 
-        if (selectedProvince && data[selectedProvince]) {
-            data[selectedProvince].forEach(item => {
-                const [code, name] = item.split('|');
-                const option = document.createElement("option");
-                option.value = code;
-                option.text = name;
-                districtSelect.add(option);
-            });
+    // รองรับการปัด (Swipe) ด้วยนิ้วมือ
+    let touchStart = 0;
+    document.getElementById('touch-area').addEventListener('touchstart', e => touchStart = e.touches[0].clientX);
+    document.getElementById('touch-area').addEventListener('touchend', e => {
+        let touchEnd = e.changedTouches[0].clientX;
+        if (touchStart - touchEnd > 80) { currentMode = 1; } // ปัดซ้าย
+        if (touchStart - touchEnd < -80) { currentMode = 0; } // ปัดขวา
+        slider.style.transform = `translateX(-${currentMode * 50}%)`;
+    });
+
+    // --- Logic โหมด 1: สร้างรหัส ---
+    function init() {
+        const pSelect = document.getElementById('p-select');
+        pSelect.innerHTML = '<option value="">-- เลือกจังหวัด --</option>';
+        for (let key in rawData) {
+            let opt = document.createElement('option');
+            opt.value = key;
+            opt.text = rawData[key].name;
+            pSelect.add(opt);
         }
     }
 
-    function calculateZipcode() {
-        const provinceVal = document.getElementById("province").value;
-        const districtCode = document.getElementById("district").value;
-        const display = document.getElementById("zipcode");
+    function updateD() {
+        const pKey = document.getElementById('p-select').value;
+        const dSelect = document.getElementById('d-select');
+        dSelect.innerHTML = '<option value="">-- เลือกเขต --</option>';
+        if (pKey) {
+            const dists = rawData[pKey].districts;
+            for (let dCode in dists) {
+                let opt = document.createElement('option');
+                opt.value = dCode;
+                opt.text = dists[dCode];
+                dSelect.add(opt);
+            }
+        }
+        genZip();
+    }
 
-        if (provinceVal && districtCode) {
-            const provinceParts = provinceVal.split('|');
-            display.innerText = provinceParts[0] + provinceParts[1] + districtCode;
+    function genZip() {
+        const pVal = document.getElementById('p-select').value;
+        const dVal = document.getElementById('d-select').value;
+        const display = document.getElementById('zip-display');
+        if (pVal && dVal) {
+            const pCode = pVal.split('|');
+            display.innerText = pCode[0] + pCode[1] + dVal;
         } else {
             display.innerText = "00000";
         }
     }
 
-    function copyToClipboard() {
-        const zipcode = document.getElementById("zipcode").innerText;
-        if (zipcode === "00000") return;
-
-        navigator.clipboard.writeText(zipcode).then(() => {
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        });
+    function copyZip() {
+        const zip = document.getElementById('zip-display').innerText;
+        if (zip !== "00000") {
+            navigator.clipboard.writeText(zip).then(() => {
+                const toast = document.getElementById('toast');
+                toast.className = "show";
+                setTimeout(() => toast.className = "", 3000);
+            });
+        }
     }
-</script>
 
+    // --- Logic โหมด 2: ถอดรหัส ---
+    function decodeZip() {
+        const input = document.getElementById('zip-input').value;
+        const resBox = document.getElementById('decode-result');
+        const emptyBox = document.getElementById('decode-empty');
+
+        if (input.length === 5) {
+            const z = input[0];
+            const p = input.substring(1, 3);
+            const d = input.substring(3, 5);
+            
+            const pKey = z + "|" + p;
+            const provData = rawData[pKey];
+
+            if (provData && provData.districts[d]) {
+                resBox.style.display = 'block';
+                emptyBox.style.display = 'none';
+                document.getElementById('res-zone').innerText = `เขตที่ ${z}`;
+                document.getElementById('res-prov').innerText = provData.name + " (" + p + ")";
+                document.getElementById('res-dist').innerText = provData.districts[d] + " (" + d + ")";
+                document.getElementById('res-read').innerText = `คุณอยู่ในเขตภูมิภาคที่ ${z} จังหวัด${provData.name} พื้นที่/เขต${provData.districts[d]}`;
+            } else {
+                resBox.style.display = 'none';
+                emptyBox.style.display = 'block';
+                emptyBox.innerHTML = '<span class="material-icons" style="font-size:64px; margin-bottom:15px; display:block;">report_gmailerrorred</span>❌ ไม่พบข้อมูลรหัสนี้ในระบบ';
+            }
+        } else {
+            resBox.style.display = 'none';
+            emptyBox.style.display = 'block';
+            emptyBox.innerHTML = '<span class="material-icons" style="font-size:64px; margin-bottom:15px; display:block;">search</span>ใส่รหัสให้ครบ 5 หลักเพื่อดูข้อมูล';
+        }
+    }
+
+    init();
+</script>
 </body>
 </html>
