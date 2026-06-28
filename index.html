@@ -1,716 +1,582 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>รหัสไปรษณีย์ฝาแตก</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold-deep: #8B6914;
-    --gold-mid: #B8860B;
-    --gold-bright: #DAA520;
-    --gold-light: #F5D47A;
-    --gold-pale: #FDF3D0;
-    --gold-faint: #FFFBF0;
-    --white: #FFFFFF;
-    --off-white: #FAFAF7;
-    --text-dark: #2C1F00;
-    --text-mid: #5A4010;
-    --text-light: #8B6914;
-    --border: rgba(184,134,11,0.25);
-    --border-strong: rgba(184,134,11,0.5);
-    --shadow-gold: rgba(184,134,11,0.15);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>รหัสไปรษณีย์ฝาแตกโดยพันรัฐ</title>
+    <!-- Google Fonts & Material Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="icon" type="image/webp" href="https://media.instahyre.com/images/profile/base/employer/27465/38ea2d555b/northstar_white.webp">
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Sarabun', sans-serif;
-    background: var(--off-white);
-    color: var(--text-dark);
-    min-height: 100vh;
-    background-image:
-      radial-gradient(ellipse at 20% 10%, rgba(218,165,32,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 90%, rgba(184,134,11,0.06) 0%, transparent 50%);
-  }
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Sarabun', sans-serif;
+        }
 
-  /* ---- TOP BORDER ORNAMENT ---- */
-  .top-border {
-    height: 5px;
-    background: linear-gradient(90deg, transparent, var(--gold-mid), var(--gold-bright), var(--gold-mid), transparent);
-  }
+        body {
+            background: linear-gradient(135deg, #f4f9fd 0%, #ffffff 100%);
+            background-attachment: fixed;
+            color: #2c3e50;
+            padding-top: 15px; /* ปรับลดพื้นที่เพื่อไม่ให้ดันตกลงไปเยอะ */
+            padding-bottom: 90px; /* เว้นระยะไม่ให้แผงล่างบังแผนที่ */
+            -webkit-tap-highlight-color: transparent;
+        }
 
-  /* ---- HEADER ---- */
-  header {
-    text-align: center;
-    padding: 2.5rem 1rem 2rem;
-    position: relative;
-  }
-  .crown-ornament {
-    font-size: 28px;
-    color: var(--gold-bright);
-    letter-spacing: 8px;
-    margin-bottom: .5rem;
-    display: block;
-  }
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(22px, 5vw, 36px);
-    font-weight: 700;
-    color: var(--gold-deep);
-    letter-spacing: 1px;
-    line-height: 1.2;
-  }
-  header h1 span {
-    display: block;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-light);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
-    margin: 1.25rem auto 0;
-    max-width: 320px;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-mid)); }
-  .divider-line:last-child { background: linear-gradient(90deg, var(--gold-mid), transparent); }
-  .divider-diamond { width: 8px; height: 8px; background: var(--gold-bright); transform: rotate(45deg); flex-shrink: 0; }
+        /* iOS 26 Glassmorphism Common Style */
+        .ios-capsule {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 30px; 
+            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.06);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-  /* ---- LEGEND PILLS ---- */
-  .legend {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 0 1rem 1.5rem;
-  }
-  .lpill {
-    font-size: 12px;
-    padding: 5px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border-strong);
-    color: var(--text-mid);
-    background: var(--white);
-  }
-  .lpill b { color: var(--gold-deep); }
+        /* Top Container Layout */
+        .top-group-container {
+            width: 92%;
+            max-width: 600px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-  /* ---- MAIN CONTAINER ---- */
-  .container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 1rem 4rem;
-  }
+        .search-box {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+        }
 
-  /* ---- LOOKUP CARD ---- */
-  .lookup-card {
-    background: var(--white);
-    border: 1px solid var(--border-strong);
-    border-radius: 16px;
-    padding: 2rem 2rem 1.5rem;
-    margin-bottom: 2rem;
-    position: relative;
-    box-shadow: 0 4px 32px var(--shadow-gold);
-  }
-  .lookup-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 20px; right: 20px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
-    border-radius: 0 0 2px 2px;
-  }
-  .lookup-title {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold-deep);
-    margin-bottom: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .lookup-title::before, .lookup-title::after {
-    content: '◆';
-    font-size: 8px;
-    color: var(--gold-bright);
-  }
-  .selects-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 1.25rem;
-  }
-  @media (max-width: 520px) { .selects-row { grid-template-columns: 1fr; } }
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            color: #2c3e50;
+            outline: none;
+            padding-left: 10px;
+        }
 
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-light);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  select {
-    appearance: none;
-    -webkit-appearance: none;
-    background: var(--gold-faint);
-    border: 1px solid var(--border-strong);
-    border-radius: 8px;
-    padding: 10px 36px 10px 14px;
-    font-size: 14px;
-    font-family: 'Sarabun', sans-serif;
-    color: var(--text-dark);
-    cursor: pointer;
-    transition: border-color .2s, box-shadow .2s;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8860B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-  }
-  select:focus {
-    outline: none;
-    border-color: var(--gold-bright);
-    box-shadow: 0 0 0 3px rgba(218,165,32,0.15);
-  }
-  select:disabled { opacity: .5; cursor: not-allowed; }
+        .search-box .material-icons-outlined {
+            color: #7f8c8d;
+            font-size: 22px;
+        }
 
-  /* ---- RESULT BOX ---- */
-  .result-box {
-    background: linear-gradient(135deg, var(--gold-pale) 0%, #FFF8E1 100%);
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    display: none;
-    align-items: center;
-    gap: 16px;
-    animation: fadeUp .3s ease;
-  }
-  .result-box.show { display: flex; }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .result-zip {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 700;
-    color: var(--gold-deep);
-    letter-spacing: 4px;
-    line-height: 1;
-    white-space: nowrap;
-  }
-  .result-divider { width: 1px; height: 50px; background: var(--border-strong); flex-shrink: 0; }
-  .result-info { flex: 1; }
-  .result-name { font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
-  .result-area { font-size: 13px; color: var(--text-light); }
-  .copy-btn {
-    padding: 8px 18px;
-    border: 1px solid var(--gold-mid);
-    border-radius: 8px;
-    background: transparent;
-    color: var(--gold-deep);
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background .2s, color .2s;
-    white-space: nowrap;
-  }
-  .copy-btn:hover { background: var(--gold-bright); color: var(--white); }
-  .copy-btn.copied { background: #5A8A3C; border-color: #5A8A3C; color: white; }
-  @media (max-width: 520px) {
-    .result-box { flex-wrap: wrap; }
-    .result-divider { display: none; }
-  }
+        /* Integrated District Results Panel (Float under Search) */
+        .district-results-panel {
+            padding: 15px 20px;
+            display: none;
+            max-height: 180px;
+            overflow-y: auto;
+        }
 
-  /* ---- STRUCTURE EXPLAINER ---- */
-  .struct-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-    justify-content: center;
-  }
-  .digit-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .digits {
-    display: flex;
-    gap: 4px;
-  }
-  .digit-box {
-    width: 38px;
-    height: 46px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    border: 1px solid;
-  }
-  .digit-box.d1 { background: #FFF3CD; color: #8B4513; border-color: #DAA520; }
-  .digit-box.d23 { background: #FDF3D0; color: var(--gold-deep); border-color: var(--gold-light); }
-  .digit-box.d45 { background: var(--gold-pale); color: var(--gold-mid); border-color: var(--border-strong); }
-  .digit-label { font-size: 11px; color: var(--text-light); text-align: center; font-weight: 500; }
-  .struct-sep { font-size: 24px; color: var(--gold-light); font-weight: 300; margin-top: -16px; }
+        .zone-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #0077b6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-  /* ---- SECTION TITLE ---- */
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold-deep);
-    margin-bottom: 1rem;
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border-strong), transparent);
-  }
+        .list-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+            gap: 8px;
+        }
 
-  /* ---- FULL TABLE ---- */
-  .search-bar {
-    position: relative;
-    margin-bottom: 1rem;
-  }
-  .search-bar input {
-    width: 100%;
-    padding: 10px 14px 10px 40px;
-    border: 1px solid var(--border-strong);
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'Sarabun', sans-serif;
-    background: var(--white);
-    color: var(--text-dark);
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .search-bar input:focus { outline: none; border-color: var(--gold-bright); box-shadow: 0 0 0 3px rgba(218,165,32,0.12); }
-  .search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gold-mid);
-    font-size: 16px;
-    pointer-events: none;
-  }
+        .clickable-item {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 119, 182, 0.15);
+            padding: 8px 6px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-size: 12.5px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #2c3e50;
+        }
 
-  .filter-tabs {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 1.25rem;
-  }
-  .tab {
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid var(--border-strong);
-    background: var(--white);
-    color: var(--text-mid);
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .tab.active, .tab:hover {
-    background: var(--gold-bright);
-    color: var(--white);
-    border-color: var(--gold-bright);
-  }
+        .clickable-item:hover {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+        
+        .clickable-item.active {
+            background: #00b4d8;
+            color: white;
+            border-color: #0077b6;
+        }
 
-  .province-block { margin-bottom: 1.5rem; }
-  .prov-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: .55rem 1rem;
-    border-radius: 8px;
-    margin-bottom: .5rem;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .d1-h { background: #FFF3CD; color: #7A5500; border: 1px solid #DAA520; }
-  .d2-h { background: #FEF9EC; color: #8B6200; border: 1px solid #E8C44A; }
-  .d3-h { background: var(--gold-pale); color: var(--gold-deep); border: 1px solid var(--border-strong); }
-  .code-tag {
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    background: rgba(255,255,255,0.7);
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-weight: 400;
-  }
-  .count-tag { font-size: 11px; font-weight: 400; margin-left: auto; opacity: .7; }
+        /* Main Map Layout */
+        .container {
+            width: 92%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-  .entries-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 6px;
-  }
-  .entry-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: .5rem .8rem;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-size: 13px;
-    cursor: pointer;
-    transition: border-color .15s, box-shadow .15s, transform .1s;
-  }
-  .entry-card:hover {
-    border-color: var(--gold-bright);
-    box-shadow: 0 2px 12px var(--shadow-gold);
-    transform: translateY(-1px);
-  }
-  .entry-zip {
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gold-deep);
-    white-space: nowrap;
-  }
-  .entry-name { color: var(--text-mid); flex: 1; }
-  .mark { background: rgba(218,165,32,0.3); border-radius: 2px; color: var(--text-dark); }
+        /* Map Card View */
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(224, 231, 255, 0.8);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+        }
 
-  .no-result {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: var(--text-light);
-    font-size: 15px;
-  }
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0077b6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
 
-  /* ---- FOOTER ---- */
-  footer {
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 12px;
-    color: var(--text-light);
-    border-top: 1px solid var(--border);
-    letter-spacing: 1px;
-  }
+        .grid-map {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-  /* ---- ANIMATIONS ---- */
-  @keyframes shimmer {
-    0% { background-position: -400px 0; }
-    100% { background-position: 400px 0; }
-  }
-</style>
+        .map-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .map-block {
+            background: linear-gradient(135deg, #f1f8ff 0%, #ffffff 100%);
+            border: 1.5px solid #d0e7ff;
+            border-radius: 12px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .map-block:hover {
+            border-color: #00b4d8;
+        }
+
+        .map-block.active {
+            background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+            color: white;
+            border-color: #0077b6;
+            box-shadow: 0 4px 12px rgba(0, 180, 216, 0.2);
+        }
+
+        .map-block .code-num {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .map-block .name-lbl {
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .map-block.core-center {
+            border: 2px dashed #0077b6;
+            background: #fff9db;
+        }
+
+        /* ลอยติดขอบหน้าจอด้านล่างพอดี ไม่จมหาย (Fixed Bottom Panel) */
+        .bottom-floating-panel {
+            position: fixed;
+            bottom: 0; /* ติดขอบล่างจอพอดี */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%; /* เต็มความกว้างจอเพื่อความเสถียรบนมือถือ */
+            max-width: 600px;
+            padding: 15px 20px;
+            border-bottom-left-radius: 0; /* ให้แนบสนิทกับขอบล่างพอดี */
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 25px; /* มนเฉพาะขอบบน */
+            border-top-right-radius: 25px;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .zip-display-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .zip-info-text {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 0;
+        }
+
+        .zip-info-text .area-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .zip-info-text .zip-number {
+            font-family: monospace;
+            font-size: 19px;
+            font-weight: 700;
+            color: #0077b6;
+            background: rgba(0, 119, 182, 0.08);
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+
+        .copy-btn {
+            background: #00b4d8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 180, 216, 0.15);
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: #0077b6;
+        }
+
+        /* Toast UI */
+        .toast {
+            position: fixed;
+            bottom: 30px; 
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(33, 37, 41, 0.95);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.25s ease-out;
+            z-index: 2500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
 </head>
 <body>
 
-<div class="top-border"></div>
-
-<header>
-  <span class="crown-ornament">✦ ✦ ✦</span>
-  <h1>รหัสไปรษณีย์ฝาแตก
-    <span>โดยพันรัฐ &nbsp;·&nbsp; ระบบค้นหารหัสไปรษณีย์</span>
-  </h1>
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-diamond"></div>
-    <div class="divider-line"></div>
-  </div>
-</header>
-
-<div class="legend">
-  <span class="lpill"><b>หลักที่ 1</b> เขตปกครอง (1–3)</span>
-  <span class="lpill"><b>หลักที่ 2–3</b> รหัสจังหวัด (14 จังหวัด)</span>
-  <span class="lpill"><b>หลักที่ 4–5</b> รหัสเขต (61 เขต)</span>
-</div>
-
-<div class="container">
-
-  <!-- Structure Visual -->
-  <div class="struct-card">
-    <div class="digit-group">
-      <div class="digits"><div class="digit-box d1">1</div></div>
-      <div class="digit-label">เขตปกครอง<br>1–3</div>
-    </div>
-    <div class="struct-sep">·</div>
-    <div class="digit-group">
-      <div class="digits">
-        <div class="digit-box d23">0</div>
-        <div class="digit-box d23">1</div>
-      </div>
-      <div class="digit-label">รหัสจังหวัด<br>2 หลัก</div>
-    </div>
-    <div class="struct-sep">·</div>
-    <div class="digit-group">
-      <div class="digits">
-        <div class="digit-box d45">0</div>
-        <div class="digit-box d45">1</div>
-      </div>
-      <div class="digit-label">รหัสเขต<br>2 หลัก</div>
-    </div>
-  </div>
-
-  <!-- Lookup Tool -->
-  <div class="lookup-card">
-    <div class="lookup-title">ค้นหารหัสไปรษณีย์</div>
-    <div class="selects-row">
-      <div class="field">
-        <label>จังหวัด / Province</label>
-        <select id="sel-prov" onchange="onProvChange()">
-          <option value="">— เลือกจังหวัด —</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>เขต / District</label>
-        <select id="sel-area" onchange="onAreaChange()" disabled>
-          <option value="">— เลือกจังหวัดก่อน —</option>
-        </select>
-      </div>
+    <!-- Top Container Group -->
+    <div class="top-group-container">
+        <!-- Search Box -->
+        <div class="search-box ios-capsule">
+            <span class="material-icons-outlined">search</span>
+            <input type="text" id="globalSearch" placeholder="✦ค้นหาจังหวัด เขต หรือรหัสไปรษณีย์...">
+        </div>
+        
+        <!-- District Results Panel (ติดใต้ช่องค้นหาพอดี ไม่ทับซ้อนแผนที่) -->
+        <div class="district-results-panel ios-capsule" id="districtResultsPanel">
+            <div class="zone-title" id="zoneTitle">
+                <span class="material-icons-outlined">location_city</span> รายชื่อเขต / แขวง
+            </div>
+            <div id="districtContainer" class="list-items"></div>
+        </div>
     </div>
 
-    <div class="result-box" id="result-box">
-      <div class="result-zip" id="result-zip">—</div>
-      <div class="result-divider"></div>
-      <div class="result-info">
-        <div class="result-name" id="result-name">—</div>
-        <div class="result-area" id="result-area">—</div>
-      </div>
-      <button class="copy-btn" id="copy-btn" onclick="copyZip()">คัดลอก</button>
+    <!-- Main Content Grid -->
+    <div class="container">
+        <div class="card">
+            <div class="card-title">
+                <span class="material-icons-outlined">map</span>
+                แผนที่จำลองเชิงโครงสร้าง (แตะเลือกจังหวัด)
+            </div>
+            
+            <div class="grid-map">
+                <!-- Row 1 -->
+                <div class="map-row">
+                    <div class="map-block" onclick="selectProvince('311', this)">
+                        <span class="code-num">11</span><span class="name-lbl">พรศรี</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('310', this)">
+                        <span class="code-num">10</span><span class="name-lbl">งอ</span>
+                    </div>
+                    <div style="flex: 0.3;"></div>
+                    <div class="map-block" onclick="selectProvince('313', this)">
+                        <span class="code-num">13</span><span class="name-lbl">ยากส์</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('312', this)">
+                        <span class="code-num">12</span><span class="name-lbl">ทม</span>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="map-row">
+                    <div class="map-block" onclick="selectProvince('204', this)">
+                        <span class="code-num">4</span><span class="name-lbl">เขาเจ๋ง</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('207', this)">
+                        <span class="code-num">7</span><span class="name-lbl">เลิกโง่</span>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="map-row">
+                    <div class="map-block" onclick="selectProvince('206', this)">
+                        <span class="code-num">6</span><span class="name-lbl">โอ้ลลิ่ง</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('205', this)">
+                        <span class="code-num">5</span><span class="name-lbl">ต้มยำไก่</span>
+                    </div>
+                    <div class="map-block core-center" onclick="selectProvince('101', this)">
+                        <span class="code-num" style="color:#0077b6;">1</span><span class="name-lbl" style="font-weight:600;">พระบรมฯ</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('102', this)">
+                        <span class="code-num">2</span><span class="name-lbl">วังเหลี่ยมฯ</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('203', this)">
+                        <span class="code-num">3</span><span class="name-lbl">สลัมคลองฯ</span>
+                    </div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="map-row">
+                    <div class="map-block" onclick="selectProvince('209', this)">
+                        <span class="code-num">9</span><span class="name-lbl">กรุงเจ๋ง</span>
+                    </div>
+                    <div class="map-block" onclick="selectProvince('208', this)">
+                        <span class="code-num">8</span><span class="name-lbl">โยดก</span>
+                    </div>
+                </div>
+
+                <!-- Row 5 -->
+                <div class="map-row" style="justify-content: flex-end;">
+                    <div style="flex: 1.5;"></div>
+                    <div class="map-block" onclick="selectProvince('314', this)">
+                        <span class="code-num">14</span><span class="name-lbl">ประปาแตก</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Full Table -->
-  <div class="section-title">ทำเนียบรหัสทั้งหมด</div>
+    <!-- Fixed Bottom Zipcode Bar -->
+    <div id="bottomFloatingPanel" class="bottom-floating-panel ios-capsule"></div>
 
-  <div class="search-bar">
-    <span class="search-icon">⌕</span>
-    <input type="text" id="search" placeholder="ค้นหารหัสหรือชื่อเขต..." oninput="renderTable()">
-  </div>
+    <!-- Toast Copy Alert -->
+    <div id="toast" class="toast">
+        <span class="material-icons-outlined" style="color:#4caf50;">check_circle</span>
+        <span>คัดลอกสำเร็จ!</span>
+    </div>
 
-  <div class="filter-tabs">
-    <button class="tab active" data-f="all" onclick="setTab(this)">ทั้งหมด</button>
-    <button class="tab" data-f="1" onclick="setTab(this)">เขตปกครอง 1</button>
-    <button class="tab" data-f="2" onclick="setTab(this)">เขตปกครอง 2</button>
-    <button class="tab" data-f="3" onclick="setTab(this)">เขตปกครอง 3</button>
-  </div>
+    <script>
+        const DATA = [
+          {district:1, provName:"พระบรมหาราชวัง", areaCode:"101", entries:[
+            {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"},
+            {zip:"10104",name:"ประชาธิปจ"},{zip:"10105",name:"วัง"},{zip:"10106",name:"โรงพยาบาล"},
+            {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"}
+          ]},
+          {district:1, provName:"วังเหลี่ยมนอก", areaCode:"102", entries:[
+            {zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"},
+            {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"},
+            {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"},
+            {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"},
+            {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"},
+            {zip:"10225",name:"อนุรักษ์นิยม"}
+          ]},
+          {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[
+            {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"},
+            {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"}
+          ]},
+          {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[
+            {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"}
+          ]},
+          {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[
+            {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"},
+            {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"}
+          ]},
+          {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[
+            {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิง"},
+            {zip:"20643",name:"โอ้ลวิ่ง"}
+          ]},
+          {district:2, provName:"เลิกโง่", areaCode:"207", entries:[
+            {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"}
+          ]},
+          {district:2, provName:"โยดก", areaCode:"208", entries:[
+            {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"}
+          ]},
+          {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[
+            {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"}
+          ]},
+          {district:3, provName:"งอ", areaCode:"310", entries:[
+            {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"}
+          ]},
+          {district:3, provName:"พรศรี", areaCode:"311", entries:[
+            {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"}
+          ]},
+          {district:3, provName:"ทม", areaCode:"312", entries:[
+            {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"}
+          ]},
+          {district:3, provName:"ยากส์", areaCode:"313", entries:[
+            {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"}
+          ]},
+          {district:3, provName:"ประปาแตก", areaCode:"314", entries:[
+            {zip:"31461",name:"ประปาแตก"}
+          ]}
+        ];
 
-  <div id="table-out"></div>
+        function selectProvince(areaCode, element) {
+            const match = DATA.find(p => p.areaCode === areaCode);
+            if(!match) return;
+            
+            document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
+            if(element) element.classList.add('active');
 
-</div>
+            document.getElementById('zoneTitle').innerHTML = `<span class="material-icons-outlined">location_city</span> เขตใน จ.${match.provName}`;
+            renderDistricts(match.entries);
+            document.getElementById('bottomFloatingPanel').style.display = 'none';
+        }
 
-<footer>✦ &nbsp; รหัสไปรษณีย์ฝาแตก โดยพันรัฐ &nbsp;·&nbsp; 14 จังหวัด &nbsp;·&nbsp; 61 เขต &nbsp; ✦</footer>
+        function renderDistricts(entries) {
+            const container = document.getElementById('districtContainer');
+            const panel = document.getElementById('districtResultsPanel');
+            container.innerHTML = '';
+            
+            entries.forEach(entry => {
+                const item = document.createElement('div');
+                item.className = 'clickable-item';
+                item.innerText = entry.name;
+                item.onclick = () => {
+                    document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    showFloatingZipcode(entry);
+                };
+                container.appendChild(item);
+            });
+            panel.style.display = 'block';
+        }
 
-<script>
-const DATA = [
-  {district:1, provName:"พระบรมหาราชวัง", areaCode:"101", entries:[
-    {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"},
-    {zip:"10104",name:"ประชาธิปจ"},{zip:"10105",name:"วัง"},{zip:"10106",name:"โรงพยาบาล"},
-    {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"}
-  ]},
-  {district:1, provName:"วังเหลี่ยมนอก", areaCode:"102", entries:[
-    {zip:"10210",name:"บางแตงไม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"},
-    {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"},
-    {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"},
-    {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลา"},
-    {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"},
-    {zip:"10225",name:"อนุรักษ์นิยม"}
-  ]},
-  {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[
-    {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"},
-    {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"}
-  ]},
-  {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[
-    {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"}
-  ]},
-  {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[
-    {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"},
-    {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"}
-  ]},
-  {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[
-    {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิง"},
-    {zip:"20643",name:"โอ้ลวิ่ง"}
-  ]},
-  {district:2, provName:"เลิกโง่", areaCode:"207", entries:[
-    {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"}
-  ]},
-  {district:2, provName:"โยดก", areaCode:"208", entries:[
-    {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"}
-  ]},
-  {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[
-    {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"}
-  ]},
-  {district:3, provName:"งอ", areaCode:"310", entries:[
-    {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"}
-  ]},
-  {district:3, provName:"พรศรี", areaCode:"311", entries:[
-    {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"}
-  ]},
-  {district:3, provName:"ทม", areaCode:"312", entries:[
-    {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"}
-  ]},
-  {district:3, provName:"ยากส์", areaCode:"313", entries:[
-    {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"}
-  ]},
-  {district:3, provName:"ประปาแตก", areaCode:"314", entries:[
-    {zip:"31461",name:"ประปาแตก"}
-  ]}
-];
+        function showFloatingZipcode(entry) {
+            const panel = document.getElementById('bottomFloatingPanel');
+            panel.innerHTML = `
+                <div class="zip-display-row">
+                    <div class="zip-info-text">
+                        <span class="area-name">${entry.name}</span>
+                        <span class="zip-number">${entry.zip}</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyZip('${entry.zip}')">
+                        <span class="material-icons-outlined" style="font-size:15px;">content_copy</span> คัดลอก
+                    </button>
+                </div>
+            `;
+            panel.style.display = 'block';
+        }
 
-// --- Populate dropdowns ---
-const selProv = document.getElementById('sel-prov');
-const selArea = document.getElementById('sel-area');
+        function copyZip(zip) {
+            navigator.clipboard.writeText(zip).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            });
+        }
 
-DATA.forEach(prov => {
-  const opt = document.createElement('option');
-  opt.value = prov.areaCode;
-  opt.textContent = `${prov.provName} (${prov.areaCode})`;
-  selProv.appendChild(opt);
-});
+        document.getElementById('globalSearch').addEventListener('input', function(e) {
+            const query = e.target.value.trim().toLowerCase();
+            const panel = document.getElementById('districtResultsPanel');
+            
+            if (!query) {
+                document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
+                panel.style.display = 'none';
+                document.getElementById('bottomFloatingPanel').style.display = 'none';
+                return;
+            }
 
-function onProvChange() {
-  const code = selProv.value;
-  selArea.innerHTML = '';
-  if (!code) {
-    selArea.innerHTML = '<option value="">— เลือกจังหวัดก่อน —</option>';
-    selArea.disabled = true;
-    hideResult();
-    return;
-  }
-  const prov = DATA.find(p => p.areaCode === code);
-  const defOpt = document.createElement('option');
-  defOpt.value = '';
-  defOpt.textContent = '— เลือกเขต —';
-  selArea.appendChild(defOpt);
-  prov.entries.forEach(e => {
-    const opt = document.createElement('option');
-    opt.value = e.zip;
-    opt.textContent = `${e.zip} – ${e.name}`;
-    selArea.appendChild(opt);
-  });
-  selArea.disabled = false;
-  hideResult();
-}
+            let filteredEntries = [];
+            DATA.forEach(prov => {
+                if (prov.provName.toLowerCase().includes(query)) {
+                    prov.entries.forEach(e => filteredEntries.push(e));
+                } else {
+                    prov.entries.forEach(e => {
+                        if (e.name.toLowerCase().includes(query) || e.zip.includes(query)) {
+                            filteredEntries.push(e);
+                        }
+                    });
+                }
+            });
 
-function onAreaChange() {
-  const zip = selArea.value;
-  if (!zip) { hideResult(); return; }
-  const provCode = selProv.value;
-  const prov = DATA.find(p => p.areaCode === provCode);
-  const entry = prov.entries.find(e => e.zip === zip);
-  showResult(zip, entry.name, prov.provName, prov.district);
-}
-
-function showResult(zip, name, provName, district) {
-  const box = document.getElementById('result-box');
-  document.getElementById('result-zip').textContent = zip;
-  document.getElementById('result-name').textContent = name;
-  document.getElementById('result-area').textContent = `จังหวัด: ${provName} · เขตปกครองที่ ${district}`;
-  document.getElementById('copy-btn').textContent = 'คัดลอก';
-  document.getElementById('copy-btn').className = 'copy-btn';
-  box.classList.add('show');
-}
-
-function hideResult() {
-  document.getElementById('result-box').classList.remove('show');
-}
-
-function copyZip() {
-  const zip = document.getElementById('result-zip').textContent;
-  navigator.clipboard.writeText(zip).then(() => {
-    const btn = document.getElementById('copy-btn');
-    btn.textContent = '✓ คัดลอกแล้ว';
-    btn.className = 'copy-btn copied';
-    setTimeout(() => {
-      btn.textContent = 'คัดลอก';
-      btn.className = 'copy-btn';
-    }, 2000);
-  });
-}
-
-// --- Table ---
-let activeTab = 'all';
-
-function setTab(btn) {
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeTab = btn.dataset.f;
-  renderTable();
-}
-
-function hl(text, q) {
-  if (!q) return text;
-  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  return text.replace(re, '<mark class="mark">$1</mark>');
-}
-
-function renderTable() {
-  const q = document.getElementById('search').value.trim();
-  const out = document.getElementById('table-out');
-  const dClass = { 1: 'd1-h', 2: 'd2-h', 3: 'd3-h' };
-  const dLabel = { 1: 'เขตปกครอง 1', 2: 'เขตปกครอง 2', 3: 'เขตปกครอง 3' };
-  let html = '';
-  let total = 0;
-
-  DATA.forEach(prov => {
-    if (activeTab !== 'all' && String(prov.district) !== activeTab) return;
-    const filtered = prov.entries.filter(e =>
-      !q || e.zip.includes(q) || e.name.toLowerCase().includes(q.toLowerCase())
-    );
-    if (!filtered.length) return;
-    total += filtered.length;
-    html += `<div class="province-block">
-      <div class="prov-header ${dClass[prov.district]}">
-        ${hl(prov.provName, q)}
-        <span class="code-tag">${prov.areaCode}</span>
-        <span style="font-size:11px;color:#8B6914;margin-left:4px">${dLabel[prov.district]}</span>
-        <span class="count-tag">${filtered.length} รหัส</span>
-      </div>
-      <div class="entries-grid">`;
-    filtered.forEach(e => {
-      html += `<div class="entry-card" onclick="selectEntry('${prov.areaCode}','${e.zip}')">
-        <span class="entry-zip">${hl(e.zip, q)}</span>
-        <span class="entry-name">${hl(e.name, q)}</span>
-      </div>`;
-    });
-    html += `</div></div>`;
-  });
-
-  if (!total) {
-    html = `<div class="no-result">✦ ไม่พบรหัสที่ค้นหา ✦</div>`;
-  }
-  out.innerHTML = html;
-}
-
-function selectEntry(provCode, zip) {
-  selProv.value = provCode;
-  onProvChange();
-  setTimeout(() => {
-    selArea.value = zip;
-    onAreaChange();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 50);
-}
-
-renderTable();
-</script>
+            if (filteredEntries.length > 0) {
+                document.getElementById('zoneTitle').innerHTML = `<span class="material-icons-outlined">search</span> ผลการค้นหา (${filteredEntries.length})`;
+                const distContainer = document.getElementById('districtContainer');
+                distContainer.innerHTML = '';
+                
+                filteredEntries.forEach(entry => {
+                    const item = document.createElement('div');
+                    item.className = 'clickable-item';
+                    item.innerText = entry.name;
+                    item.onclick = () => {
+                        document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        showFloatingZipcode(entry);
+                    };
+                    distContainer.appendChild(item);
+                });
+                panel.style.display = 'block';
+                
+                if(filteredEntries.length === 1) {
+                    showFloatingZipcode(filteredEntries[0]);
+                }
+            } else {
+                document.getElementById('districtContainer').innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-icons-outlined">search_off</span>
+                        <p>ไม่พบข้อมูล</p>
+                    </div>`;
+                panel.style.display = 'block';
+                document.getElementById('bottomFloatingPanel').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
