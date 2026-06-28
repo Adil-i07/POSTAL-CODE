@@ -371,10 +371,10 @@
                         <span class="code-num">5</span><span class="name-lbl">ต้มยำไก่</span>
                     </div>
                     <div class="map-block core-center" onclick="selectProvince('101', this)">
-                        <span class="code-num" style="color:#0077b6;">1</span><span class="name-lbl" style="font-weight:600;">พระบรมฯ</span>
+                        <span class="code-num" style="color:#0077b6;">1</span><span class="name-lbl" style="font-weight:600;">นครราชธานี</span>
                     </div>
                     <div class="map-block" onclick="selectProvince('102', this)">
-                        <span class="code-num">2</span><span class="name-lbl">วังเหลี่ยมฯ</span>
+                        <span class="code-num">2</span><span class="name-lbl">ราษฎรมณฑล</span>
                     </div>
                     <div class="map-block" onclick="selectProvince('203', this)">
                         <span class="code-num">3</span><span class="name-lbl">สลัมคลองฯ</span>
@@ -412,61 +412,7 @@
     </div>
 
     <script>
-        const DATA = [
-          {district:1, provName:"พระบรมหาราชวัง", areaCode:"101", entries:[
-            {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"},
-            {zip:"10104",name:"ประชาธิปจ"},{zip:"10105",name:"วัง"},{zip:"10106",name:"โรงพยาบาล"},
-            {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"}
-          ]},
-          {district:1, provName:"วังเหลี่ยมนอก", areaCode:"102", entries:[
-            {zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"},
-            {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"},
-            {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"},
-            {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"},
-            {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"},
-            {zip:"10225",name:"อนุรักษ์นิยม"}
-          ]},
-          {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[
-            {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"},
-            {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"}
-          ]},
-          {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[
-            {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"}
-          ]},
-          {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[
-            {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"},
-            {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"}
-          ]},
-          {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[
-            {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิง"},
-            {zip:"20643",name:"โอ้ลวิ่ง"}
-          ]},
-          {district:2, provName:"เลิกโง่", areaCode:"207", entries:[
-            {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"}
-          ]},
-          {district:2, provName:"โยดก", areaCode:"208", entries:[
-            {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"}
-          ]},
-          {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[
-            {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"}
-          ]},
-          {district:3, provName:"งอ", areaCode:"310", entries:[
-            {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"}
-          ]},
-          {district:3, provName:"พรศรี", areaCode:"311", entries:[
-            {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"}
-          ]},
-          {district:3, provName:"ทม", areaCode:"312", entries:[
-            {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"}
-          ]},
-          {district:3, provName:"ยากส์", areaCode:"313", entries:[
-            {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"}
-          ]},
-          {district:3, provName:"ประปาแตก", areaCode:"314", entries:[
-            {zip:"31461",name:"ประปาแตก"}
-          ]}
-        ];
-
+        const DATA = [ {district:1, provName:"นครราชธานี", areaCode:"101", entries:[ {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"}, {zip:"10104",name:"ประชาธิป"},{zip:"10105",name:"พรศรีแผ่นดิน"},{zip:"10106",name:"โรงพยาบาล"}, {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"} ]}, {district:1, provName:"ราษฎรมณฑล", areaCode:"102", entries:[ {zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"}, {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"}, {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"}, {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"}, {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"}, {zip:"10225",name:"อนุรักษ์นิยม"} ]}, {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[ {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"}, {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"} ]}, {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[ {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"} ]}, {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[ {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"}, {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"} ]}, {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[ {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิ่ง"}, {zip:"20643",name:"โอ้ลวิ่ง"} ]}, {district:2, provName:"เลิกโง่", areaCode:"207", entries:[ {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"} ]}, {district:2, provName:"โยดก", areaCode:"208", entries:[ {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"} ]}, {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[ {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"} ]}, {district:3, provName:"งอ", areaCode:"310", entries:[ {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"} ]}, {district:3, provName:"พรศรี", areaCode:"311", entries:[ {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"} ]}, {district:3, provName:"ทม", areaCode:"312", entries:[ {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"} ]}, {district:3, provName:"ยากส์", areaCode:"313", entries:[ {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"} ]}, {district:3, provName:"ประปาแตก", areaCode:"314", entries:[ {zip:"31461",name:"ประปาแตก"} ]} ];
         function selectProvince(areaCode, element) {
             const match = DATA.find(p => p.areaCode === areaCode);
             if(!match) return;
