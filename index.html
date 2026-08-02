@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>รหัสไปรษณีย์ฝาแตกโดยพันรัฐ</title>
-    <!-- Google Fonts & Material Icons -->
+    <title>รหัสไปรษณีย์ฝาแตก โดยพันรัฐ</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link rel="icon" type="image/webp" href="https://media.instahyre.com/images/profile/base/employer/27465/38ea2d555b/northstar_white.webp">
+<link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/a/AVvXsEgMEvGooTXSJnHe1TF-uy0wYy0GdFdYM8iQ8LMqim1CpDnRCSgIBdop9K2C1Xf-Gtesdb8kAZvm6HYT46gBUgw1ulekS-QDvDLGAPuT_l0X6e1hTDhgCqgXrm-MSIdZb9siNio-1hbIF6F_nLPiWCGWZ7pe-wkZysTLs60EzOZSGB1uK0hiSOfW7gZUoN27">
 
-
-    
     <style>
         * {
             box-sizing: border-box;
@@ -22,22 +19,33 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f4f9fd 0%, #ffffff 100%);
-            background-attachment: fixed;
-            color: #2c3e50;
-            padding-top: 15px; /* ปรับลดพื้นที่เพื่อไม่ให้ดันตกลงไปเยอะ */
-            padding-bottom: 90px; /* เว้นระยะไม่ให้แผงล่างบังแผนที่ */
+            background: #ffffff;
+            color: #111111;
+            padding-top: 15px;
+            padding-bottom: 90px;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* iOS 26 Glassmorphism Common Style */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* iOS-style capsule, monochrome */
         .ios-capsule {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(25px) saturate(200%);
-            -webkit-backdrop-filter: blur(25px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 30px; 
-            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.06);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(25px) saturate(120%);
+            -webkit-backdrop-filter: blur(25px) saturate(120%);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -62,65 +70,79 @@
             border: none;
             background: transparent;
             font-size: 15px;
-            color: #2c3e50;
+            color: #111111;
             outline: none;
             padding-left: 10px;
         }
 
-        .search-box .material-icons-outlined {
-            color: #7f8c8d;
-            font-size: 22px;
+        .search-box .icon {
+            width: 20px;
+            height: 20px;
+            color: #555555;
         }
 
-        /* Integrated District Results Panel (Float under Search) */
+        /* Integrated District Results Panel */
         .district-results-panel {
             padding: 15px 20px;
             display: none;
-            max-height: 180px;
+            max-height: 220px;
             overflow-y: auto;
         }
 
         .zone-title {
             font-size: 13px;
             font-weight: 600;
-            color: #0077b6;
+            color: #000000;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
+        .zone-title .icon {
+            width: 15px;
+            height: 15px;
+        }
 
         .list-items {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             gap: 8px;
         }
 
+        /* touch-friendly district buttons */
         .clickable-item {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(0, 119, 182, 0.15);
-            padding: 8px 6px;
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            padding: 12px 8px;
+            min-height: 46px;
+            border-radius: 16px;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s;
-            font-size: 12.5px;
-            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            font-size: 13px;
+            font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #2c3e50;
+            color: #111111;
         }
 
         .clickable-item:hover {
-            background: #e3f2fd;
-            border-color: #90caf9;
+            background: #eeeeee;
+            border-color: #999999;
         }
-        
+
+        .clickable-item:active {
+            transform: scale(0.96);
+        }
+
         .clickable-item.active {
-            background: #00b4d8;
-            color: white;
-            border-color: #0077b6;
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
         }
 
         /* Main Map Layout */
@@ -130,46 +152,49 @@
             margin: 0 auto;
         }
 
-        /* Map Card View */
         .card {
             background: #ffffff;
             border-radius: 24px;
-            padding: 20px;
-            border: 1px solid rgba(224, 231, 255, 0.8);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+            padding: 18px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
         }
 
         .card-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
-            color: #0077b6;
+            color: #000000;
             display: flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 15px;
         }
+        .card-title .icon {
+            width: 17px;
+            height: 17px;
+        }
 
         .grid-map {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .map-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
             justify-content: center;
         }
 
         .map-block {
-            background: linear-gradient(135deg, #f1f8ff 0%, #ffffff 100%);
-            border: 1.5px solid #d0e7ff;
+            background: #fafafa;
+            border: 1.5px solid #dddddd;
             border-radius: 12px;
-            padding: 12px 6px;
+            padding: 10px 4px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             user-select: none;
             display: flex;
             flex-direction: column;
@@ -180,51 +205,56 @@
         }
 
         .map-block:hover {
-            border-color: #00b4d8;
+            border-color: #000000;
+        }
+
+        .map-block:active {
+            transform: scale(0.96);
         }
 
         .map-block.active {
-            background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
-            color: white;
-            border-color: #0077b6;
-            box-shadow: 0 4px 12px rgba(0, 180, 216, 0.2);
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
         .map-block .code-num {
-            font-size: 16px;
+            font-size: clamp(11px, 3.6vw, 16px);
             font-weight: 700;
             margin-bottom: 2px;
         }
 
         .map-block .name-lbl {
-            font-size: 12px;
+            font-size: clamp(8.5px, 2.6vw, 12px);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
+            line-height: 1.2;
         }
 
         .map-block.core-center {
-            border: 2px dashed #0077b6;
-            background: #fff9db;
+            border: 2px dashed #000000;
+            background: #f0f0f0;
         }
 
-        /* ลอยติดขอบหน้าจอด้านล่างพอดี ไม่จมหาย (Fixed Bottom Panel) */
+        /* Fixed Bottom Zipcode Panel */
         .bottom-floating-panel {
             position: fixed;
-            bottom: 0; /* ติดขอบล่างจอพอดี */
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100%; /* เต็มความกว้างจอเพื่อความเสถียรบนมือถือ */
+            width: 100%;
             max-width: 600px;
             padding: 15px 20px;
-            border-bottom-left-radius: 0; /* ให้แนบสนิทกับขอบล่างพอดี */
+            border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
-            border-top-left-radius: 25px; /* มนเฉพาะขอบบน */
+            border-top-left-radius: 25px;
             border-top-right-radius: 25px;
             z-index: 2000;
             display: none;
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .zip-display-row {
@@ -245,7 +275,7 @@
         .zip-info-text .area-name {
             font-size: 16px;
             font-weight: 700;
-            color: #2c3e50;
+            color: #111111;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -255,44 +285,50 @@
             font-family: monospace;
             font-size: 19px;
             font-weight: 700;
-            color: #0077b6;
-            background: rgba(0, 119, 182, 0.08);
+            color: #000000;
+            background: rgba(0, 0, 0, 0.06);
             padding: 2px 12px;
             border-radius: 20px;
         }
 
         .copy-btn {
-            background: #00b4d8;
-            color: white;
+            background: #000000;
+            color: #ffffff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-size: 13px;
-            font-weight: 600;
+            justify-content: center;
             transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 180, 216, 0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
+        }
+        .copy-btn .icon {
+            width: 18px;
+            height: 18px;
         }
 
         .copy-btn:hover {
-            background: #0077b6;
+            background: #333333;
+        }
+        .copy-btn:active {
+            transform: scale(0.92);
         }
 
         /* Toast UI */
         .toast {
             position: fixed;
-            bottom: 30px; 
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(33, 37, 41, 0.95);
+            background: rgba(20, 20, 20, 0.95);
             color: white;
             padding: 10px 20px;
             border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: transform 0.25s ease-out;
             z-index: 2500;
             display: flex;
@@ -301,9 +337,102 @@
             font-size: 13px;
             pointer-events: none;
         }
+        .toast .icon {
+            width: 16px;
+            height: 16px;
+        }
 
         .toast.show {
             transform: translateX(-50%) translateY(0);
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            color: #888888;
+            grid-column: 1 / -1;
+        }
+        .empty-state .icon {
+            width: 28px;
+            height: 28px;
+        }
+        .empty-state p {
+            font-size: 12.5px;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(12px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes panelSlideDown {
+            from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes panelSlideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulseRing {
+            0%   { box-shadow: 0 0 0 0 rgba(0,0,0,0.25); }
+            100% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+        }
+
+        .map-block {
+            opacity: 0;
+            animation: fadeSlideUp 0.45s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+
+        .map-block.active {
+            animation: fadeSlideUp 0.45s cubic-bezier(0.16,1,0.3,1) forwards, pulseRing 0.6s ease-out;
+        }
+
+        .district-results-panel.panel-open {
+            animation: panelSlideDown 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .clickable-item {
+            opacity: 0;
+            animation: popIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+
+        .bottom-floating-panel.panel-open {
+            animation: panelSlideUp 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .zip-info-text .zip-number {
+            animation: popIn 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .toast {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Smaller screens: shrink map text further so nothing gets cut off */
+        @media (max-width: 380px) {
+            .map-block {
+                padding: 8px 2px;
+                border-radius: 10px;
+            }
+            .map-block .code-num {
+                font-size: clamp(10px, 3.4vw, 14px);
+            }
+            .map-block .name-lbl {
+                font-size: clamp(7.5px, 2.3vw, 10.5px);
+            }
+            .grid-map {
+                gap: 6px;
+            }
+            .map-row {
+                gap: 6px;
+            }
         }
     </style>
 </head>
@@ -313,14 +442,19 @@
     <div class="top-group-container">
         <!-- Search Box -->
         <div class="search-box ios-capsule">
-            <span class="material-icons-outlined">search</span>
-            <input type="text" id="globalSearch" placeholder="✦ค้นหาจังหวัด เขต หรือรหัสไปรษณีย์...">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="globalSearch" placeholder="ค้นหา...">
         </div>
-        
-        <!-- District Results Panel (ติดใต้ช่องค้นหาพอดี ไม่ทับซ้อนแผนที่) -->
+
+        <!-- District Results Panel -->
         <div class="district-results-panel ios-capsule" id="districtResultsPanel">
             <div class="zone-title" id="zoneTitle">
-                <span class="material-icons-outlined">location_city</span> รายชื่อเขต / แขวง
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </span>
+                เขต
             </div>
             <div id="districtContainer" class="list-items"></div>
         </div>
@@ -330,10 +464,12 @@
     <div class="container">
         <div class="card">
             <div class="card-title">
-                <span class="material-icons-outlined">map</span>
-                แผนที่จำลองเชิงโครงสร้าง (แตะเลือกจังหวัด)
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                </span>
+                แผนที่
             </div>
-            
+
             <div class="grid-map">
                 <!-- Row 1 -->
                 <div class="map-row">
@@ -371,10 +507,10 @@
                         <span class="code-num">5</span><span class="name-lbl">ต้มยำไก่</span>
                     </div>
                     <div class="map-block core-center" onclick="selectProvince('101', this)">
-                        <span class="code-num" style="color:#0077b6;">1</span><span class="name-lbl" style="font-weight:600;">นครราชธานี</span>
+                        <span class="code-num">1</span><span class="name-lbl" style="font-weight:600;">นครราชฯ</span>
                     </div>
                     <div class="map-block" onclick="selectProvince('102', this)">
-                        <span class="code-num">2</span><span class="name-lbl">ราษฎรมณฑล</span>
+                        <span class="code-num">2</span><span class="name-lbl">ราษฎรฯ</span>
                     </div>
                     <div class="map-block" onclick="selectProvince('203', this)">
                         <span class="code-num">3</span><span class="name-lbl">สลัมคลองฯ</span>
@@ -407,20 +543,89 @@
 
     <!-- Toast Copy Alert -->
     <div id="toast" class="toast">
-        <span class="material-icons-outlined" style="color:#4caf50;">check_circle</span>
-        <span>คัดลอกสำเร็จ!</span>
+        <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </span>
+        <span>คัดลอกสำเร็จ</span>
     </div>
 
     <script>
-        const DATA = [ {district:1, provName:"นครราชธานี", areaCode:"101", entries:[ {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"}, {zip:"10104",name:"ประชาธิป"},{zip:"10105",name:"พรศรีแผ่นดิน"},{zip:"10106",name:"โรงพยาบาล"}, {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"} ]}, {district:1, provName:"ราษฎรมณฑล", areaCode:"102", entries:[ {zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"}, {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"}, {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"}, {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"}, {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"}, {zip:"10225",name:"อนุรักษ์นิยม"} ]}, {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[ {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"}, {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"} ]}, {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[ {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"} ]}, {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[ {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"}, {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"} ]}, {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[ {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิ่ง"}, {zip:"20643",name:"โอ้ลวิ่ง"} ]}, {district:2, provName:"เลิกโง่", areaCode:"207", entries:[ {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"} ]}, {district:2, provName:"โยดก", areaCode:"208", entries:[ {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"} ]}, {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[ {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"} ]}, {district:3, provName:"งอ", areaCode:"310", entries:[ {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"} ]}, {district:3, provName:"พรศรี", areaCode:"311", entries:[ {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"} ]}, {district:3, provName:"ทม", areaCode:"312", entries:[ {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"} ]}, {district:3, provName:"ยากส์", areaCode:"313", entries:[ {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"} ]}, {district:3, provName:"ประปาแตก", areaCode:"314", entries:[ {zip:"31461",name:"ประปาแตก"} ]} ];
+        const ICON_PIN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
+        const ICON_SEARCH = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
+        const ICON_SEARCH_OFF = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="8" x2="14" y2="14"></line></svg>`;
+        const ICON_COPY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+
+        const DATA = [
+          {district:1, provName:"นครราชธานี", areaCode:"101", entries:[
+            {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"},
+            {zip:"10104",name:"ประชาธิป"},{zip:"10105",name:"พรศรีแผ่นดิน"},{zip:"10106",name:"โรงพยาบาล"},
+            {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"}
+          ]},
+          {district:1, provName:"ราษฎรมณฑล", areaCode:"102", entries:[
+            {zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"},
+            {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"},
+            {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"},
+            {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"},
+            {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"},
+            {zip:"10225",name:"อนุรักษ์นิยม"}
+          ]},
+          {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[
+            {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"},
+            {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"}
+          ]},
+          {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[
+            {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"}
+          ]},
+          {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[
+            {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"},
+            {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"}
+          ]},
+          {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[
+            {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิ่ง"},
+            {zip:"20643",name:"โอ้ลวิ่ง"}
+          ]},
+          {district:2, provName:"เลิกโง่", areaCode:"207", entries:[
+            {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"}
+          ]},
+          {district:2, provName:"โยดก", areaCode:"208", entries:[
+            {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"}
+          ]},
+          {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[
+            {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"}
+          ]},
+          {district:3, provName:"งอ", areaCode:"310", entries:[
+            {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"}
+          ]},
+          {district:3, provName:"พรศรี", areaCode:"311", entries:[
+            {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"}
+          ]},
+          {district:3, provName:"ทม", areaCode:"312", entries:[
+            {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"}
+          ]},
+          {district:3, provName:"ยากส์", areaCode:"313", entries:[
+            {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"}
+          ]},
+          {district:3, provName:"ประปาแตก", areaCode:"314", entries:[
+            {zip:"31461",name:"ประปาแตก"}
+          ]}
+        ];
+
+        // Stagger fade-in animation for map blocks on load
+        document.querySelectorAll('.map-block').forEach((block, idx) => {
+            block.style.animationDelay = `${idx * 0.045}s`;
+        });
+
         function selectProvince(areaCode, element) {
             const match = DATA.find(p => p.areaCode === areaCode);
             if(!match) return;
-            
-            document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
-            if(element) element.classList.add('active');
 
-            document.getElementById('zoneTitle').innerHTML = `<span class="material-icons-outlined">location_city</span> เขตใน จ.${match.provName}`;
+            document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
+            if(element) {
+                element.style.animationDelay = '0s';
+                element.classList.add('active');
+            }
+
+            document.getElementById('zoneTitle').innerHTML = `<span class="icon">${ICON_PIN}</span> ${match.provName}`;
             renderDistricts(match.entries);
             document.getElementById('bottomFloatingPanel').style.display = 'none';
         }
@@ -429,10 +634,11 @@
             const container = document.getElementById('districtContainer');
             const panel = document.getElementById('districtResultsPanel');
             container.innerHTML = '';
-            
-            entries.forEach(entry => {
+
+            entries.forEach((entry, idx) => {
                 const item = document.createElement('div');
                 item.className = 'clickable-item';
+                item.style.animationDelay = `${idx * 0.035}s`;
                 item.innerText = entry.name;
                 item.onclick = () => {
                     document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
@@ -441,7 +647,15 @@
                 };
                 container.appendChild(item);
             });
+            openPanel(panel);
+        }
+
+        function openPanel(panel) {
             panel.style.display = 'block';
+            panel.classList.remove('panel-open');
+            // force reflow so the animation restarts every time
+            void panel.offsetWidth;
+            panel.classList.add('panel-open');
         }
 
         function showFloatingZipcode(entry) {
@@ -452,12 +666,12 @@
                         <span class="area-name">${entry.name}</span>
                         <span class="zip-number">${entry.zip}</span>
                     </div>
-                    <button class="copy-btn" onclick="copyZip('${entry.zip}')">
-                        <span class="material-icons-outlined" style="font-size:15px;">content_copy</span> คัดลอก
+                    <button class="copy-btn" onclick="copyZip('${entry.zip}')" aria-label="คัดลอก">
+                        <span class="icon">${ICON_COPY}</span>
                     </button>
                 </div>
             `;
-            panel.style.display = 'block';
+            openPanel(panel);
         }
 
         function copyZip(zip) {
@@ -471,7 +685,7 @@
         document.getElementById('globalSearch').addEventListener('input', function(e) {
             const query = e.target.value.trim().toLowerCase();
             const panel = document.getElementById('districtResultsPanel');
-            
+
             if (!query) {
                 document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
                 panel.style.display = 'none';
@@ -493,13 +707,14 @@
             });
 
             if (filteredEntries.length > 0) {
-                document.getElementById('zoneTitle').innerHTML = `<span class="material-icons-outlined">search</span> ผลการค้นหา (${filteredEntries.length})`;
+                document.getElementById('zoneTitle').innerHTML = `<span class="icon">${ICON_SEARCH}</span> ผลค้นหา (${filteredEntries.length})`;
                 const distContainer = document.getElementById('districtContainer');
                 distContainer.innerHTML = '';
-                
-                filteredEntries.forEach(entry => {
+
+                filteredEntries.forEach((entry, idx) => {
                     const item = document.createElement('div');
                     item.className = 'clickable-item';
+                    item.style.animationDelay = `${idx * 0.035}s`;
                     item.innerText = entry.name;
                     item.onclick = () => {
                         document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
@@ -508,15 +723,15 @@
                     };
                     distContainer.appendChild(item);
                 });
-                panel.style.display = 'block';
-                
+                openPanel(panel);
+
                 if(filteredEntries.length === 1) {
                     showFloatingZipcode(filteredEntries[0]);
                 }
             } else {
                 document.getElementById('districtContainer').innerHTML = `
                     <div class="empty-state">
-                        <span class="material-icons-outlined">search_off</span>
+                        <span class="icon">${ICON_SEARCH_OFF}</span>
                         <p>ไม่พบข้อมูล</p>
                     </div>`;
                 panel.style.display = 'block';
