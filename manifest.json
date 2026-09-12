@@ -1,11 +1,11 @@
 {
   "name": "รหัสไปรษณีย์ฝาแตก",
-  "short_name": "ฝาแตก",
+  "short_name": "POSTAL-CODE",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
-  "display": "fullscreen",
+"display": "standalone",
   "icons": [
     {
       "src": "https://blogger.googleusercontent.com/img/a/AVvXsEgMEvGooTXSJnHe1TF-uy0wYy0GdFdYM8iQ8LMqim1CpDnRCSgIBdop9K2C1Xf-Gtesdb8kAZvm6HYT46gBUgw1ulekS-QDvDLGAPuT_l0X6e1hTDhgCqgXrm-MSIdZb9siNio-1hbIF6F_nLPiWCGWZ7pe-wkZysTLs60EzOZSGB1uK0hiSOfW7gZUoN27",
