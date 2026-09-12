@@ -118,12 +118,13 @@
         .clickable-item {
             background: rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.15);
-            padding: 12px 8px;
+            padding: 10px 8px;
             min-height: 46px;
             border-radius: 16px;
             cursor: pointer;
             text-align: center;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: all 0.15s;
@@ -132,7 +133,9 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 100%;
             color: #111111;
+            position: relative;
         }
 
         .clickable-item:hover {
@@ -150,6 +153,33 @@
             border-color: #000000;
         }
 
+        .prov-tag {
+            display: block;
+            font-size: 9.5px;
+            font-weight: 400;
+            opacity: 0.55;
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        mark {
+            background: rgba(0,0,0,0.15);
+            color: inherit;
+            border-radius: 3px;
+            padding: 0 1px;
+        }
+        .clickable-item.active mark {
+            background: rgba(255,255,255,0.35);
+        }
+
+        .copy-btn.active-fav-btn {
+            background: #f5b400;
+            color: #ffffff;
+            border-color: #f5b400;
+        }
+
         /* Main Map Layout */
         .container {
             width: 92%;
@@ -163,6 +193,7 @@
             padding: 18px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+            margin-bottom: 15px;
         }
 
         .card-title {
@@ -171,12 +202,38 @@
             color: #000000;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 8px;
             margin-bottom: 15px;
+        }
+        .card-title-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .card-title .icon {
             width: 17px;
             height: 17px;
+        }
+
+        .theme-toggle {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.15);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .theme-toggle:active {
+            transform: scale(0.9);
+        }
+        .theme-toggle .icon {
+            width: 16px;
+            height: 16px;
         }
 
         .grid-map {
@@ -296,6 +353,12 @@
             border-radius: 20px;
         }
 
+        .action-btns {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
         .copy-btn {
             background: #000000;
             color: #ffffff;
@@ -321,6 +384,13 @@
         }
         .copy-btn:active {
             transform: scale(0.92);
+        }
+
+        .copy-btn.share-btn {
+            background: rgba(0,0,0,0.08);
+            color: #111111;
+            box-shadow: none;
+            border: 1px solid rgba(0,0,0,0.15);
         }
 
         /* Toast UI */
@@ -439,6 +509,121 @@
                 gap: 6px;
             }
         }
+
+        /* ===== Dark mode ===== */
+        body.dark {
+            background: #0e0e0e;
+            color: #f2f2f2;
+        }
+        body.dark .ios-capsule {
+            background: rgba(30, 30, 30, 0.85);
+            border-color: rgba(255,255,255,0.12);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        body.dark .search-box input {
+            color: #f2f2f2;
+        }
+        body.dark .search-box .icon {
+            color: #aaaaaa;
+        }
+        body.dark .zone-title,
+        body.dark .card-title {
+            color: #ffffff;
+        }
+        body.dark .card {
+            background: #171717;
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        body.dark .clickable-item {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.15);
+            color: #f2f2f2;
+        }
+        body.dark .clickable-item:hover {
+            background: #262626;
+            border-color: #888888;
+        }
+        body.dark .clickable-item.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        body.dark .map-block {
+            background: #171717;
+            border-color: #333333;
+            color: #f2f2f2;
+        }
+        body.dark .map-block:hover {
+            border-color: #ffffff;
+        }
+        body.dark .map-block.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        body.dark .map-block.core-center {
+            border-color: #ffffff;
+            background: #1f1f1f;
+        }
+        body.dark .zip-info-text .area-name {
+            color: #f2f2f2;
+        }
+        body.dark .zip-info-text .zip-number {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+        }
+        body.dark .copy-btn {
+            background: #ffffff;
+            color: #000000;
+        }
+        body.dark .copy-btn:hover {
+            background: #dddddd;
+        }
+        body.dark .copy-btn.share-btn {
+            background: rgba(255,255,255,0.1);
+            color: #f2f2f2;
+            border-color: rgba(255,255,255,0.2);
+        }
+        body.dark .theme-toggle {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            color: #f2f2f2;
+        }
+        body.dark .empty-state {
+            color: #999999;
+        }
+        body.dark .toast {
+            background: rgba(245,245,245,0.95);
+            color: #111111;
+        }
+
+        /* ===== Favorites row ===== */
+        .fav-row {
+            display: none;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .fav-chip {
+            flex-shrink: 0;
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 14px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        body.dark .fav-chip {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -450,8 +635,19 @@
             <span class="icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </span>
-            <input type="text" id="globalSearch" placeholder="ค้นหา...">
+            <input type="text" id="globalSearch" placeholder="ค้นหาชื่อพื้นที่ หรือรหัสไปรษณีย์...">
+            <button class="theme-toggle" id="clearSearchBtn" onclick="clearSearch()" aria-label="ล้างการค้นหา" style="display:none;">
+                <span class="icon" id="clearIcon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
+            </button>
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="สลับธีม">
+                <span class="icon" id="themeIcon"></span>
+            </button>
         </div>
+
+        <!-- Favorites Row -->
+        <div class="fav-row ios-capsule" id="favRow" style="padding: 10px 14px;"></div>
 
         <!-- District Results Panel -->
         <div class="district-results-panel ios-capsule" id="districtResultsPanel">
@@ -469,10 +665,12 @@
     <div class="container">
         <div class="card">
             <div class="card-title">
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                </span>
-                แผนที่
+                <div class="card-title-left">
+                    <span class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    </span>
+                    แผนที่
+                </div>
             </div>
 
             <div class="grid-map">
@@ -551,7 +749,7 @@
         <span class="icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         </span>
-        <span>คัดลอกสำเร็จ</span>
+        <span id="toastMsg">คัดลอกสำเร็จ</span>
     </div>
 
     <script>
@@ -559,6 +757,11 @@
         const ICON_SEARCH = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
         const ICON_SEARCH_OFF = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="8" x2="14" y2="14"></line></svg>`;
         const ICON_COPY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+        const ICON_SHARE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
+        const ICON_SUN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+        const ICON_MOON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        const ICON_STAR_OUTLINE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+        const ICON_STAR_FILLED = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
 
         const DATA = [
           {district:1, provName:"นครราชธานี", areaCode:"101", entries:[
@@ -615,6 +818,61 @@
           ]}
         ];
 
+        // ===== Theme =====
+        function applyTheme(mode) {
+            document.body.classList.toggle('dark', mode === 'dark');
+            document.getElementById('themeIcon').innerHTML = mode === 'dark' ? ICON_SUN : ICON_MOON;
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', mode === 'dark' ? '#0e0e0e' : '#ffffff');
+        }
+        function toggleTheme() {
+            const current = localStorage.getItem('zipapp_theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('zipapp_theme', next);
+            applyTheme(next);
+        }
+        applyTheme(localStorage.getItem('zipapp_theme') === 'dark' ? 'dark' : 'light');
+
+        // ===== Favorites =====
+        function getFavs() {
+            try { return JSON.parse(localStorage.getItem('zipapp_favs') || '[]'); }
+            catch(e) { return []; }
+        }
+        function saveFavs(favs) {
+            localStorage.setItem('zipapp_favs', JSON.stringify(favs));
+        }
+        function isFav(zip) {
+            return getFavs().some(f => f.zip === zip);
+        }
+        function toggleFav(entry) {
+            let favs = getFavs();
+            if (favs.some(f => f.zip === entry.zip)) {
+                favs = favs.filter(f => f.zip !== entry.zip);
+            } else {
+                favs.unshift({zip: entry.zip, name: entry.name});
+                favs = favs.slice(0, 12);
+            }
+            saveFavs(favs);
+            renderFavRow();
+            const btn = document.getElementById('favToggleBtn');
+            if (btn) {
+                const nowFav = isFav(entry.zip);
+                btn.classList.toggle('active-fav-btn', nowFav);
+                btn.innerHTML = `<span class="icon">${nowFav ? ICON_STAR_FILLED : ICON_STAR_OUTLINE}</span>`;
+            }
+        }
+        function renderFavRow() {
+            const favs = getFavs();
+            const row = document.getElementById('favRow');
+            if (favs.length === 0) { row.style.display = 'none'; row.innerHTML = ''; return; }
+            row.style.display = 'flex';
+            row.innerHTML = favs.map(f => `
+                <div class="fav-chip" onclick='showFloatingZipcode(${JSON.stringify(f)})'>
+                    <span class="icon" style="width:11px;height:11px;">${ICON_STAR_FILLED}</span> ${f.name}
+                </div>
+            `).join('');
+        }
+        renderFavRow();
+
         // Stagger fade-in animation for map blocks on load
         document.querySelectorAll('.map-block').forEach((block, idx) => {
             block.style.animationDelay = `${idx * 0.045}s`;
@@ -645,11 +903,11 @@
                 item.className = 'clickable-item';
                 item.style.animationDelay = `${idx * 0.035}s`;
                 item.innerText = entry.name;
-                item.onclick = () => {
+                item.addEventListener('click', () => {
                     document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
                     item.classList.add('active');
                     showFloatingZipcode(entry);
-                };
+                });
                 container.appendChild(item);
             });
             openPanel(panel);
@@ -665,15 +923,25 @@
 
         function showFloatingZipcode(entry) {
             const panel = document.getElementById('bottomFloatingPanel');
+            const canShare = !!navigator.share;
+            const fav = isFav(entry.zip);
             panel.innerHTML = `
                 <div class="zip-display-row">
                     <div class="zip-info-text">
                         <span class="area-name">${entry.name}</span>
                         <span class="zip-number">${entry.zip}</span>
                     </div>
-                    <button class="copy-btn" onclick="copyZip('${entry.zip}')" aria-label="คัดลอก">
-                        <span class="icon">${ICON_COPY}</span>
-                    </button>
+                    <div class="action-btns">
+                        <button class="copy-btn share-btn ${fav ? 'active-fav-btn' : ''}" id="favToggleBtn" onclick='toggleFav(${JSON.stringify(entry)})' aria-label="บันทึกรายการโปรด">
+                            <span class="icon">${fav ? ICON_STAR_FILLED : ICON_STAR_OUTLINE}</span>
+                        </button>
+                        ${canShare ? `<button class="copy-btn share-btn" onclick='shareZip(${JSON.stringify(entry)})' aria-label="แชร์">
+                            <span class="icon">${ICON_SHARE}</span>
+                        </button>` : ''}
+                        <button class="copy-btn" onclick="copyZip('${entry.zip}')" aria-label="คัดลอก">
+                            <span class="icon">${ICON_COPY}</span>
+                        </button>
+                    </div>
                 </div>
             `;
             openPanel(panel);
@@ -681,15 +949,50 @@
 
         function copyZip(zip) {
             navigator.clipboard.writeText(zip).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2000);
+                showToast('คัดลอกสำเร็จ');
             });
         }
 
+        function shareZip(entry) {
+            navigator.share({
+                title: entry.name,
+                text: `${entry.name} รหัสไปรษณีย์ ${entry.zip}`
+            }).catch(() => {});
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // normalize: lowercase + strip spaces so "ต้ม ยำ ไก่" or extra spacing still matches
+        function normalize(str) {
+            return str.toLowerCase().replace(/\s+/g, '');
+        }
+
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const nText = normalize(text);
+            const idx = nText.indexOf(query);
+            if (idx === -1) return text;
+            // map normalized index back to original string (safe here since Thai text rarely has spaces mid-word)
+            return text.slice(0, idx) + '<mark>' + text.slice(idx, idx + query.length) + '</mark>' + text.slice(idx + query.length);
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('globalSearch');
+            input.value = '';
+            input.dispatchEvent(new Event('input'));
+            input.focus();
+        }
+
         document.getElementById('globalSearch').addEventListener('input', function(e) {
-            const query = e.target.value.trim().toLowerCase();
+            const raw = e.target.value.trim();
+            const query = normalize(raw);
             const panel = document.getElementById('districtResultsPanel');
+            document.getElementById('clearSearchBtn').style.display = raw ? 'inline-flex' : 'none';
 
             if (!query) {
                 document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
@@ -698,18 +1001,24 @@
                 return;
             }
 
-            let filteredEntries = [];
+            // rank matches: exact name > name starts with query > name contains query
+            // > province matches > zip code contains query
+            let results = [];
             DATA.forEach(prov => {
-                if (prov.provName.toLowerCase().includes(query)) {
-                    prov.entries.forEach(e => filteredEntries.push(e));
-                } else {
-                    prov.entries.forEach(e => {
-                        if (e.name.toLowerCase().includes(query) || e.zip.includes(query)) {
-                            filteredEntries.push(e);
-                        }
-                    });
-                }
+                const provMatch = normalize(prov.provName).includes(query);
+                prov.entries.forEach(e => {
+                    const nName = normalize(e.name);
+                    let score = -1;
+                    if (nName === query) score = 0;
+                    else if (nName.startsWith(query)) score = 1;
+                    else if (nName.includes(query)) score = 2;
+                    else if (e.zip.includes(query)) score = 3;
+                    else if (provMatch) score = 4;
+                    if (score >= 0) results.push({entry: {...e, provName: prov.provName}, score});
+                });
             });
+            results.sort((a, b) => a.score - b.score);
+            const filteredEntries = results.map(r => r.entry);
 
             if (filteredEntries.length > 0) {
                 document.getElementById('zoneTitle').innerHTML = `<span class="icon">${ICON_SEARCH}</span> ผลค้นหา (${filteredEntries.length})`;
@@ -720,12 +1029,12 @@
                     const item = document.createElement('div');
                     item.className = 'clickable-item';
                     item.style.animationDelay = `${idx * 0.035}s`;
-                    item.innerText = entry.name;
-                    item.onclick = () => {
+                    item.innerHTML = highlightMatch(entry.name, query) + `<span class="prov-tag">${entry.provName}</span>`;
+                    item.addEventListener('click', () => {
                         document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
                         item.classList.add('active');
                         showFloatingZipcode(entry);
-                    };
+                    });
                     distContainer.appendChild(item);
                 });
                 openPanel(panel);
@@ -737,7 +1046,7 @@
                 document.getElementById('districtContainer').innerHTML = `
                     <div class="empty-state">
                         <span class="icon">${ICON_SEARCH_OFF}</span>
-                        <p>ไม่พบข้อมูล</p>
+                        <p>ไม่พบข้อมูล ลองพิมพ์ชื่อพื้นที่หรือรหัสไปรษณีย์</p>
                     </div>`;
                 panel.style.display = 'block';
                 document.getElementById('bottomFloatingPanel').style.display = 'none';
