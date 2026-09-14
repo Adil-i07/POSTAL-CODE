@@ -89,6 +89,81 @@
             transition: all 0.3s var(--ease);
         }
 
+        /* App install banner (FT Web Hub) */
+        .app-install-banner {
+            width: 92%;
+            max-width: 600px;
+            margin: 0 auto 10px auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px 8px 8px;
+            animation: fadeSlideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .app-install-banner.hidden {
+            display: none;
+        }
+        .app-install-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--card-alt);
+        }
+        .app-install-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .app-install-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--ink);
+            line-height: 1.2;
+        }
+        .app-install-sub {
+            font-size: 11.5px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .app-install-btn {
+            flex-shrink: 0;
+            background: var(--crimson);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            white-space: nowrap;
+            transition: background 0.15s, transform 0.12s;
+        }
+        .app-install-btn:hover {
+            background: var(--crimson-dark);
+        }
+        .app-install-btn:active {
+            transform: scale(0.95);
+        }
+        .app-install-close {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+        }
+        .app-install-close svg {
+            width: 13px;
+            height: 13px;
+        }
+        .app-install-close:hover {
+            background: var(--card-alt);
+            color: var(--ink);
+        }
+
         /* Top Container Layout */
         .top-group-container {
             width: 92%;
@@ -661,6 +736,29 @@
             color: #17210c;
             border-color: #c9932f;
         }
+        body.dark .app-install-icon {
+            background: #1f2915;
+        }
+        body.dark .app-install-title {
+            color: #eaf5da;
+        }
+        body.dark .app-install-sub {
+            color: #9db98a;
+        }
+        body.dark .app-install-btn {
+            background: var(--gold);
+            color: #17210c;
+        }
+        body.dark .app-install-btn:hover {
+            background: #b6e876;
+        }
+        body.dark .app-install-close {
+            color: #9db98a;
+        }
+        body.dark .app-install-close:hover {
+            background: #1f2915;
+            color: #eaf5da;
+        }
 
         /* ===== Favorites row ===== */
         .fav-row {
@@ -692,6 +790,19 @@
     </style>
 </head>
 <body>
+
+    <!-- App Install Banner: FT Web Hub -->
+    <div class="app-install-banner ios-capsule" id="appInstallBanner">
+        <img class="app-install-icon" src="https://blogger.googleusercontent.com/img/a/AVvXsEjGgWW40j8O0ARA_3VopGxnqwBIY7GA2V_JMqIKT9T74khSL3jsZI-HaHf_CuchfO_iYiykpyJfm6pLOCDXTzn0zi58LZziayGOvr8SRYqPTpdIUUuAXZyVjVBF3T7ehyJrnDtK-c5pjnFMQ5yAnGjUhcHaqmix7VZEzO7eINfbcn8yEO4Y-1tPw80EMlGT" alt="FT Web Hub">
+        <div class="app-install-text">
+            <div class="app-install-title">FT Web Hub</div>
+            <div class="app-install-sub">ติดตั้งแอปเพื่อใช้งานสะดวกยิ่งขึ้น</div>
+        </div>
+        <a class="app-install-btn" href="FT Web Hub.apk" download>ติดตั้ง</a>
+        <button class="app-install-close" onclick="dismissInstallBanner()" aria-label="ปิด">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
 
     <!-- Top Container Group -->
     <div class="top-group-container">
@@ -889,13 +1000,29 @@
             document.getElementById('themeIcon').innerHTML = mode === 'dark' ? ICON_SUN : ICON_MOON;
             document.querySelector('meta[name="theme-color"]').setAttribute('content', mode === 'dark' ? '#10160a' : '#fafff5');
         }
+        function currentTheme() {
+            return document.body.classList.contains('dark') ? 'dark' : 'light';
+        }
         function toggleTheme() {
-            const current = localStorage.getItem('zipapp_theme') === 'dark' ? 'dark' : 'light';
-            const next = current === 'dark' ? 'light' : 'dark';
+            const next = currentTheme() === 'dark' ? 'light' : 'dark';
             localStorage.setItem('zipapp_theme', next);
             applyTheme(next);
         }
-        applyTheme(localStorage.getItem('zipapp_theme') === 'dark' ? 'dark' : 'light');
+        function getInitialTheme() {
+            const saved = localStorage.getItem('zipapp_theme');
+            if (saved === 'dark' || saved === 'light') return saved;
+            // ยังไม่เคยเลือกธีมเอง -> ใช้ธีมตามระบบปฏิบัติการ/เบราว์เซอร์
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        applyTheme(getInitialTheme());
+        // ถ้ายังไม่เคยกดเลือกธีมเอง ให้ตามระบบแบบเรียลไทม์เมื่อผู้ใช้เปลี่ยนธีมเครื่อง
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (localStorage.getItem('zipapp_theme') === null) {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
 
         // ===== Favorites =====
         function getFavs() {
@@ -937,6 +1064,17 @@
             `).join('');
         }
         renderFavRow();
+
+        // ===== FT Web Hub install banner =====
+        function dismissInstallBanner() {
+            const banner = document.getElementById('appInstallBanner');
+            if (banner) banner.classList.add('hidden');
+            localStorage.setItem('ftWebHubBannerDismissed', '1');
+        }
+        if (localStorage.getItem('ftWebHubBannerDismissed') === '1') {
+            const banner = document.getElementById('appInstallBanner');
+            if (banner) banner.classList.add('hidden');
+        }
 
         // Stagger fade-in animation for map blocks on load
         document.querySelectorAll('.map-block').forEach((block, idx) => {
