@@ -21,6 +21,58 @@
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/a/AVvXsEgMEvGooTXSJnHe1TF-uy0wYy0GdFdYM8iQ8LMqim1CpDnRCSgIBdop9K2C1Xf-Gtesdb8kAZvm6HYT46gBUgw1ulekS-QDvDLGAPuT_l0X6e1hTDhgCqgXrm-MSIdZb9siNio-1hbIF6F_nLPiWCGWZ7pe-wkZysTLs60EzOZSGB1uK0hiSOfW7gZUoN27">
 
     <style>
+        
+html {
+  filter: grayscale(100%);
+}
+img, picture, svg {
+  filter: grayscale(60%);
+}
+        
+@font-face {
+  font-family: 'SaoChingcha';
+  src: url('./SaoChingcha-Light.otf') format('opentype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'SaoChingcha';
+  src: url('./SaoChingcha-Regular.otf') format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SaoChingcha';
+  src: url('./SaoChingcha-Bold.otf') format('opentype');
+  font-weight: 700;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'SaoChingcha',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+h1,h2,h3,.display{
+  font-family:'SaoChingcha',sans-serif;
+}
+
+button{
+  font-family:'SaoChingcha',sans-serif;
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
         :root{
             --ink:#000000;
             --paper:#fafff5;
