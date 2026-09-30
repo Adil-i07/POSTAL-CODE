@@ -575,7 +575,7 @@ img{
             border-radius: 20px;
             box-shadow: var(--shadow-lift);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 2500;
+            z-index: 6000;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -836,6 +836,86 @@ img{
             border-color: rgba(201,249,141,0.14);
             color: #eaf5da;
         }
+
+        /* ===== กล่อง "ฝาแตก ประกอบด้วย 3 ภาค" (บรรทัดเดียว กดแล้วขยายเป็น 2 บรรทัด) ===== */
+        .region-box { padding: 10px 12px; }
+        .region-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .region-box-title {
+            flex: 1;
+            min-width: 0;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--crimson-dark);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .region-tabs { display: flex; gap: 5px; flex-shrink: 0; }
+        .region-tab {
+            font-size: 12.5px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: var(--card-alt);
+            border: 1.5px solid var(--border);
+            color: var(--ink);
+            transition: all .15s var(--ease);
+        }
+        .region-tab:active { transform: scale(.94); }
+        .region-tab.active {
+            background: var(--crimson);
+            border-color: var(--crimson);
+            color: #fff;
+        }
+
+        .region-more {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows .3s var(--ease);
+        }
+        .region-more.open { grid-template-rows: 1fr; }
+        .region-more-inner { overflow: hidden; }
+        .region-fullname {
+            margin-top: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .region-chips {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            padding-bottom: 2px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .region-chips::-webkit-scrollbar { display: none; }
+        .region-chips .chip {
+            flex-shrink: 0;
+            font-size: 12.5px;
+            padding: 4px 11px;
+            border-radius: 999px;
+            background: var(--card-alt);
+            border: 1.5px solid var(--border);
+            color: var(--ink);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .region-chips .chip:hover { border-color: var(--crimson); }
+        .region-chips .chip:active { transform: scale(.95); }
+
+        body.dark .region-box-title { color: var(--gold); }
+        body.dark .region-tab { background: #1f2915; border-color: rgba(201,249,141,.14); color: #eaf5da; }
+        body.dark .region-tab.active { background: var(--gold); border-color: var(--gold); color: #17210c; }
+        body.dark .region-fullname { color: #eaf5da; }
+        body.dark .region-chips .chip { background: #1f2915; border-color: rgba(201,249,141,.14); color: #eaf5da; }
+        body.dark .region-chips .chip:hover { border-color: var(--gold); }
     </style>
 </head>
 <body>
@@ -888,6 +968,17 @@ img{
 
     <!-- Main Content Grid -->
     <div class="container">
+        <div class="card region-box">
+            <div class="region-top">
+                <span class="region-box-title">ฝาแตก ประกอบด้วย 3 ภาค</span>
+                <div class="region-tabs" id="regionTabs"></div>
+            </div>
+            <div class="region-more" id="regionMore"><div class="region-more-inner">
+                <div class="region-fullname" id="regionFull"></div>
+                <div class="region-chips" id="regionChips"></div>
+            </div></div>
+        </div>
+
         <div class="card">
             <div class="card-title">
                 <div class="card-title-left">
@@ -1043,6 +1134,13 @@ img{
           ]}
         ];
 
+        // ===== ข้อมูล 3 ภาค (ผูกกับ DATA ผ่าน district) =====
+        const REGIONS = [
+            {district:1, name:"ศรีสุนทรโวหาร",     short:"ศรีสุนทรฯ",      abbr:"ศสว."},
+            {district:2, name:"ประดิษฐ์มนูธรรม",   short:"ประดิษฐ์มนูฯ",   abbr:"ปดน."},
+            {district:3, name:"ธรรมรงนาวาสวัสดิ์", short:"ธรรมรงนาวาฯ",    abbr:"ธรส."}
+        ];
+
         // ===== Theme =====
         function applyTheme(mode) {
             document.body.classList.toggle('dark', mode === 'dark');
@@ -1072,6 +1170,47 @@ img{
                 }
             });
         }
+
+        // ===== 3 ภาค (บรรทัดเดียว กดแล้วขยายเป็น 2 บรรทัด กดซ้ำเพื่อปิด) =====
+        function buildRegions() {
+            const tabs = document.getElementById('regionTabs');
+            const more = document.getElementById('regionMore');
+            const full = document.getElementById('regionFull');
+            const chips = document.getElementById('regionChips');
+            let openD = null;
+            tabs.innerHTML = '';
+
+            REGIONS.forEach(r => {
+                const btn = document.createElement('button');
+                btn.className = 'region-tab';
+                btn.textContent = `${r.district}.${r.abbr}`;
+                btn.setAttribute('aria-label', `ภาค ${r.district} ${r.name}`);
+                btn.addEventListener('click', () => {
+                    if (openD === r.district) {           // กดซ้ำ = ปิด
+                        openD = null;
+                        more.classList.remove('open');
+                        btn.classList.remove('active');
+                        return;
+                    }
+                    openD = r.district;
+                    tabs.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
+                    btn.classList.add('active');
+                    full.textContent = `ภาค ${r.district} ${r.name}`;
+                    const provs = DATA.filter(p => p.district === r.district);
+                    chips.innerHTML = provs.map(p => `<button class="chip" data-code="${p.areaCode}">${p.provName}</button>`).join('');
+                    chips.scrollLeft = 0;
+                    chips.querySelectorAll('.chip').forEach(chip => {
+                        chip.addEventListener('click', () => {
+                            const code = chip.dataset.code;
+                            selectProvince(code, document.querySelector(`.map-block[onclick*="'${code}'"]`));
+                        });
+                    });
+                    more.classList.add('open');
+                });
+                tabs.appendChild(btn);
+            });
+        }
+        buildRegions();
 
         // ===== Favorites =====
         function getFavs() {
