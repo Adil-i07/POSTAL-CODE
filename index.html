@@ -2,35 +2,7 @@
 <html lang="th"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>รหัสไปรษณีย์ฝาแตก โดยพันรัฐ</title>    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/a/AVvXsEgMEvGooTXSJnHe1TF-uy0wYy0GdFdYM8iQ8LMqim1CpDnRCSgIBdop9K2C1Xf-Gtesdb8kAZvm6HYT46gBUgw1ulekS-QDvDLGAPuT_l0X6e1hTDhgCqgXrm-MSIdZb9siNio-1hbIF6F_nLPiWCGWZ7pe-wkZysTLs60EzOZSGB1uK0hiSOfW7gZUoN27">
-<!--
-  ======================================================================
-  WEBSITE STRUCTURE & DESCRIPTION (Fataek Postal Code)
-  ======================================================================
-  
-  1. METADATA & FONTS:
-     - Title: "รหัสไปรษณีย์ฝาแตก โดยพันรัฐ" (Fataek Postal Code by Panrath)
-     - Custom Typography: 'SaoChingcha' font family loaded locally (.otf)
-     - Theme Support: Supports System, Light, and Dark modes via CSS variables
-     - Color Filters: Applied standard grayscale filter on HTML
-
-  2. USER INTERFACE COMPONENTS & CONTROLS:
-     - Navigation & View Controls (#md): Mode selector to filter by Province or District
-     - Map Controls (#ctl): Zoom In, Zoom Out, Reset View, Distance Ruler, Fullscreen, Share
-     - Search & Information Sheet (#sh): Bottom sheet with search input (#q) for area names and zip codes
-     - Top Action Bar (#tp & #mc): Ruler measurement display and route/area editing tools
-     - Admin Login Overlay (#lg): Password popup modal to access developer/edit mode
-
-  3. MAP CONTAINER:
-     - SVG Canvas (#m): Dynamic SVG map area with interactive pan/zoom capabilities
-
-  4. DATA STRUCTURE (script DATA array):
-     - District 1: นครราชธานี (101), ราษฎรมณฑล (102)
-     - District 2: สลัมคลองเจ๋ง (203), เขาเจ๋ง (204), ต้มยำไก่ (205), โอ้ลลิ่ง (206), เลิกโง่ (207), โยดก (208), กรุงเจ๋ง (209)
-     - District 3: งอ (310), พรศรี (311), ทม (312), ยากส์ (313), ประปาแตก (314)
-  ======================================================================
--->
 <style>
-
 html {
   filter: grayscale(35%);
 }
@@ -84,7 +56,7 @@ img{
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--card:rgba(22,34,24,.55);--tx:#e2efdf;--mut:#8da68e;--line:#7cc47f;--halo:#0f1a10;--r0:#2d4623;--r1:#234638;--r2:#3f4a1f;--sea:#0b130c;--ac:#7cc47f;--row:rgba(124,196,127,.12);--bd:rgba(255,255,255,.1);--sh:0 8px 28px rgba(0,0,0,.5)}}
 :root[data-theme=dark]{--card:rgba(22,34,24,.55);--tx:#e2efdf;--mut:#8da68e;--line:#7cc47f;--halo:#0f1a10;--r0:#2d4623;--r1:#234638;--r2:#3f4a1f;--sea:#0b130c;--ac:#7cc47f;--row:rgba(124,196,127,.12);--bd:rgba(255,255,255,.1);--sh:0 8px 28px rgba(0,0,0,.5)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0;overflow:hidden}
-body{background:var(--sea);color:var(--tx);font:14px/1.45 "SaoChingcha",sans-serif}
+body{background:var(--sea);color:var(--tx);font:14px/1.45 "Noto Sans Thai","Sarabun",system-ui,sans-serif}
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 #m{position:fixed;inset:0;width:100%;height:100%;display:block;background:var(--sea);touch-action:none;cursor:grab;user-select:none}
 #m:active{cursor:grabbing}
@@ -156,8 +128,9 @@ body.fs #md{opacity:0;transform:translateY(-16px);pointer-events:none}body.fs #s
 .fm{display:flex;flex-direction:column;gap:10px;margin:0 6px 12px}.fm label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut)}
 .fm input,.fm select,.fm textarea{padding:10px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--row);color:var(--tx);font:inherit;font-size:15px;outline:0}.fm :focus{box-shadow:0 0 0 2px var(--ac)}
 body.fs #tp{top:calc(12px + env(safe-area-inset-top,0px))}
+.fm input[type=range]{padding:0;height:24px}.fm input[type=color]{padding:2px;height:42px}.row2{display:flex;gap:8px;align-items:center}.row2 input{flex:1}
 </style></head><body>
-<svg id="m"></svg><div id="ts"></div><div id="tp"><div id="mc" class="fl" hidden><svg class="i" viewBox="0 0 24 24"><path d="m14.5 3.5 6 6L9 21l-6-6z"/><path d="m8 11 2 2M11 8l2 2M14 5l2 2M5 14l2 2"/></svg><span id="mv"></span><button id="mu" aria-label="ย้อนจุด"><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button id="mx" aria-label="ปิดการวัด"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="ed" class="fl" hidden><span style="padding:0 6px 0 10px;font-weight:600;font-size:13px;color:var(--ac)">แก้ไข</span><button data-tool="shop" title="ร้าน"><svg class="i" viewBox="0 0 24 24"><path d="M4 9.5 5.5 4h13L20 9.5"/><path d="M4 9.5a2.6 2.6 0 0 0 5.3 0 2.6 2.6 0 0 0 5.4 0 2.6 2.6 0 0 0 5.3 0"/><path d="M5.5 13v7h13v-7"/></svg></button><button data-tool="road" title="ถนน"><svg class="i" viewBox="0 0 24 24"><path d="M8 3 5 21M16 3l3 18M12 5v3M12 11v3M12 17v3"/></svg></button><button data-tool="other" title="อื่นๆ"><svg class="i" viewBox="0 0 24 24"><path d="M12 3.5 20.5 12 12 20.5 3.5 12z"/></svg></button><button id="edok" hidden title="เสร็จสิ้นเส้นถนน"><svg class="i" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></button><button id="edx" title="ออกจากโหมดแก้ไข"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="pc" class="fl" hidden></div></div><div id="lg" hidden><div class="fl"><h2>โหมดแก้ไข</h2><input id="pw" type="password" placeholder="รหัสผ่าน" autocomplete="current-password"><small id="lge" style="color:#e03131;min-height:1.2em"></small><small id="lgn" style="color:var(--mut)"></small><div class="act" style="margin:0"><button id="lgb">เข้าสู่ระบบ</button><button id="lgc">ยกเลิก</button></div></div></div>
+<svg id="m"></svg><div id="ts"></div><div id="tp"><div id="mc" class="fl" hidden><svg class="i" viewBox="0 0 24 24"><path d="m14.5 3.5 6 6L9 21l-6-6z"/><path d="m8 11 2 2M11 8l2 2M14 5l2 2M5 14l2 2"/></svg><span id="mv"></span><button id="mu" aria-label="ย้อนจุด"><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button id="mx" aria-label="ปิดการวัด"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="ed" class="fl" hidden><span style="padding:0 6px 0 10px;font-weight:600;font-size:13px;color:var(--ac)">แก้ไข</span><button data-tool="place" title="สถานที่"><svg class="i" viewBox="0 0 24 24"><path d="M4 9.5 5.5 4h13L20 9.5"/><path d="M4 9.5a2.6 2.6 0 0 0 5.3 0 2.6 2.6 0 0 0 5.4 0 2.6 2.6 0 0 0 5.3 0"/><path d="M5.5 13v7h13v-7"/></svg></button><button data-tool="road" title="ถนน"><svg class="i" viewBox="0 0 24 24"><path d="M8 3 5 21M16 3l3 18M12 5v3M12 11v3M12 17v3"/></svg></button><button id="edok" hidden title="เสร็จสิ้นเส้นถนน"><svg class="i" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></button><button id="edx" title="ออกจากโหมดแก้ไข"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="pc" class="fl" hidden></div></div><div id="lg" hidden><div class="fl"><h2>โหมดแก้ไข</h2><input id="pw" type="password" placeholder="รหัสผ่าน" autocomplete="current-password"><small id="lge" style="color:#e03131;min-height:1.2em"></small><small id="lgn" style="color:var(--mut)"></small><div class="act" style="margin:0"><button id="lgb">เข้าสู่ระบบ</button><button id="lgc">ยกเลิก</button></div></div></div>
 
 <div id="md" class="fl"><button id="mnb" aria-label="เมนู"><svg class="i" viewBox="0 0 24 24"><path d="M4 8.5h16M4 15.5h16"/></svg></button><u class="sp dm"></u><div class="seg"><i id="th"></i><button id="b0" class="a" aria-label="แยกจังหวัด" title="แยกจังหวัด"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></button>
 <button id="b1" aria-label="แยกเขต" title="แยกเขต"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></button></div><u class="sp"></u><button id="tb" aria-label="ธีม"></button></div>
@@ -241,7 +214,7 @@ const FULL={x:0,y:0,w:1380,h:750};
 let fs=false,ms=false,mp=[],FV=[],vb={...FULL},sel={i:null,j:null},mode=0,anim,st=0,H=0,off=[0,0,0];
 const I={star:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="m12 3.5 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.9l6-.9z"/></svg>',starf:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px;fill:currentColor"><path d="m12 3.5 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.9l6-.9z"/></svg>',cp:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>',link:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',chev:'<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m9 6 6 6-6 6"/></svg>',back:'<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="m15 6-6 6 6 6"/></svg>',pin:'<svg class="i" viewBox="0 0 24 24" style="color:var(--ac)"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',no:'<svg class="i" viewBox="0 0 24 24" style="width:32px;height:32px"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M9 9l4 4m0-4-4 4"/></svg>'};
 const R0=()=>svg.getBoundingClientRect(),sc=()=>R0().width/vb.w;
-function labels(){const s=sc(),o=[],E=(t,x,y,fs)=>o.push(`<text x="${x}" y="${y}" font-size="${fs}" stroke-width="${3/s}">${t}</text>`);
+function labels(){OCC=[];const s=sc(),o=[],E=(t,x,y,fs)=>{OCC.push([x-t.length*.3*fs,y-fs*.6,x+t.length*.3*fs,y+fs*.6]);return o.push(`<text x="${x}" y="${y}" font-size="${fs}" stroke-width="${3/s}">${t}</text>`)};
  const showAll=vb.w<460;
  DATA.forEach((p,i)=>{const b=PB[i],on=sel.i===i||showAll;
   if(on){C[i].forEach((c,j)=>{const x=c.cx,y=c.cy;if(x<vb.x-50||x>vb.x+vb.w+50||y<vb.y-50||y>vb.y+vb.h+50)return;
@@ -298,7 +271,7 @@ function shareView(){let u='';try{u=location.href.split('#')[0]}catch(_){}
  if(navigator.share)navigator.share({title:document.title,url:l}).catch(e=>{if(e.name!=='AbortError')copy(l,'คัดลอกลิงก์มุมมองแล้ว')});else copy(l,'คัดลอกลิงก์มุมมองแล้ว')}
 function panel(){const B=$('#body'),qv=qi.value.trim().toLowerCase();let h='';$('#cl').hidden=!qv;if(FORM){B.innerHTML=formHtml();return}
  const row=(i,j,t,sub,e,on)=>`<div class="it${on?' on':''}" data-i="${i}"${j!=null?` data-j="${j}"`:''}>${j!=null?I.pin:`<span class="dot r${DATA[i].district-1}"></span>`}<div class="t"><b>${t}${FV.includes(e)?' <span style="color:#f5b301">★</span>':''}</b>${sub?`<small>${sub}</small>`:''}</div><em>${e}</em>${j==null?I.chev:`<button class="cp" data-zip="${e}" aria-label="คัดลอกรหัส">${I.cp}</button>`}</div>`;
- if(qv){const m=[];PL.forEach(p=>{if((p.name+(p.note||'')+KS[p.kind]).toLowerCase().includes(qv))m.push(placeRow(p))});DATA.forEach((p,i)=>{const rg=REG[p.district-1];
+ if(qv){const m=[];PL.forEach(p=>{if(plText(p).toLowerCase().includes(qv))m.push(placeRow(p))});DATA.forEach((p,i)=>{const rg=REG[p.district-1];
   if((p.provName+p.areaCode+rg.ab+rg.f).toLowerCase().includes(qv))m.push(row(i,null,p.provName,rg.n+' '+rg.ab,p.areaCode));
   p.entries.forEach((e,j)=>{if((e.name+e.zip).toLowerCase().includes(qv))m.push(row(i,j,e.name,p.provName,e.zip))})});
   h=m.length?m.slice(0,40).join(''):`<div class="em">${I.no}<p>ไม่พบผลการค้นหา</p></div>`}
@@ -343,10 +316,27 @@ $('#zi').onclick=()=>zc(1.6);$('#zo').onclick=()=>zc(1/1.6);$('#zr').onclick=()=
 const rs=()=>{geo();setSt(st,1);upd()};
 addEventListener('resize',rs);DT.onchange=rs;addEventListener('hashchange',go);$('#mnb').onclick=()=>{setSt(st?0:1);if(sel.i!==null)refit()};new ResizeObserver(upd).observe(svg);
 // ===== สถานที่ / หมุด / โหมดแก้ไข =====
-const API='https://script.google.com/macros/s/AKfycby-F4kuKIIhjctJXHnlKC9bYawrYtYkAqcsuZyiRnSZF7h0Flyz9SFVYv34tHtiGf8Xug/exec'; // ← วาง URL Web App ของ Google Apps Script (ลงท้าย /exec) ถ้าว่างจะบันทึกในเครื่องนี้เท่านั้น
-const PH='d903e4ea3ddfda42a12af1555221b32f47a2bf6b2ce15f1af42987d417a7d51a',KS={shop:'ร้าน',road:'ถนน',other:'อื่นๆ'},KC={shop:'#e03131',road:'#8a5a2b',other:'#7048e8'};
+const API='https://script.google.com/macros/s/AKfycbxK8Dhu68g7uIqEnF9rVV-6alcExBWOEROCQM3tMpQTATIMQctfFkYGFtkQwA_KsPrX1w/exec'; // ← วาง URL Web App ของ Google Apps Script (ลงท้าย /exec) ถ้าว่างจะบันทึกในเครื่องนี้เท่านั้น
+const PH='d903e4ea3ddfda42a12af1555221b32f47a2bf6b2ce15f1af42987d417a7d51a',KS={place:'สถานที่',road:'ถนน'};
+const LV={national:{n:'ระดับประเทศ',r:15,f:14,w:2400,k:4},major:{n:'สำคัญขนาดใหญ่',r:12,f:12.5,w:900,k:3},local:{n:'ท้องถิ่น',r:9.5,f:11.5,w:450,k:2},poi:{n:'จุดสนใจทั่วไป',r:7.5,f:10.5,w:220,k:1}};
+const RT={highway:{n:'ทางหลวง',w:9,k:4,vw:2400,c:'#f2a33a',cs:'#b5701a'},main:{n:'ถนนสายหลัก',w:7,k:3,vw:1100,c:'#ffd76a',cs:'#c9a227'},secondary:{n:'ถนนสายรอง',w:5.5,k:2,vw:700,c:'#ffffff',cs:'#9fb09f'},local:{n:'ถนนท้องถิ่น',w:3.8,k:1,vw:400,c:'#ffffff',cs:'#b9c4b9'}};
+const CATS=[
+['food','อาหารและเครื่องดื่ม','Food and Drink','#e8590c','🍽️',[['restaurant','ร้านอาหาร'],['cafe','คาเฟ่'],['bar','บาร์'],['bakery','เบเกอรี่'],['fast_food_restaurant','ฟาสต์ฟู้ด'],['ice_cream_shop','ร้านไอศกรีม'],['coffee_shop','ร้านกาแฟ']]],
+['automotive','ยานพาหนะและเดินทาง','Automotive','#495057','🚗',[['gas_station','ปั๊มน้ำมัน'],['electric_vehicle_charging_station','สถานีชาร์จ EV'],['car_repair','อู่ซ่อมรถ'],['parking','ที่จอดรถ'],['car_rental','เช่ารถ']]],
+['lodging','ที่พักและโรงแรม','Lodging','#7048e8','🏨',[['hotel','โรงแรม'],['resort_hotel','รีสอร์ท'],['hostel','โฮสเทล'],['campground','ลานกางเต็นท์'],['bed_and_breakfast','เบด แอนด์ เบรกฟาสต์']]],
+['shopping','ร้านค้าและบริการ','Shopping & Services','#1c7ed6','🛍️',[['supermarket','ซูเปอร์มาร์เก็ต'],['shopping_mall','ห้างสรรพสินค้า'],['convenience_store','ร้านสะดวกซื้อ'],['clothing_store','ร้านเสื้อผ้า'],['laundry','ร้านซักรีด'],['hair_salon','ร้านทำผม']]],
+['health','การแพทย์และสุขภาพ','Health and Wellness','#e03131','🏥',[['hospital','โรงพยาบาล'],['pharmacy','ร้านขายยา'],['dentist','ทันตแพทย์'],['doctor','คลินิก/แพทย์'],['spa','สปา'],['gym','ฟิตเนส']]],
+['entertainment','บันเทิงและสันทนาการ','Entertainment & Recreation','#d6336c','🎡',[['amusement_park','สวนสนุก'],['movie_theater','โรงภาพยนตร์'],['park','สวนสาธารณะ'],['zoo','สวนสัตว์'],['aquarium','พิพิธภัณฑ์สัตว์น้ำ'],['night_club','ไนต์คลับ']]],
+['culture','สถานที่ท่องเที่ยวและวัฒนธรรม','Culture & Attractions','#9c36b5','🖼️',[['museum','พิพิธภัณฑ์'],['art_gallery','หอศิลป์'],['tourist_attraction','สถานที่ท่องเที่ยว'],['historical_landmark','โบราณสถาน/จุดสำคัญ']]],
+['education','การศึกษา','Education','#f08c00','🎓',[['primary_school','โรงเรียนประถม'],['secondary_school','โรงเรียนมัธยม'],['university','มหาวิทยาลัย'],['library','ห้องสมุด']]],
+['finance','การเงิน','Finance','#2f9e44','🏦',[['bank','ธนาคาร'],['atm','ตู้ ATM'],['accounting','สำนักงานบัญชี']]],
+['government','หน่วยงานรัฐและสาธารณูปโภค','Government & Facilities','#364fc7','🏛️',[['police','สถานีตำรวจ'],['post_office','ที่ทำการไปรษณีย์'],['fire_station','สถานีดับเพลิง'],['embassy','สถานทูต'],['city_hall','ศาลากลาง/ที่ว่าการ'],['public_bathroom','ห้องน้ำสาธารณะ']]],
+['worship','ศาสนสถาน','Places of Worship','#c2a000','🛐',[['buddhist_temple','วัดพุทธ'],['church','โบสถ์'],['mosque','มัสยิด'],['hindu_temple','เทวสถานฮินดู']]],
+['nature','ธรรมชาติ','Natural Features','#2b8a3e','🌿',[['beach','ชายหาด'],['mountain_peak','ยอดเขา'],['lake','ทะเลสาบ'],['river','แม่น้ำ'],['national_park','อุทยานแห่งชาติ']]],
+['other','อื่นๆ','Other','#868e96','📍',[['general','ทั่วไป']]]];
+const catOf=id=>CATS.find(c=>c[0]===id)||CATS[12];
 const EDIT=/\/edit\/?$/.test(location.pathname)||/[?&]edit\b/.test(location.search)||/^#\/?edit/.test(location.hash);
-let FORM=null,pin=null,pend=0,lt=0,lx=0,ly=0,lpT=0,lpf=false,PL=[],rev=0,PW='',pulling=0;const ED={on:false,auth:false,tool:null,pts:[]};
+let FORM=null,pin=null,pend=0,lt=0,lx=0,ly=0,lpT=0,lpf=false,PL=[],rev=0,PW='',pulling=0,OCC=[],inflight=0,lastChg=0;const ED={on:false,auth:false,tool:null,pts:[]};
 try{if(!API)PL=JSON.parse(localStorage.getItem('pl')||'[]')}catch(_){}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const wpos=(x,y)=>{const r=R0();return[+(vb.x+(x-r.left)/r.width*vb.w).toFixed(1),+(vb.y+(y-r.top)/r.height*vb.h).toFixed(1)]};
@@ -355,39 +345,66 @@ function whereAt(x,y){for(const i of[0,1,2,3,4,5,6,7,8,9,10,11,12,13]){if(!OUT[i
 const baseUrl=()=>{try{return location.href.split('#')[0]}catch(_){return''}};
 const viewQ=()=>'&v='+[vb.x+vb.w/2,vb.y+vb.h/2,vb.w].map(n=>Math.round(n*10)/10).join(',');
 function shareLink(l){if(navigator.share)navigator.share({title:document.title,url:l}).catch(e=>{if(e.name!=='AbortError')copy(l,'คัดลอกลิงก์แล้ว')});else copy(l,'คัดลอกลิงก์แล้ว')}
-function drawPl(){const s=sc(),lab=vb.w<520;let h='';
- PL.forEach(p=>{const col=KC[p.kind]||KC.other,n=esc(p.name||'');
-  if(p.kind==='road'&&p.pts&&p.pts.length>1){const q=p.pts.map(a=>a.join(',')).join(' ');
-   h+=`<g class="pm" data-id="${p.id}"><polyline points="${q}" fill="none" stroke="transparent" stroke-width="${16/s}" stroke-linecap="round"/><polyline points="${q}" fill="none" stroke="${col}" stroke-width="${3.5/s}" stroke-linecap="round" stroke-linejoin="round"/></g>`;
-   if(lab&&n){const a=p.pts[0],b=p.pts[1];h+=`<text x="${(a[0]+b[0])/2}" y="${(a[1]+b[1])/2-8/s}" font-size="${11/s}" stroke-width="${3/s}" style="fill:${col}">${n}</text>`}}
-  else{h+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${13/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${6/s}" fill="${col}" stroke="#fff" stroke-width="${2/s}"/></g>`;
-   if(lab&&n)h+=`<text x="${p.x}" y="${p.y-13/s}" font-size="${11/s}" stroke-width="${3/s}" style="fill:${col}">${n}</text>`}});
- if(ED.pts.length)h+=`<polyline points="${ED.pts.map(a=>a.join(',')).join(' ')}" fill="none" stroke="#1c7ed6" stroke-width="${3/s}" stroke-dasharray="${6/s} ${5/s}"/>`+ED.pts.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="${4.5/s}" fill="#fff" stroke="#1c7ed6" stroke-width="${2/s}"/>`).join('');
- if(pin)h+=`<g transform="translate(${pin.x} ${pin.y}) scale(${1/s})"><path d="M0 0C-8-10-12-16-12-22a12 12 0 1 1 24 0c0 6-4 12-12 22z" fill="#1c7ed6" stroke="#fff" stroke-width="2"/><circle cy="-22" r="4.5" fill="#fff"/></g>`;
- $('#pl').innerHTML=h}
+function drawPl(){const s=sc(),W=vb.w,occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]),zf=Math.min(2.6,Math.max(1,Math.pow(1380/W,.35)));let cas='',fil='',txt='',defs='',mk='',pv='';
+ PL.filter(p=>p.kind==='road'&&p.pts&&p.pts.length>1).sort((a,b)=>(RT[a.rt]||RT.local).k-(RT[b.rt]||RT.local).k).forEach(p=>{const t=RT[p.rt]||RT.local;if(W>t.vw)return;
+  const wpx=t.w*zf*(p.size||1),w=wpx/s,q=p.pts.map(a=>a.join(',')).join(' '),n=esc(p.name||''),pts=p.pts[p.pts.length-1][0]<p.pts[0][0]?p.pts.slice().reverse():p.pts,id='rp'+p.id;let L=0;for(let i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+  const cs=p.color?`color-mix(in srgb,${p.color} 55%,#000)`:t.cs,cf=p.color||t.c;
+  cas+=`<polyline points="${q}" fill="none" style="stroke:${cs}" stroke-width="${w+2.4/s}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  fil+=`<g class="pm" data-id="${p.id}"><polyline points="${q}" fill="none" stroke="transparent" stroke-width="${Math.max(wpx,16)/s}" stroke-linecap="round"/><polyline points="${q}" fill="none" style="stroke:${cf}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  const fp=wpx*.62;if(n&&fp>=6&&L*s>=n.length*fp*.55+12){defs+=`<path id="${id}" d="M${pts.map(a=>a.join(' ')).join('L')}" fill="none"/>`;txt+=`<text style="font-size:${fp/s}px;fill:#3a3a3a;stroke:none;font-weight:600"><textPath href="#${id}" startOffset="50%">${n}</textPath></text>`}});
+ PL.filter(p=>p.kind!=='road'&&W<=(LV[p.lvl]||LV.local).w).sort((a,b)=>(LV[b.lvl]||LV.local).k-(LV[a.lvl]||LV.local).k||(b.size||1)-(a.size||1)).forEach(p=>{
+  const L=LV[p.lvl]||LV.local,c=catOf(p.cat),sz=p.size||1,r=L.r*sz/s,n=esc(p.name||'');occ.push([p.x-r,p.y-r,p.x+r,p.y+r]);
+  mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*1.15}" style="stroke:none">${c[4]}</text>`:''}</g>`;
+  if(n){const f0=L.f*sz/s;for(const k of[1,.78]){const f=f0*k,hw=n.length*.3*f,y=p.y+r+f*.75,b=[p.x-hw,y-f*.6,p.x+hw,y+f*.6];if(!hit(b)){occ.push(b);mk+=`<text x="${p.x}" y="${y}" font-size="${f}" stroke-width="${3/s}">${n}</text>`;break}}}});
+ if(ED.pts.length)pv=`<polyline points="${ED.pts.map(a=>a.join(',')).join(' ')}" fill="none" stroke="#1c7ed6" stroke-width="${3/s}" stroke-dasharray="${6/s} ${5/s}"/>`+ED.pts.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="${4.5/s}" fill="#fff" stroke="#1c7ed6" stroke-width="${2/s}"/>`).join('');
+ if(pin)pv+=`<g transform="translate(${pin.x} ${pin.y}) scale(${1/s})"><path d="M0 0C-8-10-12-16-12-22a12 12 0 1 1 24 0c0 6-4 12-12 22z" fill="#1c7ed6" stroke="#fff" stroke-width="2"/><circle cy="-22" r="4.5" fill="#fff"/></g>`;
+ $('#pl').innerHTML=`<defs>${defs}</defs>`+cas+fil+txt+mk+pv}
 function showPc(){const c=$('#pc');if(!pin){c.hidden=true;return}const w=whereAt(pin.x,pin.y),t=!w?'นอกพื้นที่':w[1]==null?DATA[w[0]].provName:DATA[w[0]].entries[w[1]].name+' · '+DATA[w[0]].provName;
  c.hidden=false;c.innerHTML=`<span style="padding-left:10px;line-height:1.25"><b>${pin.x}, ${pin.y}</b><br><small style="color:var(--mut)">${esc(t)}</small></span><button data-a="cp" aria-label="คัดลอกพิกัด">${I.cp}</button><button data-a="sh" aria-label="แชร์พิกัด">${I.link}</button>${ED.on&&ED.auth?'<button data-a="add" aria-label="เพิ่มสถานที่"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>':''}<button data-a="rm" aria-label="เอาหมุดออก"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`}
 function addPin(w){pin={x:w[0],y:w[1]};try{navigator.vibrate&&navigator.vibrate(15)}catch(_){}drawPl();showPc()}
 $('#pc').onclick=e=>{const b=e.target.closest('[data-a]');if(!b||!pin)return;const a=b.dataset.a;
- if(a==='cp')copy(pin.x+', '+pin.y,'คัดลอกพิกัดแล้ว');else if(a==='sh')shareLink(baseUrl()+'#p='+pin.x+','+pin.y+viewQ());else if(a==='add')openForm({kind:'shop',x:pin.x,y:pin.y});else{pin=null;showPc();drawPl()}};
+ if(a==='cp')copy(pin.x+', '+pin.y,'คัดลอกพิกัดแล้ว');else if(a==='sh')shareLink(baseUrl()+'#p='+pin.x+','+pin.y+viewQ());else if(a==='add')openForm({kind:'place',x:pin.x,y:pin.y});else{pin=null;showPc();drawPl()}};
 // ฟอร์มสถานที่
-const placeRow=p=>`<div class="it" data-pl="${p.id}">${I.pin}<div class="t"><b>${esc(p.name)}</b><small>${KS[p.kind]||''}</small></div></div>`;
-function openForm(p){FORM={p:{...p},isNew:!p.id};ED.tool=null;ED.pts=[];syncEd();setSt(1);panel();$('#body').scrollTop=0}
-function showPlace(id,z=true){const p=PL.find(a=>a.id===id);if(!p)return;FORM={p:{...p},isNew:false};setSt(1);
+const plText=p=>{const c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'';return p.name+' '+(p.note||'')+' '+(p.kind==='road'?(RT[p.rt]||RT.local).n:c[1]+' '+c[2]+' '+sb+' '+(LV[p.lvl]||LV.local).n)};
+const placeRow=p=>{const rd=p.kind==='road',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':c[4]}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:c[1]}</small></div></div>`};
+const opt=(a,v)=>a.map(x=>`<option value="${x[0]}"${x[0]===v?' selected':''}>${x[1]}</option>`).join('');
+function openForm(p){FORM={p:{name:'',note:'',lvl:'local',cat:'food',sub:'restaurant',rt:'secondary',size:1,color:'',...p},isNew:!p.id};ED.tool=null;ED.pts=[];syncEd();setSt(1);panel();$('#body').scrollTop=0}
+function showPlace(id){const p=PL.find(a=>a.id===id);if(!p)return;FORM={p:{...p},isNew:false};setSt(1);
  const b=p.kind==='road'&&p.pts&&p.pts.length>1?bb([p.pts.map(a=>a.join(',')).join(' ')]):{x:p.x-30,y:p.y-30,w:60,h:60};fit(b,p.kind==='road'?1.6:1);panel();$('#body').scrollTop=0}
-function formHtml(){const p=FORM.p,ed=ED.on&&ED.auth,bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
- if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips"><span>${KS[p.kind]}</span><span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
- return bk+`<h2>${FORM.isNew?'เพิ่มสถานที่':'แก้ไขสถานที่'}</h2><div class="fm"><label>ชื่อ<input id="fn" value="${esc(p.name||'')}" placeholder="เช่น ร้านก๋วยเตี๋ยว / ถนนประชาธิป"></label><label>ประเภท<select id="fk">${['shop','road','other'].map(k=>`<option value="${k}"${p.kind===k?' selected':''}>${KS[k]}</option>`).join('')}</select></label><label>หมายเหตุ<textarea id="fnote" rows="3">${esc(p.note||'')}</textarea></label><small style="color:var(--mut)">${p.kind==='road'?(p.pts?p.pts.length:0)+' จุด':p.x+', '+p.y}</small></div><div class="act"><button data-fsave="1">บันทึก</button>${FORM.isNew?'':'<button data-fdel="1">ลบ</button>'}</div>`}
-function saveForm(){const p=FORM.p,k=$('#fk').value,nm=$('#fn').value.trim();if(!nm)return toast('ใส่ชื่อก่อน');if(k==='road'&&!(p.pts&&p.pts.length>1))return toast('ถนนต้องวาดเส้นก่อน');
- const it={id:p.id||'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:k,name:nm,note:$('#fnote').value.trim(),x:p.x,y:p.y,pts:k==='road'?p.pts:[]},n=PL.findIndex(a=>a.id===it.id);
+function syncForm(){const p=FORM.p,g=id=>{const e=$('#'+id);return e?e.value:undefined},v={name:g('fn'),note:g('fnote'),kind:g('fk'),rt:g('frt'),lvl:g('flv'),cat:g('fcat'),sub:g('fsub')};
+ for(const k in v)if(v[k]!==undefined)p[k]=v[k];const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub))p.sub=c[5][0][0]}
+function formHtml(){const p=FORM.p,ed=ED.on&&ED.auth,rd=p.kind==='road',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'',bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
+ if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${rd?`<span>${(RT[p.rt]||RT.local).n}</span>`:`<span>${c[4]} ${c[1]}</span><span>${sb}</span><span>${(LV[p.lvl]||LV.local).n}</span>`}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
+ const dc=rd?(RT[p.rt]||RT.local).c:c[3];
+ return bk+`<h2>${FORM.isNew?'เพิ่มสถานที่':'แก้ไขสถานที่'}</h2><div class="fm"><label>ชื่อ<input id="fn" value="${esc(p.name||'')}" placeholder="เช่น ร้านก๋วยเตี๋ยว / ถนนประชาธิป"></label>
+<label>ชนิด<select id="fk">${opt([['place','สถานที่ (หมุด)'],['road','ถนน (เส้น)']],p.kind)}</select></label>`+
+ (rd?`<label>ประเภทถนน<select id="frt">${opt(Object.entries(RT).map(([k,v])=>[k,v.n]),p.rt)}</select></label>`:
+ `<label>ระดับการแสดงผล / ขนาด<select id="flv">${opt(Object.entries(LV).map(([k,v])=>[k,v.n]),p.lvl)}</select></label><label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(c[5],p.sub)}</select></label>`)+
+ `<label>${rd?'ความกว้างเส้น':'ขนาดหมุด'} <b id="fszv">${Math.round((p.size||1)*100)}%</b><input id="fsz" type="range" min="50" max="250" step="10" value="${Math.round((p.size||1)*100)}"></label>
+<label>สี<div class="row2"><input id="fc" type="color" value="${p.color||dc}"><div class="act" style="margin:0"><button data-fcr="1">ค่าเริ่มต้น</button></div></div></label>
+<label>หมายเหตุ<textarea id="fnote" rows="3">${esc(p.note||'')}</textarea></label><small style="color:var(--mut)">${rd?(p.pts?p.pts.length:0)+' จุด':p.x+', '+p.y}</small></div><div class="act"><button data-fsave="1">บันทึก</button>${FORM.isNew?'':'<button data-fdel="1">ลบ</button>'}</div>`}
+function saveForm(){syncForm();const p=FORM.p;if(!p.name.trim())return toast('ใส่ชื่อก่อน');if(p.kind==='road'&&!(p.pts&&p.pts.length>1))return toast('ถนนต้องวาดเส้นก่อน');
+ const rd=p.kind==='road',it={id:p.id||'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:p.kind,name:p.name.trim(),note:(p.note||'').trim(),x:rd?p.pts[0][0]:p.x,y:rd?p.pts[0][1]:p.y,pts:rd?p.pts:[],lvl:p.lvl,cat:p.cat,sub:p.sub,rt:p.rt,color:p.color||'',size:p.size||1},n=PL.findIndex(a=>a.id===it.id);
  n<0?PL.push(it):PL[n]=it;FORM=null;push('upsert',it);drawPl();panel();toast('บันทึกแล้ว')}
 function delForm(b){if(!b.dataset.c){b.dataset.c=1;b.textContent='กดอีกครั้งเพื่อลบ';return}const p=FORM.p;PL=PL.filter(a=>a.id!==p.id);FORM=null;push('delete',p);drawPl();panel();toast('ลบแล้ว')}
-// ซิงค์กับ Google Apps Script
+$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat')){syncForm();panel()}});
+$('#body').addEventListener('input',e=>{if(!FORM)return;if(e.target.id==='fc')FORM.p.color=e.target.value;if(e.target.id==='fsz')$('#fszv').textContent=e.target.value+'%'});
+$('#body').addEventListener('click',e=>{if(FORM&&e.target.closest('[data-fcr]')){syncForm();FORM.p.color='';panel()}});
+// ซิงค์กับ Google Apps Script (โพลลิ่งต่อเนื่อง)
 const post=(b,pw=PW)=>fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...b,pw})}).then(r=>r.json());
-async function push(act,item){if(!API){try{localStorage.setItem('pl',JSON.stringify(PL))}catch(_){}return}
- try{const j=await post({action:act,item});if(j.ok){rev=j.rev;PL=j.items;drawPl();if(!FORM)panel()}else toast(j.err||'บันทึกไม่สำเร็จ')}catch(_){toast('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้')}}
-async function pull(){if(!API||pulling)return;pulling=1;try{const j=await(await fetch(API+'?action=list&rev='+rev,{cache:'no-store'})).json();if(j.ok&&!j.same){rev=j.rev;PL=j.items;drawPl();if(!FORM)panel()}}catch(_){}pulling=0}
-if(API){setInterval(()=>{if(!document.hidden)pull()},3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});pull()}
+const wire=it=>({id:it.id,kind:it.kind,name:it.name,note:it.note||'',x:it.x,y:it.y,pts:it.pts||[],meta:{lvl:it.lvl,cat:it.cat,sub:it.sub,rt:it.rt,color:it.color||'',size:it.size||1}});
+const unwire=r=>{const o={...r,...(r.meta||{})};delete o.meta;if(o.kind==='shop'){o.kind='place';o.cat=o.cat||'shopping';o.sub=o.sub||'supermarket'}else if(o.kind==='other'){o.kind='place';o.cat='other';o.sub='general'}
+ o.lvl=LV[o.lvl]?o.lvl:'local';o.rt=RT[o.rt]?o.rt:'local';o.cat=o.cat||'other';o.size=+o.size||1;o.pts=o.pts||[];return o};
+PL=PL.map(unwire);
+const apply=(rv,items)=>{rev=rv;PL=items.map(unwire);lastChg=Date.now();drawPl();if(!FORM)panel()};
+async function push(act,item){if(!API){try{localStorage.setItem('pl',JSON.stringify(PL))}catch(_){}return}inflight++;
+ try{const j=await post({action:act,item:wire(item)});if(j.ok)apply(j.rev,j.items);else toast(j.err||'บันทึกไม่สำเร็จ')}catch(_){toast('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้')}inflight--}
+async function pull(){if(!API||pulling||inflight)return;pulling=1;try{const j=await(await fetch(API+'?action=list&rev='+rev,{cache:'no-store'})).json();if(j.ok&&!j.same&&!inflight)apply(j.rev,j.items)}catch(_){}pulling=0}
+// ความเร็วโพลล์: เร็ว (POLL_FAST) เมื่อมีการใช้งาน/แก้ไข/มีการเปลี่ยนแปลงล่าสุด, ช้าลง (POLL_IDLE) เมื่อเงียบ เพื่อไม่ให้โควตา Apps Script หมด
+const POLL_FAST=250,POLL_IDLE=2500;let act=Date.now();
+['pointerdown','keydown','wheel','touchstart'].forEach(ev=>addEventListener(ev,()=>{act=Date.now()},{passive:true}));
+async function loop(){for(;;){const busy=ED.on||Date.now()-act<20000||Date.now()-lastChg<60000;await pull();await new Promise(r=>setTimeout(r,document.hidden?5000:busy?POLL_FAST:POLL_IDLE))}}
+if(API)loop();
 // เข้าสู่ระบบ /edit
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 async function login(pw){if(API){try{return(await post({action:'auth'},pw)).ok?1:0}catch(_){return-1}}try{return await sha(pw)===PH?1:0}catch(_){return 0}}
