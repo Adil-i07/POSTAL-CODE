@@ -1,28 +1,12 @@
 <!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>รหัสไปรษณีย์ฝาแตก โดยพันรัฐ</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#fafff5">
-    <!-- Fullscreen / standalone app behavior when added to home screen -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="รหัสไปรษณีย์ฝาแตก">
-    <!-- Google Fonts -->
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>รหัสไปรษณีย์ฝาแตก โดยพันรัฐ</title>
     <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/a/AVvXsEgMEvGooTXSJnHe1TF-uy0wYy0GdFdYM8iQ8LMqim1CpDnRCSgIBdop9K2C1Xf-Gtesdb8kAZvm6HYT46gBUgw1ulekS-QDvDLGAPuT_l0X6e1hTDhgCqgXrm-MSIdZb9siNio-1hbIF6F_nLPiWCGWZ7pe-wkZysTLs60EzOZSGB1uK0hiSOfW7gZUoN27">
 
-    <style>
-        
+<style>
+
 html {
-  filter: grayscale(100%);
-}
-img, picture, svg {
   filter: grayscale(60%);
 }
         
@@ -70,1388 +54,220 @@ img{
   max-width:100%;
   display:block;
 }
-        :root{
-            --ink:#000000;
-            --paper:#fafff5;
-            --card:#ffffff;
-            --card-alt:#f2f9e4;
-            --border:#e7efd9;
-            --crimson:#7ba83f;
-            --crimson-dark:#2f4a12;
-            --gold:#c9f98d;
-            --sunday:#5a8228;
-            --muted:#4a5142;
-            --important:#b14b4b;
-            --shadow-soft:0 1px 2px rgba(26,31,22,.06);
-            --shadow-lift:0 18px 40px -18px rgba(26,31,22,.35);
-            --radius-lg:22px;
-            --radius-md:14px;
-            --radius-sm:9px;
-            --ease:cubic-bezier(.16,1,.3,1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'SaoChingcha', sans-serif;
-        }
-
-        html {
-            height: 100%;
-        }
-
-        body {
-            background:
-                radial-gradient(circle at 15% 8%, rgba(123,168,63,.08), transparent 45%),
-                radial-gradient(circle at 90% 92%, rgba(201,249,141,.18), transparent 40%),
-                var(--paper);
-            color: var(--ink);
-            min-height: 100vh;
-            min-height: 100dvh;
-            padding-top: calc(15px + env(safe-area-inset-top));
-            padding-bottom: calc(90px + env(safe-area-inset-bottom));
-            padding-left: env(safe-area-inset-left);
-            padding-right: env(safe-area-inset-right);
-            -webkit-tap-highlight-color: transparent;
-            overscroll-behavior-y: none;
-        }
-
-        .icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .icon svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* Paper capsule, moss-green accents */
-        .ios-capsule {
-            background: var(--card);
-            border: 1.5px solid var(--border);
-            border-radius: 999px;
-            box-shadow: var(--shadow-lift);
-            transition: all 0.3s var(--ease);
-        }
-
-        /* App install banner (FT Web Hub) */
-        .app-install-banner {
-            width: 92%;
-            max-width: 600px;
-            margin: 0 auto 10px auto;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 10px 8px 8px;
-            animation: fadeSlideUp 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-        .app-install-banner.hidden {
-            display: none;
-        }
-        .app-install-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: var(--card-alt);
-        }
-        .app-install-text {
-            flex: 1;
-            min-width: 0;
-        }
-        .app-install-title {
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--ink);
-            line-height: 1.2;
-        }
-        .app-install-sub {
-            font-size: 11.5px;
-            color: var(--muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .app-install-btn {
-            flex-shrink: 0;
-            background: var(--crimson);
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 13px;
-            padding: 8px 16px;
-            border-radius: 999px;
-            white-space: nowrap;
-            transition: background 0.15s, transform 0.12s;
-        }
-        .app-install-btn:hover {
-            background: var(--crimson-dark);
-        }
-        .app-install-btn:active {
-            transform: scale(0.95);
-        }
-        .app-install-close {
-            flex-shrink: 0;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--muted);
-        }
-        .app-install-close svg {
-            width: 13px;
-            height: 13px;
-        }
-        .app-install-close:hover {
-            background: var(--card-alt);
-            color: var(--ink);
-        }
-
-        /* Top Container Layout */
-        .top-group-container {
-            width: 92%;
-            max-width: 600px;
-            margin: 0 auto 15px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-        }
-
-        .search-box input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 16px;
-            color: var(--ink);
-            outline: none;
-            padding-left: 10px;
-        }
-
-        .search-box .icon {
-            width: 20px;
-            height: 20px;
-            color: var(--muted);
-        }
-
-        /* Integrated District Results Panel */
-        .district-results-panel {
-            padding: 15px 20px;
-            border-radius: var(--radius-md);
-            display: none;
-            max-height: 220px;
-            overflow-y: auto;
-        }
-
-        .zone-title {
-            font-family: 'Caveat', cursive;
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--crimson-dark);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .zone-title .icon {
-            width: 16px;
-            height: 16px;
-            color: var(--crimson);
-        }
-
-        .list-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 8px;
-        }
-
-        /* touch-friendly district buttons */
-        .clickable-item {
-            background: var(--card-alt);
-            border: 1.5px solid var(--border);
-            padding: 10px 8px;
-            min-height: 46px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s var(--ease);
-            font-size: 14px;
-            font-weight: 400;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-            color: var(--ink);
-            position: relative;
-        }
-
-        .clickable-item:hover {
-            background: #e9f4d5;
-            border-color: var(--crimson);
-        }
-
-        .clickable-item:active {
-            transform: scale(0.96);
-        }
-
-        .clickable-item.active {
-            background: var(--crimson);
-            color: #ffffff;
-            border-color: var(--crimson);
-        }
-
-        .prov-tag {
-            display: block;
-            font-size: 10.5px;
-            font-weight: 400;
-            opacity: 0.65;
-            margin-top: 1px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        mark {
-            background: var(--gold);
-            color: var(--crimson-dark);
-            border-radius: 3px;
-            padding: 0 1px;
-        }
-        .clickable-item.active mark {
-            background: rgba(255,255,255,0.35);
-            color: inherit;
-        }
-
-        .copy-btn.active-fav-btn {
-            background: #c9932f;
-            color: #ffffff;
-            border-color: #c9932f;
-        }
-
-        /* Main Map Layout */
-        .container {
-            width: 92%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            padding: 18px;
-            border: 1.5px solid var(--border);
-            box-shadow: var(--shadow-lift);
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-family: 'Caveat', cursive;
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--ink);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        .card-title-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .card-title .icon {
-            width: 18px;
-            height: 18px;
-            color: var(--crimson);
-        }
-
-        .theme-toggle {
-            background: var(--card-alt);
-            border: 1.5px solid var(--border);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            color: var(--crimson);
-        }
-        .theme-toggle:active {
-            transform: scale(0.9);
-        }
-        .theme-toggle .icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .grid-map {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .map-row {
-            display: flex;
-            gap: 8px;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .map-block {
-            background: var(--card-alt);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 10px 4px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.15s var(--ease);
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .map-block:hover {
-            border-color: var(--crimson);
-        }
-
-        .map-block:active {
-            transform: scale(0.96);
-        }
-
-        .map-block.active {
-            background: var(--crimson);
-            color: #ffffff;
-            border-color: var(--crimson);
-            box-shadow: 0 4px 12px rgba(123, 168, 63, 0.35);
-        }
-
-        .map-block .code-num {
-            font-family: 'Caveat', cursive;
-            font-size: clamp(14px, 4.2vw, 20px);
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .map-block .name-lbl {
-            font-size: clamp(8.5px, 2.6vw, 12px);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-            line-height: 1.2;
-        }
-
-        .map-block.core-center {
-            border: 2px dashed var(--crimson);
-            background: #eef7dc;
-        }
-
-        /* Fixed Bottom Zipcode Panel */
-        .bottom-floating-panel {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 600px;
-            padding: 15px 20px;
-            padding-bottom: calc(15px + env(safe-area-inset-bottom));
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            border-top-left-radius: var(--radius-lg);
-            border-top-right-radius: var(--radius-lg);
-            z-index: 2000;
-            display: none;
-            box-shadow: 0 -18px 40px -18px rgba(26,31,22,.35);
-        }
-
-        .zip-display-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .zip-info-text {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            min-width: 0;
-        }
-
-        .zip-info-text .area-name {
-            font-family: 'Caveat', cursive;
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--ink);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .zip-info-text .zip-number {
-            font-family: monospace;
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--crimson-dark);
-            background: var(--card-alt);
-            border: 1px solid var(--border);
-            padding: 2px 12px;
-            border-radius: 20px;
-        }
-
-        .action-btns {
-            display: flex;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-
-        .copy-btn {
-            background: var(--crimson);
-            color: #ffffff;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(123, 168, 63, 0.3);
-            flex-shrink: 0;
-        }
-        .copy-btn .icon {
-            width: 18px;
-            height: 18px;
-        }
-
-        .copy-btn:hover {
-            background: var(--crimson-dark);
-        }
-        .copy-btn:active {
-            transform: scale(0.92);
-        }
-
-        .copy-btn.share-btn {
-            background: var(--card-alt);
-            color: var(--crimson-dark);
-            box-shadow: none;
-            border: 1.5px solid var(--border);
-        }
-
-        /* Toast UI */
-        .toast {
-            position: fixed;
-            bottom: calc(30px + env(safe-area-inset-bottom));
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--crimson-dark);
-            color: #fafff5;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lift);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 6000;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 14px;
-            pointer-events: none;
-        }
-        .toast .icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 10px;
-            color: var(--muted);
-            grid-column: 1 / -1;
-        }
-        .empty-state .icon {
-            width: 28px;
-            height: 28px;
-            color: var(--border);
-        }
-        .empty-state p {
-            font-size: 13.5px;
-        }
-
-        /* ===== Animations ===== */
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(12px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes panelSlideDown {
-            from { opacity: 0; transform: translateY(-10px); max-height: 0; }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes panelSlideUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(30px); }
-            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.85); }
-            to   { opacity: 1; transform: scale(1); }
-        }
-        @keyframes pulseRing {
-            0%   { box-shadow: 0 0 0 0 rgba(123,168,63,0.35); }
-            100% { box-shadow: 0 0 0 10px rgba(123,168,63,0); }
-        }
-
-        .map-block {
-            opacity: 0;
-            animation: fadeSlideUp 0.45s var(--ease) forwards;
-        }
-
-        .map-block.active {
-            animation: fadeSlideUp 0.45s var(--ease) forwards, pulseRing 0.6s ease-out;
-        }
-
-        .district-results-panel.panel-open {
-            animation: panelSlideDown 0.3s var(--ease);
-        }
-
-        .clickable-item {
-            opacity: 0;
-            animation: popIn 0.3s var(--ease) forwards;
-        }
-
-        .bottom-floating-panel.panel-open {
-            animation: panelSlideUp 0.35s var(--ease);
-        }
-
-        .zip-info-text .zip-number {
-            animation: popIn 0.3s var(--ease);
-        }
-
-        /* Smaller screens: shrink map text further so nothing gets cut off */
-        @media (max-width: 380px) {
-            .map-block {
-                padding: 8px 2px;
-                border-radius: 8px;
-            }
-            .map-block .code-num {
-                font-size: clamp(13px, 4vw, 17px);
-            }
-            .map-block .name-lbl {
-                font-size: clamp(7.5px, 2.3vw, 10.5px);
-            }
-            .grid-map {
-                gap: 6px;
-            }
-            .map-row {
-                gap: 6px;
-            }
-        }
-
-        /* ===== Dark mode (deep moss) ===== */
-        body.dark {
-            background:
-                radial-gradient(circle at 15% 8%, rgba(201,249,141,.05), transparent 45%),
-                radial-gradient(circle at 90% 92%, rgba(123,168,63,.1), transparent 40%),
-                #10160a;
-            color: #eaf5da;
-        }
-        body.dark .ios-capsule {
-            background: #182010;
-            border-color: rgba(201,249,141,0.14);
-            box-shadow: 0 18px 40px -18px rgba(0,0,0,.6);
-        }
-        body.dark .search-box input {
-            color: #eaf5da;
-        }
-        body.dark .search-box .icon {
-            color: #9db98a;
-        }
-        body.dark .zone-title,
-        body.dark .card-title {
-            color: var(--gold);
-        }
-        body.dark .card-title .icon,
-        body.dark .zone-title .icon {
-            color: var(--gold);
-        }
-        body.dark .card {
-            background: #182010;
-            border-color: rgba(201,249,141,0.14);
-            box-shadow: 0 18px 40px -18px rgba(0,0,0,.6);
-        }
-        body.dark .clickable-item {
-            background: #1f2915;
-            border-color: rgba(201,249,141,0.14);
-            color: #eaf5da;
-        }
-        body.dark .clickable-item:hover {
-            background: #263219;
-            border-color: var(--gold);
-        }
-        body.dark .clickable-item.active {
-            background: var(--gold);
-            color: #17210c;
-            border-color: var(--gold);
-        }
-        body.dark .map-block {
-            background: #1f2915;
-            border-color: rgba(201,249,141,0.14);
-            color: #eaf5da;
-        }
-        body.dark .map-block:hover {
-            border-color: var(--gold);
-        }
-        body.dark .map-block.active {
-            background: var(--gold);
-            color: #17210c;
-            border-color: var(--gold);
-        }
-        body.dark .map-block.core-center {
-            border-color: var(--gold);
-            background: #232f16;
-        }
-        body.dark .zip-info-text .area-name {
-            color: #eaf5da;
-        }
-        body.dark .zip-info-text .zip-number {
-            color: var(--gold);
-            background: #1f2915;
-            border-color: rgba(201,249,141,0.14);
-        }
-        body.dark .copy-btn {
-            background: var(--gold);
-            color: #17210c;
-            box-shadow: 0 4px 10px rgba(201,249,141,0.25);
-        }
-        body.dark .copy-btn:hover {
-            background: #b6e876;
-        }
-        body.dark .copy-btn.share-btn {
-            background: #1f2915;
-            color: #eaf5da;
-            border-color: rgba(201,249,141,0.18);
-        }
-        body.dark .theme-toggle {
-            background: #1f2915;
-            border-color: rgba(201,249,141,0.18);
-            color: var(--gold);
-        }
-        body.dark .empty-state {
-            color: #9db98a;
-        }
-        body.dark .empty-state .icon {
-            color: #3a4a29;
-        }
-        body.dark .toast {
-            background: var(--gold);
-            color: #17210c;
-        }
-        body.dark mark {
-            background: var(--crimson);
-            color: #10160a;
-        }
-        body.dark .copy-btn.active-fav-btn {
-            background: #c9932f;
-            color: #17210c;
-            border-color: #c9932f;
-        }
-        body.dark .app-install-icon {
-            background: #1f2915;
-        }
-        body.dark .app-install-title {
-            color: #eaf5da;
-        }
-        body.dark .app-install-sub {
-            color: #9db98a;
-        }
-        body.dark .app-install-btn {
-            background: var(--gold);
-            color: #17210c;
-        }
-        body.dark .app-install-btn:hover {
-            background: #b6e876;
-        }
-        body.dark .app-install-close {
-            color: #9db98a;
-        }
-        body.dark .app-install-close:hover {
-            background: #1f2915;
-            color: #eaf5da;
-        }
-
-        /* ===== Favorites row ===== */
-        .fav-row {
-            display: none;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-        .fav-chip {
-            flex-shrink: 0;
-            background: var(--card-alt);
-            border: 1.5px solid var(--border);
-            border-radius: 14px;
-            padding: 6px 12px;
-            font-size: 13px;
-            font-weight: 400;
-            cursor: pointer;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--crimson-dark);
-        }
-        body.dark .fav-chip {
-            background: #1f2915;
-            border-color: rgba(201,249,141,0.14);
-            color: #eaf5da;
-        }
-
-        /* ===== กล่อง "ฝาแตก ประกอบด้วย 3 ภาค" (บรรทัดเดียว กดแล้วขยายเป็น 2 บรรทัด) ===== */
-        .region-box { padding: 10px 12px; }
-        .region-top {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-        .region-box-title {
-            flex: 1;
-            min-width: 0;
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--crimson-dark);
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .region-tabs { display: flex; gap: 5px; flex-shrink: 0; }
-        .region-tab {
-            font-size: 12.5px;
-            padding: 5px 10px;
-            border-radius: 999px;
-            background: var(--card-alt);
-            border: 1.5px solid var(--border);
-            color: var(--ink);
-            transition: all .15s var(--ease);
-        }
-        .region-tab:active { transform: scale(.94); }
-        .region-tab.active {
-            background: var(--crimson);
-            border-color: var(--crimson);
-            color: #fff;
-        }
-
-        .region-more {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows .3s var(--ease);
-        }
-        .region-more.open { grid-template-rows: 1fr; }
-        .region-more-inner { overflow: hidden; }
-        .region-fullname {
-            margin-top: 8px;
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--ink);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .region-chips {
-            display: flex;
-            gap: 6px;
-            margin-top: 6px;
-            padding-bottom: 2px;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        .region-chips::-webkit-scrollbar { display: none; }
-        .region-chips .chip {
-            flex-shrink: 0;
-            font-size: 12.5px;
-            padding: 4px 11px;
-            border-radius: 999px;
-            background: var(--card-alt);
-            border: 1.5px solid var(--border);
-            color: var(--ink);
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .region-chips .chip:hover { border-color: var(--crimson); }
-        .region-chips .chip:active { transform: scale(.95); }
-
-        body.dark .region-box-title { color: var(--gold); }
-        body.dark .region-tab { background: #1f2915; border-color: rgba(201,249,141,.14); color: #eaf5da; }
-        body.dark .region-tab.active { background: var(--gold); border-color: var(--gold); color: #17210c; }
-        body.dark .region-fullname { color: #eaf5da; }
-        body.dark .region-chips .chip { background: #1f2915; border-color: rgba(201,249,141,.14); color: #eaf5da; }
-        body.dark .region-chips .chip:hover { border-color: var(--gold); }
-    </style>
-</head>
-<body>
-
-    <!-- App Install Banner: FT Web Hub -->
-    <div class="app-install-banner ios-capsule" id="appInstallBanner">
-        <img class="app-install-icon" src="https://blogger.googleusercontent.com/img/a/AVvXsEjGgWW40j8O0ARA_3VopGxnqwBIY7GA2V_JMqIKT9T74khSL3jsZI-HaHf_CuchfO_iYiykpyJfm6pLOCDXTzn0zi58LZziayGOvr8SRYqPTpdIUUuAXZyVjVBF3T7ehyJrnDtK-c5pjnFMQ5yAnGjUhcHaqmix7VZEzO7eINfbcn8yEO4Y-1tPw80EMlGT" alt="FT Web Hub">
-        <div class="app-install-text">
-            <div class="app-install-title">FT Web Hub</div>
-            <div class="app-install-sub">ติดตั้งแอปเพื่อใช้งานสะดวกยิ่งขึ้น</div>
-        </div>
-        <a class="app-install-btn" href="https://github.com/Adil-i07/POSTAL-CODE/releases/download/v1.0/FT.Web.Hub.apk" download>ติดตั้ง</a>
-        <button class="app-install-close" onclick="dismissInstallBanner()" aria-label="ปิด">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-    </div>
-
-    <!-- Top Container Group -->
-    <div class="top-group-container">
-        <!-- Search Box -->
-        <div class="search-box ios-capsule">
-            <span class="icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </span>
-            <input type="text" id="globalSearch" placeholder="ค้นหาชื่อพื้นที่ หรือรหัสไปรษณีย์...">
-            <button class="theme-toggle" id="clearSearchBtn" onclick="clearSearch()" aria-label="ล้างการค้นหา" style="display:none;">
-                <span class="icon" id="clearIcon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </span>
-            </button>
-            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="สลับธีม">
-                <span class="icon" id="themeIcon"></span>
-            </button>
-        </div>
-
-        <!-- Favorites Row -->
-        <div class="fav-row ios-capsule" id="favRow" style="padding: 10px 14px;"></div>
-
-        <!-- District Results Panel -->
-        <div class="district-results-panel ios-capsule" id="districtResultsPanel">
-            <div class="zone-title" id="zoneTitle">
-                <span class="icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                </span>
-                เขต
-            </div>
-            <div id="districtContainer" class="list-items"></div>
-        </div>
-    </div>
-
-    <!-- Main Content Grid -->
-    <div class="container">
-        <div class="card region-box">
-            <div class="region-top">
-                <span class="region-box-title">ฝาแตก ประกอบด้วย 3 ภาค</span>
-                <div class="region-tabs" id="regionTabs"></div>
-            </div>
-            <div class="region-more" id="regionMore"><div class="region-more-inner">
-                <div class="region-fullname" id="regionFull"></div>
-                <div class="region-chips" id="regionChips"></div>
-            </div></div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                <div class="card-title-left">
-                    <span class="icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                    </span>
-                    แผนที่
-                </div>
-            </div>
-
-            <div class="grid-map">
-                <!-- Row 1 -->
-                <div class="map-row">
-                    <div class="map-block" onclick="selectProvince('311', this)">
-                        <span class="code-num">11</span><span class="name-lbl">พรศรี</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('310', this)">
-                        <span class="code-num">10</span><span class="name-lbl">งอ</span>
-                    </div>
-                    <div style="flex: 0.3;"></div>
-                    <div class="map-block" onclick="selectProvince('313', this)">
-                        <span class="code-num">13</span><span class="name-lbl">ยากส์</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('312', this)">
-                        <span class="code-num">12</span><span class="name-lbl">ทม</span>
-                    </div>
-                </div>
-
-                <!-- Row 2 -->
-                <div class="map-row">
-                    <div class="map-block" onclick="selectProvince('204', this)">
-                        <span class="code-num">4</span><span class="name-lbl">เขาเจ๋ง</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('207', this)">
-                        <span class="code-num">7</span><span class="name-lbl">เลิกโง่</span>
-                    </div>
-                </div>
-
-                <!-- Row 3 -->
-                <div class="map-row">
-                    <div class="map-block" onclick="selectProvince('206', this)">
-                        <span class="code-num">6</span><span class="name-lbl">โอ้ลลิ่ง</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('205', this)">
-                        <span class="code-num">5</span><span class="name-lbl">ต้มยำไก่</span>
-                    </div>
-                    <div class="map-block core-center" onclick="selectProvince('101', this)">
-                        <span class="code-num">1</span><span class="name-lbl" style="font-weight:600;">นครราชฯ</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('102', this)">
-                        <span class="code-num">2</span><span class="name-lbl">ราษฎรฯ</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('203', this)">
-                        <span class="code-num">3</span><span class="name-lbl">สลัมคลองฯ</span>
-                    </div>
-                </div>
-
-                <!-- Row 4 -->
-                <div class="map-row">
-                    <div class="map-block" onclick="selectProvince('209', this)">
-                        <span class="code-num">9</span><span class="name-lbl">กรุงเจ๋ง</span>
-                    </div>
-                    <div class="map-block" onclick="selectProvince('208', this)">
-                        <span class="code-num">8</span><span class="name-lbl">โยดก</span>
-                    </div>
-                </div>
-
-                <!-- Row 5 -->
-                <div class="map-row" style="justify-content: flex-end;">
-                    <div style="flex: 1.5;"></div>
-                    <div class="map-block" onclick="selectProvince('314', this)">
-                        <span class="code-num">14</span><span class="name-lbl">ประปาแตก</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Fixed Bottom Zipcode Bar -->
-    <div id="bottomFloatingPanel" class="bottom-floating-panel ios-capsule"></div>
-
-    <!-- Toast Copy Alert -->
-    <div id="toast" class="toast">
-        <span class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        </span>
-        <span id="toastMsg">คัดลอกสำเร็จ</span>
-    </div>
-
-    <script>
-        const ICON_PIN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
-        const ICON_SEARCH = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
-        const ICON_SEARCH_OFF = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="8" x2="14" y2="14"></line></svg>`;
-        const ICON_COPY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
-        const ICON_SHARE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
-        const ICON_SUN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-        const ICON_MOON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
-        const ICON_STAR_OUTLINE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
-        const ICON_STAR_FILLED = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
-
-        const DATA = [
-          {district:1, provName:"นครราชธานี", areaCode:"101", entries:[
-            {zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"},
-            {zip:"10104",name:"ประชาธิป"},{zip:"10105",name:"พรศรีแผ่นดิน"},{zip:"10106",name:"โรงพยาบาล"},
-            {zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"}
-          ]},
-          {district:1, provName:"ราษฎรมณฑล", areaCode:"102", entries:[
-            {zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"},
-            {zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"},
-            {zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"},
-            {zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"},
-            {zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"},
-            {zip:"10225",name:"อนุรักษ์นิยม"}
-          ]},
-          {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[
-            {zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"},
-            {zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"}
-          ]},
-          {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[
-            {zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"}
-          ]},
-          {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[
-            {zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"},
-            {zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"}
-          ]},
-          {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[
-            {zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิ่ง"},
-            {zip:"20643",name:"โอ้ลวิ่ง"}
-          ]},
-          {district:2, provName:"เลิกโง่", areaCode:"207", entries:[
-            {zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"}
-          ]},
-          {district:2, provName:"โยดก", areaCode:"208", entries:[
-            {zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"}
-          ]},
-          {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[
-            {zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"}
-          ]},
-          {district:3, provName:"งอ", areaCode:"310", entries:[
-            {zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"}
-          ]},
-          {district:3, provName:"พรศรี", areaCode:"311", entries:[
-            {zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"}
-          ]},
-          {district:3, provName:"ทม", areaCode:"312", entries:[
-            {zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"}
-          ]},
-          {district:3, provName:"ยากส์", areaCode:"313", entries:[
-            {zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"}
-          ]},
-          {district:3, provName:"ประปาแตก", areaCode:"314", entries:[
-            {zip:"31461",name:"ประปาแตก"}
-          ]}
-        ];
-
-        // ===== ข้อมูล 3 ภาค (ผูกกับ DATA ผ่าน district) =====
-        const REGIONS = [
-            {district:1, name:"ศรีสุนทรโวหาร",     short:"ศรีสุนทรฯ",      abbr:"ศสว."},
-            {district:2, name:"ประดิษฐ์มนูธรรม",   short:"ประดิษฐ์มนูฯ",   abbr:"ปดน."},
-            {district:3, name:"ธรรมรงนาวาสวัสดิ์", short:"ธรรมรงนาวาฯ",    abbr:"ธรส."}
-        ];
-
-        // ===== Theme =====
-        function applyTheme(mode) {
-            document.body.classList.toggle('dark', mode === 'dark');
-            document.getElementById('themeIcon').innerHTML = mode === 'dark' ? ICON_SUN : ICON_MOON;
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', mode === 'dark' ? '#10160a' : '#fafff5');
-        }
-        function currentTheme() {
-            return document.body.classList.contains('dark') ? 'dark' : 'light';
-        }
-        function toggleTheme() {
-            const next = currentTheme() === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('zipapp_theme', next);
-            applyTheme(next);
-        }
-        function getInitialTheme() {
-            const saved = localStorage.getItem('zipapp_theme');
-            if (saved === 'dark' || saved === 'light') return saved;
-            // ยังไม่เคยเลือกธีมเอง -> ใช้ธีมตามระบบปฏิบัติการ/เบราว์เซอร์
-            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-        }
-        applyTheme(getInitialTheme());
-        // ถ้ายังไม่เคยกดเลือกธีมเอง ให้ตามระบบแบบเรียลไทม์เมื่อผู้ใช้เปลี่ยนธีมเครื่อง
-        if (window.matchMedia) {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (localStorage.getItem('zipapp_theme') === null) {
-                    applyTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        }
-
-        // ===== 3 ภาค (บรรทัดเดียว กดแล้วขยายเป็น 2 บรรทัด กดซ้ำเพื่อปิด) =====
-        function buildRegions() {
-            const tabs = document.getElementById('regionTabs');
-            const more = document.getElementById('regionMore');
-            const full = document.getElementById('regionFull');
-            const chips = document.getElementById('regionChips');
-            let openD = null;
-            tabs.innerHTML = '';
-
-            REGIONS.forEach(r => {
-                const btn = document.createElement('button');
-                btn.className = 'region-tab';
-                btn.textContent = `${r.district}.${r.abbr}`;
-                btn.setAttribute('aria-label', `ภาค ${r.district} ${r.name}`);
-                btn.addEventListener('click', () => {
-                    if (openD === r.district) {           // กดซ้ำ = ปิด
-                        openD = null;
-                        more.classList.remove('open');
-                        btn.classList.remove('active');
-                        return;
-                    }
-                    openD = r.district;
-                    tabs.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
-                    btn.classList.add('active');
-                    full.textContent = `ภาค ${r.district} ${r.name}`;
-                    const provs = DATA.filter(p => p.district === r.district);
-                    chips.innerHTML = provs.map(p => `<button class="chip" data-code="${p.areaCode}">${p.provName}</button>`).join('');
-                    chips.scrollLeft = 0;
-                    chips.querySelectorAll('.chip').forEach(chip => {
-                        chip.addEventListener('click', () => {
-                            const code = chip.dataset.code;
-                            selectProvince(code, document.querySelector(`.map-block[onclick*="'${code}'"]`));
-                        });
-                    });
-                    more.classList.add('open');
-                });
-                tabs.appendChild(btn);
-            });
-        }
-        buildRegions();
-
-        // ===== Favorites =====
-        function getFavs() {
-            try { return JSON.parse(localStorage.getItem('zipapp_favs') || '[]'); }
-            catch(e) { return []; }
-        }
-        function saveFavs(favs) {
-            localStorage.setItem('zipapp_favs', JSON.stringify(favs));
-        }
-        function isFav(zip) {
-            return getFavs().some(f => f.zip === zip);
-        }
-        function toggleFav(entry) {
-            let favs = getFavs();
-            if (favs.some(f => f.zip === entry.zip)) {
-                favs = favs.filter(f => f.zip !== entry.zip);
-            } else {
-                favs.unshift({zip: entry.zip, name: entry.name});
-                favs = favs.slice(0, 12);
-            }
-            saveFavs(favs);
-            renderFavRow();
-            const btn = document.getElementById('favToggleBtn');
-            if (btn) {
-                const nowFav = isFav(entry.zip);
-                btn.classList.toggle('active-fav-btn', nowFav);
-                btn.innerHTML = `<span class="icon">${nowFav ? ICON_STAR_FILLED : ICON_STAR_OUTLINE}</span>`;
-            }
-        }
-        function renderFavRow() {
-            const favs = getFavs();
-            const row = document.getElementById('favRow');
-            if (favs.length === 0) { row.style.display = 'none'; row.innerHTML = ''; return; }
-            row.style.display = 'flex';
-            row.innerHTML = favs.map(f => `
-                <div class="fav-chip" onclick='showFloatingZipcode(${JSON.stringify(f)})'>
-                    <span class="icon" style="width:11px;height:11px;">${ICON_STAR_FILLED}</span> ${f.name}
-                </div>
-            `).join('');
-        }
-        renderFavRow();
-
-        // ===== FT Web Hub install banner =====
-        function dismissInstallBanner() {
-            const banner = document.getElementById('appInstallBanner');
-            if (banner) banner.classList.add('hidden');
-            localStorage.setItem('ftWebHubBannerDismissed', '1');
-        }
-        if (localStorage.getItem('ftWebHubBannerDismissed') === '1') {
-            const banner = document.getElementById('appInstallBanner');
-            if (banner) banner.classList.add('hidden');
-        }
-
-        // Stagger fade-in animation for map blocks on load
-        document.querySelectorAll('.map-block').forEach((block, idx) => {
-            block.style.animationDelay = `${idx * 0.045}s`;
-        });
-
-        function selectProvince(areaCode, element) {
-            const match = DATA.find(p => p.areaCode === areaCode);
-            if(!match) return;
-
-            document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
-            if(element) {
-                element.style.animationDelay = '0s';
-                element.classList.add('active');
-            }
-
-            document.getElementById('zoneTitle').innerHTML = `<span class="icon">${ICON_PIN}</span> ${match.provName}`;
-            renderDistricts(match.entries);
-            document.getElementById('bottomFloatingPanel').style.display = 'none';
-        }
-
-        function renderDistricts(entries) {
-            const container = document.getElementById('districtContainer');
-            const panel = document.getElementById('districtResultsPanel');
-            container.innerHTML = '';
-
-            entries.forEach((entry, idx) => {
-                const item = document.createElement('div');
-                item.className = 'clickable-item';
-                item.style.animationDelay = `${idx * 0.035}s`;
-                item.innerText = entry.name;
-                item.addEventListener('click', () => {
-                    document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    showFloatingZipcode(entry);
-                });
-                container.appendChild(item);
-            });
-            openPanel(panel);
-        }
-
-        function openPanel(panel) {
-            panel.style.display = 'block';
-            panel.classList.remove('panel-open');
-            // force reflow so the animation restarts every time
-            void panel.offsetWidth;
-            panel.classList.add('panel-open');
-        }
-
-        function showFloatingZipcode(entry) {
-            const panel = document.getElementById('bottomFloatingPanel');
-            const canShare = !!navigator.share;
-            const fav = isFav(entry.zip);
-            panel.innerHTML = `
-                <div class="zip-display-row">
-                    <div class="zip-info-text">
-                        <span class="area-name">${entry.name}</span>
-                        <span class="zip-number">${entry.zip}</span>
-                    </div>
-                    <div class="action-btns">
-                        <button class="copy-btn share-btn ${fav ? 'active-fav-btn' : ''}" id="favToggleBtn" onclick='toggleFav(${JSON.stringify(entry)})' aria-label="บันทึกรายการโปรด">
-                            <span class="icon">${fav ? ICON_STAR_FILLED : ICON_STAR_OUTLINE}</span>
-                        </button>
-                        ${canShare ? `<button class="copy-btn share-btn" onclick='shareZip(${JSON.stringify(entry)})' aria-label="แชร์">
-                            <span class="icon">${ICON_SHARE}</span>
-                        </button>` : ''}
-                        <button class="copy-btn" onclick="copyZip('${entry.zip}')" aria-label="คัดลอก">
-                            <span class="icon">${ICON_COPY}</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-            openPanel(panel);
-        }
-
-        function copyZip(zip) {
-            navigator.clipboard.writeText(zip).then(() => {
-                showToast('คัดลอกสำเร็จ');
-            });
-        }
-
-        function shareZip(entry) {
-            navigator.share({
-                title: entry.name,
-                text: `${entry.name} รหัสไปรษณีย์ ${entry.zip}`
-            }).catch(() => {});
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
-        }
-
-        // normalize: lowercase + strip spaces so "ต้ม ยำ ไก่" or extra spacing still matches
-        function normalize(str) {
-            return str.toLowerCase().replace(/\s+/g, '');
-        }
-
-        function highlightMatch(text, query) {
-            if (!query) return text;
-            const nText = normalize(text);
-            const idx = nText.indexOf(query);
-            if (idx === -1) return text;
-            // map normalized index back to original string (safe here since Thai text rarely has spaces mid-word)
-            return text.slice(0, idx) + '<mark>' + text.slice(idx, idx + query.length) + '</mark>' + text.slice(idx + query.length);
-        }
-
-        function clearSearch() {
-            const input = document.getElementById('globalSearch');
-            input.value = '';
-            input.dispatchEvent(new Event('input'));
-            input.focus();
-        }
-
-        document.getElementById('globalSearch').addEventListener('input', function(e) {
-            const raw = e.target.value.trim();
-            const query = normalize(raw);
-            const panel = document.getElementById('districtResultsPanel');
-            document.getElementById('clearSearchBtn').style.display = raw ? 'inline-flex' : 'none';
-
-            if (!query) {
-                document.querySelectorAll('.map-block').forEach(b => b.classList.remove('active'));
-                panel.style.display = 'none';
-                document.getElementById('bottomFloatingPanel').style.display = 'none';
-                return;
-            }
-
-            // rank matches: exact name > name starts with query > name contains query
-            // > province matches > zip code contains query
-            let results = [];
-            DATA.forEach(prov => {
-                const provMatch = normalize(prov.provName).includes(query);
-                prov.entries.forEach(e => {
-                    const nName = normalize(e.name);
-                    let score = -1;
-                    if (nName === query) score = 0;
-                    else if (nName.startsWith(query)) score = 1;
-                    else if (nName.includes(query)) score = 2;
-                    else if (e.zip.includes(query)) score = 3;
-                    else if (provMatch) score = 4;
-                    if (score >= 0) results.push({entry: {...e, provName: prov.provName}, score});
-                });
-            });
-            results.sort((a, b) => a.score - b.score);
-            const filteredEntries = results.map(r => r.entry);
-
-            if (filteredEntries.length > 0) {
-                document.getElementById('zoneTitle').innerHTML = `<span class="icon">${ICON_SEARCH}</span> ผลค้นหา (${filteredEntries.length})`;
-                const distContainer = document.getElementById('districtContainer');
-                distContainer.innerHTML = '';
-
-                filteredEntries.forEach((entry, idx) => {
-                    const item = document.createElement('div');
-                    item.className = 'clickable-item';
-                    item.style.animationDelay = `${idx * 0.035}s`;
-                    item.innerHTML = highlightMatch(entry.name, query) + `<span class="prov-tag">${entry.provName}</span>`;
-                    item.addEventListener('click', () => {
-                        document.querySelectorAll('.clickable-item').forEach(i => i.classList.remove('active'));
-                        item.classList.add('active');
-                        showFloatingZipcode(entry);
-                    });
-                    distContainer.appendChild(item);
-                });
-                openPanel(panel);
-
-                if(filteredEntries.length === 1) {
-                    showFloatingZipcode(filteredEntries[0]);
-                }
-            } else {
-                document.getElementById('districtContainer').innerHTML = `
-                    <div class="empty-state">
-                        <span class="icon">${ICON_SEARCH_OFF}</span>
-                        <p>ไม่พบข้อมูล ลองพิมพ์ชื่อพื้นที่หรือรหัสไปรษณีย์</p>
-                    </div>`;
-                panel.style.display = 'block';
-                document.getElementById('bottomFloatingPanel').style.display = 'none';
-            }
-        });
-    </script>
-    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('SW Registered!', reg))
-        .catch(err => console.error('SW Error:', err));
-    });
-  }
-</script>
-</body>
-</html>
+:root{--card:rgba(255,255,255,.9);--tx:#17301b;--mut:#7d8f7e;--line:#3b8a43;--halo:#fff;--hl:rgba(255,190,0,.38);--r0:#cfe8bd;--r1:#bde5d4;--r2:#e2edb6;--d0:#6dbb55;--d1:#3ea88a;--d2:#b8c43c;--sea:#f5f8f3;--sh:0 8px 28px rgba(20,50,25,.18);--ac:#2f8a3b;--row:rgba(47,138,59,.09);--bd:rgba(30,60,35,.1);box-sizing:border-box}
+:root:not([data-theme=light]){color-scheme:light dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--card:rgba(24,36,26,.9);--tx:#e2efdf;--mut:#8da68e;--line:#7cc47f;--halo:#0f1a10;--r0:#2d4623;--r1:#234638;--r2:#3f4a1f;--sea:#0b130c;--ac:#7cc47f;--row:rgba(124,196,127,.12);--bd:rgba(255,255,255,.1);--sh:0 8px 28px rgba(0,0,0,.5)}}
+:root[data-theme=dark]{--card:rgba(24,36,26,.9);--tx:#e2efdf;--mut:#8da68e;--line:#7cc47f;--halo:#0f1a10;--r0:#2d4623;--r1:#234638;--r2:#3f4a1f;--sea:#0b130c;--ac:#7cc47f;--row:rgba(124,196,127,.12);--bd:rgba(255,255,255,.1);--sh:0 8px 28px rgba(0,0,0,.5)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--sea);color:var(--tx);font:14px/1.45 "SaoChingcha",sans-serif}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#m{position:fixed;inset:0;width:100%;height:100%;display:block;background:var(--sea);touch-action:none;cursor:grab;user-select:none}
+#m:active{cursor:grabbing}
+.p{transition:opacity .4s ease}.f{stroke:none;transition:fill .3s,filter .3s}
+.r0 .f{fill:var(--r0)}.r1 .f{fill:var(--r1)}.r2 .f{fill:var(--r2)}
+.c{fill:transparent;stroke:var(--line);stroke-width:.7;stroke-opacity:0;vector-effect:non-scaling-stroke;transition:fill .25s,stroke-opacity .35s}
+.showd .c,.sel .c{stroke-opacity:.5}
+.ol{fill:none;stroke:var(--line);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+.p:hover .f{filter:brightness(.95)}.showd .c:hover,.sel .c:hover{fill:var(--hl)}.c.on{fill:var(--hl);stroke-opacity:1}
+.dim{opacity:.45}
+text{text-anchor:middle;dominant-baseline:central;fill:var(--tx);paint-order:stroke;stroke:var(--halo);stroke-linejoin:round;font-weight:600;pointer-events:none}
+.fl{position:fixed;background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--sh);border:1px solid var(--bd);border-radius:14px;z-index:3}
+.fl button{display:grid;place-items:center;width:42px;height:42px;border:0;background:none;color:var(--tx);cursor:pointer;border-radius:12px;transition:background .2s,color .2s,transform .15s}
+.fl button:hover{background:var(--row)}.fl button:active{transform:scale(.92)}
+#md{top:calc(12px + env(safe-area-inset-top,0px));left:12px;display:flex;padding:3px;border-radius:16px}
+#md{align-items:center}.seg{position:relative;display:flex}.sp{width:1px;height:22px;background:var(--mut);opacity:.35;margin:0 5px;flex:none}.seg i{position:absolute;top:0;left:0;width:42px;height:42px;border-radius:12px;background:var(--ac);transition:transform .35s cubic-bezier(.3,.9,.3,1)}
+#md button{position:relative;z-index:1}.seg button.a{color:#fff}.seg button.a:hover{background:none}
+#ctl{top:calc(12px + env(safe-area-inset-top,0px));right:12px;display:flex;flex-direction:column;padding:3px;gap:2px}
+#sh{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:min(100%,560px);background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px 24px 0 0;box-shadow:0 -6px 30px rgba(20,50,25,.2);border:1px solid var(--bd);border-bottom:0;z-index:4;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .42s cubic-bezier(.22,.9,.28,1);will-change:transform}
+#hd{padding:0 14px calc(12px + env(safe-area-inset-bottom,0px))}
+#grab{height:26px;display:grid;place-items:center;touch-action:none;cursor:grab}
+#grab i{width:38px;height:4px;border-radius:2px;background:var(--mut);opacity:.5}
+#sb{display:flex;align-items:center;gap:10px;height:46px;padding:0 6px 0 14px;border-radius:23px;background:var(--row);color:var(--mut);transition:box-shadow .2s}
+#sb:focus-within{box-shadow:0 0 0 2px var(--ac);color:var(--ac)}
+#q{flex:1;min-width:0;border:0;outline:0;background:none;color:var(--tx);font:inherit;font-size:15px}
+#q::placeholder{color:var(--mut)}
+#cl{width:34px;height:34px;border:0;border-radius:50%;background:none;color:var(--mut);display:grid;place-items:center;cursor:pointer}
+#cl[hidden]{display:none}
+#body{flex:1;overflow:auto;overscroll-behavior:contain;padding:0 10px 24px}
+h3{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;margin:14px 6px 4px;color:var(--mut)}h3 small{font-weight:400}
+h2{font-size:22px;margin:2px 6px 6px;font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}.dot.r0{background:var(--d0)}.dot.r1{background:var(--d1)}.dot.r2{background:var(--d2)}
+.it{display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:12px;cursor:pointer;transition:background .2s}
+.it:hover{background:var(--row)}.it.on{background:var(--hl)}
+.it .t{flex:1;min-width:0;display:flex;flex-direction:column}.it small{color:var(--mut);font-size:12px}
+.it em{font-style:normal;color:var(--mut);font-size:12.5px;font-variant-numeric:tabular-nums}
+.bk{display:inline-flex;align-items:center;gap:2px;color:var(--ac);cursor:pointer;padding:4px 8px 4px 2px;border-radius:10px;font-size:13px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 6px 8px}.chips span{padding:3px 10px;border-radius:12px;background:var(--row);font-size:12px;color:var(--mut)}
+.em{padding:28px 10px;text-align:center;color:var(--mut)}
+#body>*{animation:in .3s ease both}@keyframes in{from{opacity:0;transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#mnb,.dm{display:none}
+.cp{display:grid;place-items:center;width:30px;height:30px;border:0;background:none;color:var(--mut);border-radius:9px;cursor:pointer;flex:none;transition:background .2s,color .2s}.cp:hover{background:var(--row);color:var(--ac)}
+.act{display:flex;gap:8px;margin:0 6px 10px;flex-wrap:wrap}.act button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:0;border-radius:18px;background:var(--row);color:var(--ac);font:inherit;font-weight:600;font-size:13px;cursor:pointer;transition:transform .15s}.act button:active{transform:scale(.95)}
+#ts{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;pointer-events:none;background:var(--tx);color:var(--sea);padding:8px 16px;border-radius:20px;font-size:13px;z-index:9;transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1)}
+#ts.on{opacity:1;transform:translate(-50%,0)}
+@media(min-width:900px){
+#mnb{display:grid}.dm{display:block}
+#sh{top:72px;bottom:12px;left:12px;right:auto;margin:0;width:360px;height:auto!important;border-radius:20px;border:1px solid var(--bd);box-shadow:var(--sh);transform:none;transition:transform .45s cubic-bezier(.22,.9,.28,1),opacity .3s}
+#sh.closed{transform:translateX(calc(-100% - 24px));opacity:0;pointer-events:none}
+#grab{display:none}#hd{padding:14px 14px 10px}
+}
+</style></head><body>
+<svg id="m"></svg><div id="ts"></div>
+
+<div id="md" class="fl"><button id="mnb" aria-label="เมนู"><svg class="i" viewBox="0 0 24 24"><path d="M4 8.5h16M4 15.5h16"/></svg></button><u class="sp dm"></u><div class="seg"><i id="th"></i><button id="b0" class="a" aria-label="แยกจังหวัด" title="แยกจังหวัด"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></button>
+<button id="b1" aria-label="แยกเขต" title="แยกเขต"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></button></div><u class="sp"></u><button id="tb" aria-label="ธีม"></button></div>
+<div id="ctl" class="fl">
+<button id="zi" aria-label="ซูมเข้า"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+<button id="zo" aria-label="ซูมออก"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+<button id="zr" aria-label="ดูทั้งหมด"><svg class="i" viewBox="0 0 24 24"><path d="M4 9V5.5A1.5 1.5 0 0 1 5.5 4H9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M9 20H5.5A1.5 1.5 0 0 1 4 18.5V15"/></svg></button></div>
+<div id="sh"><div id="hd"><div id="grab"><i></i></div>
+<label id="sb"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input id="q" placeholder="ค้นหาชื่อพื้นที่ หรือรหัสไปรษณีย์" autocomplete="off" enterkeyhint="search"><button id="cl" hidden aria-label="ล้าง"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></label></div>
+<div id="body"></div></div>
+<script>
+const DATA = [
+  {district:1, provName:"นครราชธานี", areaCode:"101", entries:[{zip:"10101",name:"วังฯ"},{zip:"10102",name:"เวียง"},{zip:"10103",name:"คลัง"},{zip:"10104",name:"ประชาธิป"},{zip:"10105",name:"พรศรีแผ่นดิน"},{zip:"10106",name:"โรงพยาบาล"},{zip:"10107",name:"รถราง"},{zip:"10108",name:"ไฟฟ้าสถิต"},{zip:"10109",name:"รัฐสภาเก่า"}]},
+  {district:1, provName:"ราษฎรมณฑล", areaCode:"102", entries:[{zip:"10210",name:"บางแตงโม"},{zip:"10211",name:"บางแมวโต"},{zip:"10212",name:"มาลีวง"},{zip:"10213",name:"ยูเรนัส"},{zip:"10214",name:"สัมพันธไมต"},{zip:"10215",name:"พระอาทิตย์"},{zip:"10216",name:"วงรี"},{zip:"10217",name:"ตลาดวงรี"},{zip:"10218",name:"ผีเปรต"},{zip:"10219",name:"พันเก้าเล่า"},{zip:"10220",name:"เรือนจำ"},{zip:"10221",name:"ธนาคารกลาง"},{zip:"10222",name:"เสรีฝาแตก"},{zip:"10223",name:"ชาตินิยม"},{zip:"10224",name:"สังคมนิยม"},{zip:"10225",name:"อนุรักษ์นิยม"}]},
+  {district:2, provName:"สลัมคลองเจ๋ง", areaCode:"203", entries:[{zip:"20326",name:"กะสี"},{zip:"20327",name:"สลัมคลองเจ๋ง"},{zip:"20328",name:"คลองเจ๋ง"},{zip:"20329",name:"เขต49"},{zip:"20330",name:"ทะเลเปรี้ยว"},{zip:"20331",name:"กล้วยแตก"}]},
+  {district:2, provName:"เขาเจ๋ง", areaCode:"204", entries:[{zip:"20432",name:"บายาโดลิด"},{zip:"20433",name:"หลุมริม"},{zip:"20434",name:"ด้านขนาน"}]},
+  {district:2, provName:"ต้มยำไก่", areaCode:"205", entries:[{zip:"20535",name:"กลีเจ๋ง"},{zip:"20536",name:"กลีดำ"},{zip:"20537",name:"กลีโอ้ล"},{zip:"20538",name:"กลีเปรียว"},{zip:"20539",name:"กลีแดง"}]},
+  {district:2, provName:"โอ้ลลิ่ง", areaCode:"206", entries:[{zip:"20640",name:"หลอกูด"},{zip:"20641",name:"หลอ"},{zip:"20642",name:"โอ้ลซิ่ง"},{zip:"20643",name:"โอ้ลวิ่ง"}]},
+  {district:2, provName:"เลิกโง่", areaCode:"207", entries:[{zip:"20744",name:"เลิกโง่"},{zip:"20745",name:"เลิกเหลี่ยม"},{zip:"20746",name:"ประหารชีวิต"}]},
+  {district:2, provName:"โยดก", areaCode:"208", entries:[{zip:"20847",name:"ไส้ติ่งแตก"},{zip:"20848",name:"สมองแตก"}]},
+  {district:2, provName:"กรุงเจ๋ง", areaCode:"209", entries:[{zip:"20949",name:"กรุงเจ๋ง"},{zip:"20950",name:"อาณานิคม"},{zip:"20951",name:"ส้มปอด"}]},
+  {district:3, provName:"งอ", areaCode:"310", entries:[{zip:"31052",name:"งอ"},{zip:"31053",name:"งอลวง"}]},
+  {district:3, provName:"พรศรี", areaCode:"311", entries:[{zip:"31154",name:"พระพร"},{zip:"31155",name:"ศรีบุแม่"},{zip:"31156",name:"มุมปาน"}]},
+  {district:3, provName:"ทม", areaCode:"312", entries:[{zip:"31257",name:"ทมตะวันตก"},{zip:"31258",name:"ทมตะวันออก"}]},
+  {district:3, provName:"ยากส์", areaCode:"313", entries:[{zip:"31359",name:"ยากส์ชิบหาย"},{zip:"31360",name:"เมืองกรุงเขา"}]},
+  {district:3, provName:"ประปาแตก", areaCode:"314", entries:[{zip:"31461",name:"ประปาแตก"}]}
+];
+const REG=[{n:"ภาค 1",ab:"ศสว.",f:"ศรีสุนทรโวหาร"},{n:"ภาค 2",ab:"ปดน.",f:"ประดิษฐ์มนูธรรม"},{n:"ภาค 3",ab:"ธรส.",f:"ธรรมรงนาวาสวัสดิ์"}];
+const $=s=>document.querySelector(s),svg=$('#m'),NS='http://www.w3.org/2000/svg';
+// polygons in screenshot coordinates (1380x750)
+const bb=a=>{let p=a.join(' ').split(/[ ,]/).map(Number),xs=[],ys=[];p.forEach((v,i)=>(i%2?ys:xs).push(v));const x=Math.min(...xs),y=Math.min(...ys);return{x,y,w:Math.max(...xs)-x,h:Math.max(...ys)-y}};
+const OUT={
+0:["780,378 860,378 860,445 780,445"],1:["738,345 905,345 905,485 738,485"],
+2:["905,345 1122,303 1140,345 1148,400 1148,485 905,485"],
+3:["543,345 570,290 610,235 670,190 740,160 810,153 783,345"],
+4:["612,345 738,345 738,675 615,655"],
+5:["543,345 612,345 615,655 570,640 520,600 490,540 487,487 500,420 520,380"],
+6:["810,153 880,155 960,172 1040,185 1090,235 1122,303 905,345 783,345"],
+7:["905,485 1148,485 1148,520 1140,580 1090,640 1010,672 880,677"],
+8:["738,485 905,485 897,560 880,677 740,675"],
+9:["210,48 490,32 485,147 450,150 430,190 380,198 235,195 200,290","528,30 575,30 610,70 605,120 570,148 524,147"],
+10:["10,140 60,115 130,55 210,48 200,290 98,327 10,357"],
+11:["1190,150 1258,38 1330,65 1380,55 1380,235 1275,212 1230,190"],
+12:["1065,70 1095,45 1150,35 1200,40 1258,38 1190,150 1130,125 1075,100"],
+13:["1210,665 1235,645 1275,650 1290,690 1275,720 1235,725 1210,700"]};
+const DS={
+2:[[905,303,968,410],[968,303,1088,410],[1088,303,1148,410],[905,410,1030,485],[1030,410,1112,485],[1112,410,1148,485]],
+3:["543,345 570,290 610,235 670,190 675,198 735,285 720,340 720,345","675,198 670,190 740,160 810,153 783,300 735,285","735,285 783,300 783,345 720,345 720,340"],
+4:[[612,345,738,408],[612,408,738,487],[612,487,738,565],[612,565,738,637],[612,637,738,675]],
+5:[[480,345,612,408],[480,408,612,487],[480,487,612,565],[480,565,612,655]],
+6:["810,153 880,155 960,172 936,248 795,225","795,225 936,248 905,345 783,345","960,172 1040,185 1090,235 1122,303 905,345 936,248"],
+7:["905,485 1050,640 1010,672 880,677","905,485 1148,485 1148,520 1140,580 1090,640 1050,640"],
+8:[[738,485,905,565],[738,565,905,637],[738,637,905,675]],
+9:OUT[9],
+10:["10,140 60,115 130,242 100,290 98,327 10,357","60,115 130,55 210,48 200,230 170,225 130,242","130,242 170,225 200,230 200,290 98,327 100,290"],
+11:["1258,38 1330,65 1275,212 1230,190 1190,150","1330,65 1380,55 1380,235 1275,212"],
+12:[OUT[12][0],[1100,35,1170,105]],13:[OUT[13][0]]};
+{const g=(xs,ys,skip)=>{const o=[];for(let r=0;r<ys.length-1;r++)for(let c=0;c<xs.length-1;c++)if(!skip(r,c,xs.length-1,ys.length-1))o.push([xs[c],ys[r],xs[c+1],ys[r+1]]);return o};
+DS[0]=g([780,807,833,860],[378,403,425,445],()=>0);
+DS[1]=g([738,780,807,833,860,905],[345,378,403,425,445,485],(r,c)=>r>0&&r<4&&c>0&&c<4)}
+const LP={1:[820,357],9:[350,120]};
+const PB=DATA.map((_,i)=>bb(OUT[i]));
+const C=DATA.map((p,i)=>DS[i].map(s=>{
+ if(typeof s=='string'){const b=bb([s]),v=s.split(' ').map(q=>q.split(',').map(Number));
+  return{poly:s,...b,cx:v.reduce((a,q)=>a+q[0],0)/v.length,cy:v.reduce((a,q)=>a+q[1],0)/v.length,lw:b.w*.8}}
+ const b=PB[i],x0=Math.max(s[0],b.x),y0=Math.max(s[1],b.y),x1=Math.min(s[2],b.x+b.w),y1=Math.min(s[3],b.y+b.h);
+ return{r:s,x:x0,y:y0,w:x1-x0,h:y1-y0,cx:(x0+x1)/2,cy:(y0+y1)/2,lw:x1-x0}}));
+let h='<defs>'+DATA.map((_,i)=>i>1?`<clipPath id="k${i}">${OUT[i].map(s=>`<polygon points="${s}"/>`).join('')}</clipPath>`:'').join('')+'</defs><g id="g">';
+[1,0,2,3,4,5,6,7,8,9,10,11,12,13].forEach(i=>{const p=DATA[i];
+ h+=`<g class="p r${p.district-1}" data-i="${i}">`+OUT[i].map(s=>`<polygon class="f" points="${s}"/>`).join('')+
+ C[i].map((c,j)=>c.poly?`<polygon class="c" data-i="${i}" data-j="${j}" points="${c.poly}"/>`:`<rect class="c" data-i="${i}" data-j="${j}" x="${c.r[0]}" y="${c.r[1]}" width="${c.r[2]-c.r[0]}" height="${c.r[3]-c.r[1]}" ${i>1?`clip-path="url(#k${i})"`:''}/>`).join('')+
+ OUT[i].map(s=>`<polygon class="ol" points="${s}"/>`).join('')+'</g>'});
+svg.innerHTML=h+'</g><g id="lb"></g>';
+const DT=matchMedia('(min-width:900px)'),lb=$('#lb'),sh=$('#sh'),hd=$('#hd'),qi=$('#q'),grab=$('#grab');
+C[12][0].cx=1175;C[12][0].cy=128;C[12][0].lw=110;
+const FULL={x:0,y:0,w:1380,h:750};
+let vb={...FULL},sel={i:null,j:null},mode=0,anim,st=0,H=0,off=[0,0,0];
+const I={cp:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>',link:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',chev:'<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m9 6 6 6-6 6"/></svg>',back:'<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="m15 6-6 6 6 6"/></svg>',pin:'<svg class="i" viewBox="0 0 24 24" style="color:var(--ac)"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',no:'<svg class="i" viewBox="0 0 24 24" style="width:32px;height:32px"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M9 9l4 4m0-4-4 4"/></svg>'};
+const R0=()=>svg.getBoundingClientRect(),sc=()=>R0().width/vb.w;
+function labels(){const s=sc(),o=[],E=(t,x,y,fs)=>o.push(`<text x="${x}" y="${y}" font-size="${fs}" stroke-width="${3/s}">${t}</text>`);
+ const showAll=vb.w<460;
+ DATA.forEach((p,i)=>{const b=PB[i],on=sel.i===i||showAll;
+  if(on){C[i].forEach((c,j)=>{const x=c.cx,y=c.cy;if(x<vb.x-50||x>vb.x+vb.w+50||y<vb.y-50||y>vb.y+vb.h+50)return;
+    const t=p.entries[j].name,fs=Math.min(11.5/s,c.lw*1.2/(t.length*.6));if(fs*s>=5)E(t,x,y,fs)})}
+  if(sel.i!==i&&!showAll){const fs=(i>1?13:11)/s,w=p.provName.length*.6*fs;if(w<=b.w*1.05){const l=LP[i]||[b.x+b.w/2,b.y+b.h/2];E(p.provName,l[0],l[1],fs)}}});
+ lb.innerHTML=o.join('')}
+function upd(){const r=R0();vb.h=vb.w*r.height/r.width;svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+ svg.classList.toggle('showd',vb.w<740||mode==1);labels()}
+// bottom sheet
+function geo(){H=Math.round(innerHeight*.86);sh.style.height=DT.matches?'':H+'px';off=[H-hd.offsetHeight,H-Math.round(innerHeight*.5),0]}
+const vis=s=>H-off[s];
+function setSt(s,inst){sh.style.transition=inst?'none':'';if(DT.matches){st=s?1:0;sh.classList.toggle('closed',!st);sh.style.transform=''}else{st=s;sh.classList.remove('closed');sh.style.transform=`translateY(${off[s]}px)`}}
+function selBox(){return sel.i===null?FULL:sel.j===null?PB[sel.i]:C[sel.i][sel.j]}
+function refit(){fit(selBox(),sel.i===null?1.04:sel.j===null?1.35:4)}
+function fit(b,pad=1.35){const r=R0(),dt=DT.matches,ins=dt?0:Math.min(vis(st),r.height*.55),il=dt&&st?384:0,wv=r.width-il,hv=r.height-ins,wm=Math.max(b.w*pad,b.h*pad*wv/hv),k=wm/wv,w=k*r.width,ra=r.height/r.width,
+ S={x:vb.x+vb.w/2,y:vb.y+vb.w*ra/2},T={x:b.x+b.w/2-(il+wv/2-r.width/2)*k,y:b.y+b.h/2-(hv/2-r.height/2)*k},w0=vb.w,t0=performance.now(),d=Math.abs(Math.log(w/w0))>.5?700:520;
+ cancelAnimationFrame(anim);(function f(t){let e=Math.min(1,(t-t0)/d);e=e<.5?4*e*e*e:1-Math.pow(-2*e+2,3)/2;
+  const ww=w0*Math.pow(w/w0,e),cx=S.x+(T.x-S.x)*e,cy=S.y+(T.y-S.y)*e;vb.w=ww;vb.x=cx-ww/2;vb.y=cy-ww*ra/2;upd();if(e<1)anim=requestAnimationFrame(f)})(t0)}
+function zoomAt(f,px,py){const r=R0(),wx=vb.x+(px-r.left)/r.width*vb.w,wy=vb.y+(py-r.top)/r.height*vb.h,nw=Math.min(2400,Math.max(25,vb.w/f)),g=vb.w/nw;
+ vb.x=wx-(wx-vb.x)/g;vb.y=wy-(wy-vb.y)/g;vb.w=nw;upd()}
+function select(i,j=null,s){sel={i,j};
+ svg.querySelectorAll('.p').forEach(g=>{g.classList.toggle('sel',+g.dataset.i===i);g.classList.toggle('dim',i!==null&&+g.dataset.i!==i)});
+ svg.querySelectorAll('.c.on').forEach(e=>e.classList.remove('on'));
+ if(i!==null&&j!==null)svg.querySelector(`.c[data-i="${i}"][data-j="${j}"]`).classList.add('on');
+ if(s!==undefined)setSt(s);refit();panel();$('#body').scrollTop=0;try{history.replaceState(null,'',codeOf()?'#'+codeOf():location.pathname+location.search)}catch(_){}}
+const codeOf=()=>sel.i===null?'':sel.j===null?DATA[sel.i].areaCode:DATA[sel.i].entries[sel.j].zip;
+const linkOf=()=>{try{return location.href.split('#')[0]+'#'+codeOf()}catch(_){return codeOf()}};
+let tt;function toast(m){const t=$('#ts');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1700)}
+function copy(v,m){const ok=()=>toast(m||'คัดลอก '+v+' แล้ว'),fb=()=>{const a=document.createElement('textarea');a.value=v;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(_){toast('คัดลอกไม่สำเร็จ')}a.remove()};
+ navigator.clipboard?navigator.clipboard.writeText(v).then(ok,fb):fb()}
+const Z={};DATA.forEach((p,i)=>{Z[p.areaCode]=[i,null];p.entries.forEach((e,j)=>Z[e.zip]=[i,j])});
+function go(){const k=(location.hash||'').replace(/^#\/?/,'').trim();if(Z[k])select(Z[k][0],Z[k][1],1)}
+function panel(){const B=$('#body'),qv=qi.value.trim().toLowerCase();let h='';$('#cl').hidden=!qv;
+ const row=(i,j,t,sub,e,on)=>`<div class="it${on?' on':''}" data-i="${i}"${j!=null?` data-j="${j}"`:''}>${j!=null?I.pin:`<span class="dot r${DATA[i].district-1}"></span>`}<div class="t"><b>${t}</b>${sub?`<small>${sub}</small>`:''}</div><em>${e}</em>${j==null?I.chev:`<button class="cp" data-zip="${e}" aria-label="คัดลอกรหัส">${I.cp}</button>`}</div>`;
+ if(qv){const m=[];DATA.forEach((p,i)=>{const rg=REG[p.district-1];
+  if((p.provName+p.areaCode+rg.ab+rg.f).toLowerCase().includes(qv))m.push(row(i,null,p.provName,rg.n+' '+rg.ab,p.areaCode));
+  p.entries.forEach((e,j)=>{if((e.name+e.zip).toLowerCase().includes(qv))m.push(row(i,j,e.name,p.provName,e.zip))})});
+  h=m.length?m.slice(0,40).join(''):`<div class="em">${I.no}<p>ไม่พบผลการค้นหา</p></div>`}
+ else if(sel.i===null){REG.forEach((r,k)=>{h+=`<h3><span class="dot r${k}"></span>${r.n} · ${r.ab} <small>${r.f}</small></h3>`;DATA.forEach((p,i)=>{if(p.district-1===k)h+=row(i,null,p.provName,p.entries.length+' เขต',p.areaCode)})})}
+ else{const p=DATA[sel.i],r=REG[p.district-1];h=`<div style="padding:0 4px"><span class="bk" data-back="1">${I.back}ทั้งหมด</span></div><h2>${p.provName}</h2><div class="chips"><span>รหัส ${p.areaCode}</span><span>${r.n} ${r.ab}</span><span>${p.entries.length} เขต</span></div><div class="act"><button data-cp="${codeOf()}">${I.cp}คัดลอก ${codeOf()}</button><button data-link="1">${I.link}คัดลอกลิงก์</button></div>`+
+  p.entries.map((e,j)=>row(sel.i,j,e.name,'',e.zip,sel.j===j)).join('')}
+ B.innerHTML=h}
+$('#body').onclick=e=>{const c=e.target.closest('[data-zip],[data-cp]');if(c)return copy(c.dataset.zip||c.dataset.cp);if(e.target.closest('[data-link]'))return copy(linkOf(),'คัดลอกลิงก์แล้ว');if(e.target.closest('[data-back]'))return select(null);const t=e.target.closest('.it');if(!t)return;
+ const i=+t.dataset.i,j=t.dataset.j===undefined?null:+t.dataset.j;qi.value='';select(i,j,1)};
+qi.oninput=panel;qi.onfocus=()=>{if(st===0){setSt(1);}};
+qi.onkeydown=e=>{if(e.key==='Enter'){const t=$('#body .it');if(t)t.click();qi.blur()}};
+$('#cl').onclick=()=>{qi.value='';panel();qi.focus()};
+// sheet drag
+let dy=null;
+grab.onpointerdown=e=>{grab.setPointerCapture(e.pointerId);sh.style.transition='none';dy={y:e.clientY,t:off[st],l:e.clientY,lt:performance.now(),v:0,m:0,c:off[st]}};
+grab.onpointermove=e=>{if(!dy)return;const d=e.clientY-dy.y;if(Math.abs(d)>4)dy.m=1;dy.c=Math.min(off[0],Math.max(0,dy.t+d));sh.style.transform=`translateY(${dy.c}px)`;const n=performance.now();dy.v=(e.clientY-dy.l)/(n-dy.lt+1);dy.l=e.clientY;dy.lt=n};
+grab.onpointerup=grab.onpointercancel=()=>{if(!dy)return;const d=dy;dy=null;let s;
+ if(!d.m)s=st===0?1:0;else{const p=d.c+d.v*220;s=[0,1,2].reduce((a,k)=>Math.abs(off[k]-p)<Math.abs(off[a]-p)?k:a,0)}
+ if(s!==0)qi.blur();setSt(s);if(sel.i!==null)refit()};
+// map interaction
+const ptr=new Map();let drag=false,pd;
+svg.onpointerdown=e=>{ptr.set(e.pointerId,[e.clientX,e.clientY]);drag=false;pd=[e.clientX,e.clientY];cancelAnimationFrame(anim)};
+svg.onpointermove=e=>{if(!ptr.has(e.pointerId))return;const o=ptr.get(e.pointerId),n=[e.clientX,e.clientY],r=R0();
+ if(ptr.size===1){if(!drag&&Math.hypot(n[0]-pd[0],n[1]-pd[1])<5)return;if(!drag)svg.setPointerCapture(e.pointerId);drag=true;
+  vb.x-=(n[0]-o[0])/r.width*vb.w;vb.y-=(n[1]-o[1])/r.width*vb.w;ptr.set(e.pointerId,n);upd()}
+ else{const d=a=>Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]),d0=d([...ptr.values()]);ptr.set(e.pointerId,n);const ps=[...ptr.values()];
+  zoomAt(d(ps)/d0,(ps[0][0]+ps[1][0])/2,(ps[0][1]+ps[1][1])/2);drag=true}};
+svg.onpointerup=svg.onpointercancel=e=>ptr.delete(e.pointerId);
+svg.onwheel=e=>{e.preventDefault();cancelAnimationFrame(anim);zoomAt(Math.exp(-e.deltaY*.0018),e.clientX,e.clientY)};
+svg.onclick=e=>{if(drag){drag=false;return}qi.blur();const c=e.target.closest('.c');if(!c)return select(null,null,DT.matches?undefined:0);
+ const i=+c.dataset.i,j=+c.dataset.j;select(i,sel.i===i?j:null,1)};
+const zc=f=>{const r=R0();cancelAnimationFrame(anim);zoomAt(f,r.left+(DT.matches&&st?384+(r.width-384)/2:r.width/2),r.top+(DT.matches?r.height/2:(r.height-Math.min(vis(st),r.height*.55))/2))};
+$('#zi').onclick=()=>zc(1.6);$('#zo').onclick=()=>zc(1/1.6);$('#zr').onclick=()=>select(null);
+[0,1].forEach(k=>$('#b'+k).onclick=()=>{mode=k;$('#b0').classList.toggle('a',!k);$('#b1').classList.toggle('a',!!k);$('#th').style.transform=`translateX(${k*42}px)`;upd()});
+const rs=()=>{geo();setSt(st,1);upd()};
+addEventListener('resize',rs);DT.onchange=rs;addEventListener('hashchange',go);$('#mnb').onclick=()=>{setSt(st?0:1);if(sel.i!==null)refit()};new ResizeObserver(upd).observe(svg);
+geo();setSt(DT.matches?1:0,1);requestAnimationFrame(()=>{sh.style.transition=''});panel();refit();go();
+const TI=['<svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>','<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg>','<svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>'],TN=['ธีม: ตามระบบ','ธีม: สว่าง','ธีม: มืด'],TK=['auto','light','dark'];
+let tm=0;try{tm=Math.max(0,TK.indexOf(localStorage.getItem('th')))}catch(_){}
+function applyTh(){const r=document.documentElement;tm?r.setAttribute('data-theme',TK[tm]):r.removeAttribute('data-theme');const b=$('#tb');b.innerHTML=TI[tm];b.title=TN[tm];b.setAttribute('aria-label',TN[tm]);try{localStorage.setItem('th',TK[tm])}catch(_){}}
+$('#tb').onclick=()=>{tm=(tm+1)%3;applyTh();toast(TN[tm])};applyTh();
+</script></body></html>
