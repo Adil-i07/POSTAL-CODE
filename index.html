@@ -192,6 +192,8 @@ body.emb #sh,body.emb #pc,body.emb #ed,body.emb #av{display:none}
 .ao-box{padding:12px;border-radius:16px;background:var(--row);margin-bottom:12px;border:1px solid var(--bd)}
 .chk-grp{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
 .chk-grp label{display:inline-flex;align-items:center;gap:4px;font-size:13px;cursor:pointer}
+body.mv .p:hover .f{filter:none}
+body.mv .fl,body.mv #sh{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--paper) 84%,transparent)}
 </style></head><body>
 <svg id="m"></svg><div id="pg"><div class="zh"><div class="zw"><div class="zt"><h1>Postal Codes</h1><button id="zmap" class="zbtn"><svg class="i" viewBox="0 0 24 24"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg>Map</button></div><label id="zsb"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input id="zq" placeholder="Search province, district or zip code" autocomplete="off"></label></div></div><div class="zw" id="zl"></div></div><div id="sm" hidden><div class="fl"><div class="smh"><h2>Share this map</h2><button id="smx" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><small id="sml" class="hint"></small>
 <div class="shr"><span>🔗</span><div class="t"><b>Link</b><small>Current area, pin &amp; zoom</small></div><button class="sb2" data-sa="link">Copy</button><button class="sb2 o" id="shnat" data-sa="native">Share</button></div>
@@ -275,17 +277,26 @@ svg.insertAdjacentHTML('beforeend','<g id="ms"></g><g id="pl"></g><g id="gh" poi
 const FULL={x:0,y:0,w:1380,h:750};
 let fs=false,ms=false,mp=[],FV=[],vb={...FULL},sel={i:null,j:null},mode=0,anim,st=0,H=0,off=[0,0,0];
 const I={star:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="m12 3.5 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.9l6-.9z"/></svg>',starf:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px;fill:currentColor"><path d="m12 3.5 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.9l6-.9z"/></svg>',cp:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg>',link:'<svg class="i" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',chev:'<svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m9 6 6 6-6 6"/></svg>',back:'<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="m15 6-6 6 6 6"/></svg>',pin:'<svg class="i" viewBox="0 0 24 24" style="color:var(--ac)"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',no:'<svg class="i" viewBox="0 0 24 24" style="width:32px;height:32px"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2M9 9l4 4m0-4-4 4"/></svg>',gridPlus:'<svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="16" cy="16" r="5" fill="var(--sea)" stroke="none"/><path d="M16 13v6M13 16h6" stroke="var(--ac)" stroke-width="2"/></svg>'};
-const R0=()=>svg.getBoundingClientRect(),sc=()=>R0().width/vb.w;
+let RR=null;const R0=()=>RR||(RR=svg.getBoundingClientRect()),sc=()=>R0().width/vb.w;
 function labels(){OCC=[];const s=sc(),o=[],E=(t,x,y,fs)=>{OCC.push([x-t.length*.3*fs,y-fs*.6,x+t.length*.3*fs,y+fs*.6]);return o.push(`<text x="${x}" y="${y}" font-size="${fs}" stroke-width="${3/s}">${t}</text>`)};
  const showAll=vb.w<460;
  DATA.forEach((p,i)=>{const b=PB[i],on=sel.i===i||showAll;
-  if(on){C[i].forEach((c,j)=>{const x=c.cx,y=c.cy;if(x<vb.x-50||x>vb.x+vb.w+50||y<vb.y-50||y>vb.y+vb.h+50)return;
+  if(on){C[i].forEach((c,j)=>{const x=c.cx,y=c.cy;if(x<vb.x-vb.w*.6||x>vb.x+vb.w*1.6||y<vb.y-vb.h*.6||y>vb.y+vb.h*1.6)return;
     const t=p.entries[j].name,fs=Math.min(11.5/s,c.lw*1.2/(t.length*.6));if(fs*s>=5)E(t,x,y,fs)})}
   if(sel.i!==i&&!showAll){const fs=(i>1?13:11)/s,w=p.provName.length*.6*fs;if(w<=b.w*1.05){const l=LP[i]||[b.x+b.w/2,b.y+b.h/2];E(p.provName,l[0],l[1],fs)}}});
  FV.forEach(c=>{const z=Z[c];if(!z)return;const[i,j]=z,l=j==null?(LP[i]||[PB[i].x+PB[i].w/2,PB[i].y+PB[i].h/2]):[C[i][j].cx,C[i][j].cy];o.push(`<text class="st" x="${l[0]}" y="${l[1]-15/s}" font-size="${16/s}" stroke-width="${3/s}">★</text>`)});
  lb.innerHTML=o.join('')}
+/* ===== ระบบ render ลื่น: viewBox อัปเดตทันที (ถูกมาก) ส่วนงานหนักรวมเป็นเฟรมละครั้ง และข้ามได้ถ้ายังอยู่ในพื้นที่ที่วาดไว้แล้ว ===== */
+let rqF=0,idleT=0,forceR=0,CV=null,lastUpd=0;
+const moving=()=>performance.now()-lastUpd<160;
+const setCov=()=>CV={x0:vb.x-vb.w*.6,y0:vb.y-vb.h*.6,x1:vb.x+vb.w*1.6,y1:vb.y+vb.h*1.6,vw:vb.w};
+const inCov=()=>CV&&vb.x>=CV.x0&&vb.y>=CV.y0&&vb.x+vb.w<=CV.x1&&vb.y+vb.h<=CV.y1&&Math.abs(Math.log(vb.w/CV.vw))<.22;
+function heavy(){forceR=0;setCov();labels();if(mp.length)drawMs();if(PL.length||pin||ED.pts.length||(ADDONS.fataekts&&fataekRoutes.length))drawPl()}
+function frame(){rqF=0;try{scaleBar()}catch(_){}if(forceR||!inCov()||gridOn())heavy()}
+function reqR(f){if(f)forceR=1;if(!rqF)rqF=requestAnimationFrame(frame)}
 function upd(){const r=R0();vb.h=vb.w*r.height/r.width;svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
- svg.classList.toggle('showd',vb.w<740||mode==1);labels();try{scaleBar()}catch(_){}if(mp.length)drawMs();if(PL.length||pin||ED.pts.length||(ADDONS.fataekts&&fataekRoutes.length))drawPl()}
+ svg.classList.toggle('showd',vb.w<740||mode==1);lastUpd=performance.now();document.body.classList.add('mv');reqR(0);
+ clearTimeout(idleT);idleT=setTimeout(()=>{document.body.classList.remove('mv');reqR(1)},120)}
 // bottom sheet
 function geo(){H=Math.round(innerHeight*.86);sh.style.height=DT.matches?'':H+'px';off=[H-hd.offsetHeight,H-Math.round(innerHeight*.5),0]}
 const vis=s=>H-off[s];
@@ -397,7 +408,7 @@ function bindAddonsEvents(){
     ADDONS.fataekts = e.target.checked; 
     ftsOpts.style.display = ADDONS.fataekts ? '' : 'none';
     saveAo(); 
-    if(ADDONS.fataekts) pullFataekRoutes(); else { fataekRoutes = []; drawPl(); }
+    if(ADDONS.fataekts){ ftTxt=''; pullFataekRoutes(true); } else { fataekRoutes = []; ftTxt=''; drawPl(); }
   };
   document.querySelectorAll('.fts-t').forEach(chk=>{
     chk.onchange = e => {
@@ -486,8 +497,8 @@ const zc=f=>{const r=R0();cancelAnimationFrame(anim);zoomAt(f,r.left+(DT.matches
 $('#ru').onclick=()=>setMeas(!ms);$('#mx').onclick=()=>setMeas(false);$('#mu').onclick=()=>{mp.pop();drawMs()};$('#fsb').onclick=()=>setFs(!fs);$('#shb').onclick=shareView;$('#fsb').innerHTML=FI[0]+'<span>Full screen</span>';document.onfullscreenchange=()=>{if(!document.fullscreenElement&&fs)setFs(false)};addEventListener('keydown',e=>{if(e.key==='Escape'){if(ms)setMeas(false);else if(fs)setFs(false)}});
 $('#zi').onclick=()=>zc(1.6);$('#zo').onclick=()=>zc(1/1.6);$('#zr').onclick=()=>select(null);
 $('#hp').onclick=()=>{const h=$('#hc');h.hidden=!h.hidden;$('#hp').classList.toggle('a',!h.hidden)};$('#fx').onclick=()=>setFs(false);$('#fx').innerHTML=FI[1];$('#tabs').onclick=e=>{const b=e.target.closest('button');if(b)setTab(+b.dataset.t)};
-const rs=()=>{geo();setSt(st,1);upd()};
-addEventListener('resize',rs);DT.onchange=rs;addEventListener('hashchange',()=>{forced=null;route();go()});addEventListener('popstate',()=>{forced=null;route();go()});$('#mnb').onclick=()=>{setSt(st?0:1);if(sel.i!==null)refit()};new ResizeObserver(upd).observe(svg);
+const rs=()=>{RR=null;geo();setSt(st,1);upd();reqR(1)};
+addEventListener('resize',rs);DT.onchange=rs;addEventListener('hashchange',()=>{forced=null;route();go()});addEventListener('popstate',()=>{forced=null;route();go()});$('#mnb').onclick=()=>{setSt(st?0:1);if(sel.i!==null)refit()};new ResizeObserver(()=>{RR=null;upd();reqR(1)}).observe(svg);
 // ===== สถานที่ / หมุด / โหมดแก้ไข =====
 const API='https://script.google.com/macros/s/AKfycbxK8Dhu68g7uIqEnF9rVV-6alcExBWOEROCQM3tMpQTATIMQctfFkYGFtkQwA_KsPrX1w/exec';
 const FATAEKTS_API='https://script.google.com/macros/s/AKfycbxFwVKpCbVcRWrTHOVnL56ghd_COKAhVx5XQZEz06d0j0hFSUIG2H23i1CcLty4z7UH/exec';
@@ -524,15 +535,16 @@ const FATAEK_TYPES = {
 
 const normFataek = i => ({ no:'', fare:'', price:'', note:'', road:'', color:'', pts:[], stops:[], ...i });
 
-async function pullFataekRoutes() {
-  if (!FATAEKTS_API || !ADDONS.fataekts) return;
+let lastFt=0,ftTxt='';
+async function pullFataekRoutes(force) {
+  if (!FATAEKTS_API || !ADDONS.fataekts || (!force && moving())) return;
+  lastFt = Date.now();
   try {
     const res = await fetch(FATAEKTS_API + '?action=list', { cache: 'no-store' });
-    const j = await res.json();
-    if (j.ok && j.items) {
-      fataekRoutes = j.items.map(normFataek);
-      drawPl();
-    }
+    const t = await res.text();
+    if (t === ftTxt) return;
+    const j = JSON.parse(t);
+    if (j.ok && j.items) { ftTxt = t; fataekRoutes = j.items.map(normFataek); reqR(1); }
   } catch (_) {}
 }
 
@@ -558,7 +570,16 @@ const pathC=(P,cv)=>{const n=P.length;if(!cv||n<3)return'M'+P.map(a=>a[0]+' '+a[
  for(let i=0;i<n;i++){const a=P[(i-1+n)%n],b=P[i],c=P[(i+1)%n],e=P[(i+2)%n];d+=`C${b[0]+(c[0]-a[0])/6} ${b[1]+(c[1]-a[1])/6} ${c[0]-(e[0]-b[0])/6} ${c[1]-(e[1]-b[1])/6} ${c[0]} ${c[1]}`}return d+'Z'};
 function ghost(e){const g=$('#gh');if(!g)return;const w=wpos(e.clientX,e.clientY),pv=ED.pts[ED.pts.length-1],q=snapPt(w,pv),s=sc();
  g.innerHTML=(pv?`<line x1="${pv[0]}" y1="${pv[1]}" x2="${q[0]}" y2="${q[1]}" stroke="#1c7ed6" stroke-width="${2/s}" stroke-dasharray="${5/s} ${4/s}" opacity=".7"/>`:'')+`<circle cx="${q[0]}" cy="${q[1]}" r="${5/s}" fill="#1c7ed6" opacity=".85"/>`}
-function drawPl(){const s=sc(),W=vb.w,occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]),zf=Math.min(2.6,Math.max(1,Math.pow(1380/W,.35))),RD={c:'',f:'',t:''},WT={c:'',f:'',t:''};let hl='',dn={},gr='',bay='',defs='',mk='',pv='',hs='',fataekHtml='';
+/* ===== ตัดสิ่งที่อยู่นอกจอออกจากการวาด (ข้อมูลยังอยู่ใน PL ครบ แค่ไม่วาดลง DOM) ===== */
+function inCv(p,B,pad){if(p.id==='tmp'||(FORM&&FORM.p&&p.id===FORM.p.id))return true;let a,b,c,d;const P=p.pts;
+ if(P&&P.length&&(p.kind==='road'||(p.kind==='nature'&&p.nt!=='mountain'))){a=c=P[0][0];b=d=P[0][1];for(let i=1;i<P.length;i++){const q=P[i];if(q[0]<a)a=q[0];else if(q[0]>c)c=q[0];if(q[1]<b)b=q[1];else if(q[1]>d)d=q[1]}}
+ else{a=c=p.x;b=d=p.y}
+ if(!(a===a&&b===b&&c===c&&d===d))return true;
+ return c>=B.x0-pad&&a<=B.x1+pad&&d>=B.y0-pad&&b<=B.y1+pad}
+const FBX=new WeakMap();
+function fbox(i){let b=FBX.get(i);if(b)return b;let a=Infinity,c=Infinity,d=-Infinity,e=-Infinity;const f=(x,y)=>{if(x<a)a=x;if(x>d)d=x;if(y<c)c=y;if(y>e)e=y};
+ (i.pts||[]).forEach(p=>f(p[0],p[1]));(i.stops||[]).forEach(p=>f(p.x,p.y));b=[a,c,d,e];FBX.set(i,b);return b}
+function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=110/s,seen=p=>inCv(p,CVB,PAD),occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]),zf=Math.min(2.6,Math.max(1,Math.pow(1380/W,.35))),RD={c:'',f:'',t:''},WT={c:'',f:'',t:''};let hl='',dn={},gr='',bay='',defs='',mk='',pv='',hs='',fataekHtml='';
  const lab=(x,y,n,f0,r,style)=>{for(const k of[1,.78]){const f=f0*k,hw=n.length*.3*f,yy=y+r+f*.75,b=[x-hw,yy-f*.6,x+hw,yy+f*.6];if(!hit(b)){occ.push(b);return`<text x="${x}" y="${yy}" font-size="${f}" stroke-width="${3/sc()}" style="${style||''}">${n}</text>`}}return''};
  const pill=(x,y,t,f,bg,bd,col)=>{const w=(String(t).length*f*.58+16)/s,hh=(f+9)/s;return `<g pointer-events="none"><rect x="${x-w/2}" y="${y-hh/2}" width="${w}" height="${hh}" rx="${hh/2}" fill="${bg}" fill-opacity=".96" stroke="${bd}" stroke-width="${1.2/s}"/><text x="${x}" y="${y}" font-size="${f/s}" text-anchor="middle" dominant-baseline="central" font-weight="700" fill="${col}">${esc(t)}</text></g>`};
 
@@ -568,6 +589,7 @@ function drawPl(){const s=sc(),W=vb.w,occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[
  if(ADDONS.fataekts && fataekRoutes.length) {
    fataekRoutes.forEach(i => {
      if(!ADDONS.fataekTypes[i.type]) return;
+      {const fb=fbox(i);if(isFinite(fb[0])&&!(fb[2]>=CVB.x0-PAD&&fb[0]<=CVB.x1+PAD&&fb[3]>=CVB.y0-PAD&&fb[1]<=CVB.y1+PAD))return;}
      const T = FATAEK_TYPES[i.type] || { c:'#015caf', s:'จุดรับส่ง', e:'📍' };
      const c = i.color || T.c;
 
@@ -606,17 +628,17 @@ function drawPl(){const s=sc(),W=vb.w,occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[
 
  if(!ADDONS.mapPlaces) { $('#pl').innerHTML = fataekHtml; return; }
  const list=PL.slice();if(roadEditing()&&FORM.p.pts&&FORM.p.pts.length>1){const k=list.findIndex(a=>a.id===FORM.p.id);k<0?list.push({...FORM.p,id:'tmp'}):list[k]=FORM.p}
- list.filter(p=>p.kind==='nature'&&p.nt==='bay'&&p.pts&&p.pts.length>=3).forEach(p=>{const D=pathC(p.pts,p.curve),n=esc(p.name||''),col=p.color||'var(--wt)',st=p.color?`color-mix(in srgb,${p.color} 60%,#000)`:'var(--wtc)',cx=p.pts.reduce((a,q)=>a+q[0],0)/p.pts.length,cy=p.pts.reduce((a,q)=>a+q[1],0)/p.pts.length;
+ list.filter(p=>p.kind==='nature'&&p.nt==='bay'&&p.pts&&p.pts.length>=3&&seen(p)).forEach(p=>{const D=pathC(p.pts,p.curve),n=esc(p.name||''),col=p.color||'var(--wt)',st=p.color?`color-mix(in srgb,${p.color} 60%,#000)`:'var(--wtc)',cx=p.pts.reduce((a,q)=>a+q[0],0)/p.pts.length,cy=p.pts.reduce((a,q)=>a+q[1],0)/p.pts.length;
   bay+=`<g class="pm" data-id="${p.id}"><path d="${D}" style="fill:${col};fill-opacity:.78;stroke:${st};pointer-events:none" stroke-width="${2/s}" stroke-linejoin="round"/><path d="${D}" fill="none" stroke="transparent" stroke-width="${12/s}" style="pointer-events:stroke"/></g>`;
   if(n)mk+=lab(cx,cy,n,12*(p.size||1)/s,-6/s,'font-style:italic')});
- list.filter(p=>isLine(p)&&p.pts&&p.pts.length>1).sort((a,b)=>tOf(a).k-tOf(b).k).forEach(p=>{const t=tOf(p)||RT.local,A=p.kind==='road'?RD:WT;if(W>t.vw&&!(FORM&&FORM.p.id===p.id))return;
+ list.filter(p=>isLine(p)&&p.pts&&p.pts.length>1&&seen(p)).sort((a,b)=>tOf(a).k-tOf(b).k).forEach(p=>{const t=tOf(p)||RT.local,A=p.kind==='road'?RD:WT;if(W>t.vw&&!(FORM&&FORM.p.id===p.id))return;
   const wpx=t.w*zf*(p.size||1),w=wpx/s,D=pathD(p.pts,p.curve),n=esc(p.name||''),pts=p.pts[p.pts.length-1][0]<p.pts[0][0]?p.pts.slice().reverse():p.pts,id='rp'+p.id;let L=0;for(let i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
   const cs=p.color?`color-mix(in srgb,${p.color} 55%,#000)`:t.cs,cf=p.color||t.c;
   if(ED.msel&&ED.sel.includes(p.id))hl+=`<path d="${D}" fill="none" stroke="#ff922b" stroke-opacity=".75" stroke-width="${w+9/s}" stroke-linecap="round" stroke-linejoin="round"/>`;
   A.c+=`<path d="${D}" fill="none" style="stroke:${cs}" stroke-width="${w+2.4/s}" stroke-linecap="round" stroke-linejoin="round"/>`;
   A.f+=`<g class="pm" data-id="${p.id}"><path d="${D}" fill="none" stroke="transparent" stroke-width="${Math.max(wpx,16)/s}" stroke-linecap="round"/><path d="${D}" fill="none" style="stroke:${cf}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/></g>`;
   const fp=wpx*.62;if(n&&fp>=6&&L*s>=n.length*fp*.55+12&&!(p.grp&&dn[p.grp])){if(p.grp)dn[p.grp]=1;defs+=`<path id="${id}" d="${pathD(pts,p.curve)}" fill="none"/>`;A.t+=`<text style="font-size:${fp/s}px;fill:${t.tc||'#3a3a3a'};stroke:none;font-weight:600"><textPath href="#${id}" startOffset="50%">${n}</textPath></text>`}});
- PL.filter(p=>(p.kind==='place'||(p.kind==='nature'&&p.nt==='mountain'))&&W<=(LV[p.lvl]||LV.local).w).sort((a,b)=>(LV[b.lvl]||LV.local).k-(LV[a.lvl]||LV.local).k||(b.size||1)-(a.size||1)).forEach(p=>{
+ PL.filter(p=>(p.kind==='place'||(p.kind==='nature'&&p.nt==='mountain'))&&W<=(LV[p.lvl]||LV.local).w&&seen(p)).sort((a,b)=>(LV[b.lvl]||LV.local).k-(LV[a.lvl]||LV.local).k||(b.size||1)-(a.size||1)).forEach(p=>{
   const L=LV[p.lvl]||LV.local,c=catOf(p.cat),sz=p.size||1,r=L.r*sz/s,n=esc(p.name||''),mt=p.kind==='nature';occ.push([p.x-r,p.y-r,p.x+r,p.y+r]);
   if(mt){const q=r*1.25,col=p.color||'#8d6e63';mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${q+6/s}" fill="transparent"/><path d="M${p.x-q} ${p.y+q*.7}L${p.x} ${p.y-q}L${p.x+q} ${p.y+q*.7}Z" fill="${col}" stroke="#fff" stroke-width="${1.6/s}" stroke-linejoin="round"/><path d="M${p.x-q*.32} ${p.y-q*.35}L${p.x} ${p.y-q}L${p.x+q*.32} ${p.y-q*.35}L${p.x+q*.1} ${p.y-q*.2}L${p.x-q*.12} ${p.y-q*.3}Z" fill="#fff"/></g>`}
   else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*1.15}" style="stroke:none">${c[4]}</text>`:''}</g>`;
@@ -685,14 +707,14 @@ const wire=it=>({id:it.id,kind:it.kind,name:it.name,note:it.note||'',x:it.x,y:it
 const unwire=r=>{const o={...r,...(r.meta||{})};delete o.meta;if(o.kind==='shop'){o.kind='place';o.cat=o.cat||'shopping';o.sub=o.sub||'supermarket'}else if(o.kind==='other'){o.kind='place';o.cat='other';o.sub='general'}
  o.lvl=LV[o.lvl]?o.lvl:'local';o.rt=RT[o.rt]?o.rt:'local';o.cat=o.cat||'other';o.size=+o.size||1;o.curve=!!o.curve;o.nt=o.nt||'';o.grp=o.grp||'';o.pts=o.pts||[];return o};
 PL=PL.map(unwire);
-const apply=(rv,items)=>{loaded=true;rev=rv;PL=items.map(unwire);lastChg=Date.now();drawPl();if(!FORM)panel()};
+const apply=(rv,items)=>{loaded=true;rev=rv;PL=items.map(unwire);lastChg=Date.now();reqR(1);if(!FORM)panel()};
 async function push(act,item){if(!API||!ADDONS.mapPlaces){try{localStorage.setItem('pl',JSON.stringify(PL))}catch(_){}return}inflight++;
  try{const j=await post({action:act,item:wire(item)});if(j.ok)apply(j.rev,j.items);else toast(j.err||'บันทึกไม่สำเร็จ')}catch(_){toast('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้')}inflight--}
-async function pull(){if(!API||pulling||inflight||!ADDONS.mapPlaces)return;pulling=1;try{const j=await(await fetch(API+'?action=list&rev='+rev,{cache:'no-store'})).json();if(j.ok&&!j.same&&!inflight)apply(j.rev,j.items)}catch(_){}pulling=0}
+async function pull(){if(!API||pulling||inflight||!ADDONS.mapPlaces||moving())return;pulling=1;try{const j=await(await fetch(API+'?action=list&rev='+rev,{cache:'no-store'})).json();if(j.ok&&!j.same&&!inflight)apply(j.rev,j.items)}catch(_){}pulling=0}
 // ความเร็วโพลล์: เร็ว (POLL_FAST) เมื่อมีการใช้งาน/แก้ไข/มีการเปลี่ยนแปลงล่าสุด, ช้าลง (POLL_IDLE) เมื่อเงียบ เพื่อไม่ให้โควตา Apps Script หมด
 const POLL_FAST=250,POLL_IDLE=2500;let act=Date.now();
 ['pointerdown','keydown','wheel','touchstart'].forEach(ev=>addEventListener(ev,()=>{act=Date.now()},{passive:true}));
-async function loop(){for(;;){const busy=ED.on||Date.now()-act<20000||Date.now()-lastChg<60000;await pull();if(ADDONS.fataekts) await pullFataekRoutes();await new Promise(r=>setTimeout(r,document.hidden?5000:busy?POLL_FAST:POLL_IDLE))}}
+async function loop(){for(;;){const busy=ED.on||Date.now()-act<20000||Date.now()-lastChg<60000;await pull();if(ADDONS.fataekts&&Date.now()-lastFt>8000) await pullFataekRoutes();await new Promise(r=>setTimeout(r,document.hidden?5000:busy?POLL_FAST:POLL_IDLE))}}
 const hideLd=()=>{const l=$('#ld');if(l){l.classList.add('x');setTimeout(()=>l.remove(),600)}};setTimeout(hideLd,9000);
 loaded=!API;if(API){pull().finally(()=>{loaded=true;hideLd();if(!FORM)panel()});loop()}else setTimeout(hideLd,500);
 if(ADDONS.fataekts) pullFataekRoutes();
@@ -760,7 +782,7 @@ function goPage(p,code){forced=p;const root=location.pathname.replace(/\/(map|ed
 // ===== Share / export (PNG, SVG, HTML table, HTML embed) =====
 const ex=a=>String(a).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
 function viewLink(embed){return baseUrl()+HX()+codeOf()+(pin?'&p='+pin.x+','+pin.y:'')+viewQ()+(embed?'&embed=1':'')}
-function mapSvg(){const r=R0(),c=svg.cloneNode(true),src=svg.querySelectorAll('*'),dst=c.querySelectorAll('*'),
+function mapSvg(){try{heavy()}catch(_){}const r=R0(),c=svg.cloneNode(true),src=svg.querySelectorAll('*'),dst=c.querySelectorAll('*'),
  P=['fill','fill-opacity','stroke','stroke-width','stroke-opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','opacity','font-size','font-weight','font-style','font-family','text-anchor','dominant-baseline','paint-order','vector-effect'];
  src.forEach((e,i)=>{const d=dst[i],cs=getComputedStyle(e);let t='';P.forEach(p=>{const v=cs.getPropertyValue(p);if(v)t+=p+':'+v+';'});d.setAttribute('style',t);d.removeAttribute('class');d.removeAttribute('data-id')});
  const g=c.querySelector('#gh');if(g)g.innerHTML='';
