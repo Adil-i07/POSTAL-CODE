@@ -224,6 +224,13 @@ body.mv .fl,body.mv #sh{-webkit-backdrop-filter:none;backdrop-filter:none;backgr
 #appf{width:100%;height:100%;border:0;display:block;background:var(--paper)}
 #appb{position:absolute;left:max(10px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top));z-index:2;height:38px;padding:0 15px 0 9px;border-radius:19px;border:1px solid var(--bd);background:rgba(255,255,255,.92);color:var(--tx);display:flex;align-items:center;gap:4px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--sh);backdrop-filter:blur(8px)}
 #appb:active{transform:scale(.96)}
+
+.icp{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:16px;background:var(--row)}
+.icp .r{display:flex;align-items:center;gap:10px}.icp #icpv{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--bd);display:grid;place-items:center;font-size:22px;flex:none}
+.icp input{flex:1;min-width:0}
+.icg{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;max-height:170px;overflow:auto;padding:2px}
+.icg button{font-size:20px;line-height:1;aspect-ratio:1;border:0;border-radius:10px;background:transparent;cursor:pointer;padding:0;display:grid;place-items:center;width:auto;height:auto;min-width:0}
+.icg button:hover{background:var(--hl)}.icg button:active{transform:scale(.88)}
 </style></head><body>
 <svg id="m"></svg><div id="pg"><div class="zh"><div class="zw"><div class="zt"><h1>Postal Codes</h1><button id="zmap" class="zbtn"><svg class="i" viewBox="0 0 24 24"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg>Map</button></div><label id="zsb"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input id="zq" placeholder="Search province, district or zip code" autocomplete="off"></label></div></div><div class="zw" id="zl"></div></div><div id="sm" hidden><div class="fl"><div class="smh"><h2>Share this map</h2><button id="smx" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><small id="sml" class="hint"></small>
 <div class="shr"><span>🔗</span><div class="t"><b>Link</b><small>Current area, pin &amp; zoom</small></div><button class="sb2" data-sa="link">Copy</button><button class="sb2 o" id="shnat" data-sa="native">Share</button></div>
@@ -432,6 +439,13 @@ body.mv .fl,body.mv #sh{-webkit-backdrop-filter:none;backdrop-filter:none;backgr
 .lgw.sm{width:34px;height:34px;border-radius:50%}
 .brand{display:flex;align-items:center;gap:12px;margin:4px 6px 8px}.brand b{font-size:15px;display:block}.brand small{color:var(--mut)}
 .car text{font-weight:700}input[type=range],input[type=checkbox]{accent-color:var(--g)}
+
+.icp{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:16px;background:var(--row)}
+.icp .r{display:flex;align-items:center;gap:10px}.icp #icpv{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--bd);display:grid;place-items:center;font-size:22px;flex:none}
+.icp input{flex:1;min-width:0}
+.icg{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;max-height:170px;overflow:auto;padding:2px}
+.icg button{font-size:20px;line-height:1;aspect-ratio:1;border:0;border-radius:10px;background:transparent;cursor:pointer;padding:0;display:grid;place-items:center;width:auto;height:auto;min-width:0}
+.icg button:hover{background:var(--hl)}.icg button:active{transform:scale(.88)}
 </style></head><body>
 <svg id="m"></svg><div id="pg"><div class="zh"><div class="zw"><div class="zt"><h1 style="display:flex;align-items:center;gap:10px"><span class="lgw"><img src="mtft.png" alt="FMRFT"></span>รถของมูลนิธิ</h1><button id="zmap" class="zbtn"><svg class="i" viewBox="0 0 24 24"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg>Map</button></div><label id="zsb"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input id="zq" placeholder="ค้นหาชื่อรถ หรือเส้นทาง" autocomplete="off"></label></div></div><div class="zw" id="zl"></div></div><div id="sm" hidden><div class="fl"><div class="smh"><h2>Share this map</h2><button id="smx" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><small id="sml" class="hint"></small>
 <div class="shr"><span>🔗</span><div class="t"><b>Link</b><small>Current area, pin &amp; zoom</small></div><button class="sb2" data-sa="link">Copy</button><button class="sb2 o" id="shnat" data-sa="native">Share</button></div>
@@ -761,6 +775,11 @@ const CATS=[
 ['nature','ธรรมชาติ','Natural Features','#2b8a3e','🌿',[['beach','ชายหาด'],['mountain_peak','ยอดเขา'],['lake','ทะเลสาบ'],['river','แม่น้ำ'],['national_park','อุทยานแห่งชาติ']]],
 ['other','อื่นๆ','Other','#868e96','📍',[['general','ทั่วไป']]]];
 const catOf=id=>CATS.find(c=>c[0]===id)||CATS[12];
+const IC_PAL='😀 😍 🥰 😎 🤩 😇 🤔 😴 ❤️ 💛 💚 💙 💜 🔥 ✨ 🌟 ⭐ 💯 🏠 🏡 🏢 🏬 🏪 🏫 🏥 🏦 🏨 🏰 ⛪ 🕌 🛕 ⛩️ 🕍 🚗 🚌 🚕 🏍️ 🚲 🚆 ✈️ 🚢 ⛽ 🅿️ 🚏 🚉 🍜 🍚 🍔 🍕 🍟 🌮 🍣 🍰 🍩 🍦 ☕ 🍺 🍷 🥤 🍎 🍌 🍉 🥭 🌳 🌴 🌲 🌵 🌸 🌻 🌈 ⛰️ 🏝️ 🏖️ 🌊 💧 🐶 🐱 🐔 🐟 🐘 📦 📚 🎓 💼 💊 🔧 🔨 💡 📷 🎵 🎮 ⚽ 🏀 🏊 💈 🧺 🛒 🎁 🔔 🔑 🚻 🚰 ♿ ℹ️ ⚠️ ❗ ❓ ✅ ❌ 📍 🚩 🏁'.split(' ');
+const icSeg=s=>{s=String(s||'');try{return Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(s),x=>x.segment)}catch(_){return Array.from(s)}};
+const icClip=s=>icSeg(String(s||'').trim()).slice(0,2).join('');
+const icOf=p=>(p&&p.cat==='other'&&typeof p.sub==='string'&&p.sub.indexOf('c:')===0)?p.sub.slice(2):'';
+const pinIc=p=>icOf(p)||catOf(p.cat)[4];
 const EDIT=/\/edit\/?$/.test(location.pathname)||/[?&]edit\b/.test(location.search)||/^#\/?(map\/?)?edit/i.test(location.hash);
 let FORM=null,pin=null,pend=0,lt=0,lx=0,ly=0,lpT=0,lpf=false,PL=[],rev=0,PW='',pulling=0,OCC=[],inflight=0,lastChg=0,hdr=null,tab=0,loaded=true;const ED={on:false,auth:false,tool:null,pts:[],curve:false,lock:true,ext:null,msel:false,sel:[]};
 
@@ -884,7 +903,7 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
   if(FLT&&!isFm(p)){const bx=[p.x-r*.85,p.y-r*.85,p.x+r*.85,p.y+r*.85];if(++nm>MAXM||mo.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))return;mo.push(bx)}
   occ.push([p.x-r,p.y-r,p.x+r,p.y+r]);
   if(mt){const q=r*1.25,col=p.color||'#8d6e63';mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${q+6/s}" fill="transparent"/><path d="M${p.x-q} ${p.y+q*.7}L${p.x} ${p.y-q}L${p.x+q} ${p.y+q*.7}Z" fill="${col}" stroke="#fff" stroke-width="${1.6/s}" stroke-linejoin="round"/><path d="M${p.x-q*.32} ${p.y-q*.35}L${p.x} ${p.y-q}L${p.x+q*.32} ${p.y-q*.35}L${p.x+q*.1} ${p.y-q*.2}L${p.x-q*.12} ${p.y-q*.3}Z" fill="#fff"/></g>`}
-  else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*1.15}" style="stroke:none">${c[4]}</text>`:''}</g>`;
+  else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*((icOf(p)&&icSeg(icOf(p)).length>1)?.8:1.15)}" style="stroke:none">${esc(pinIc(p))}</text>`:''}</g>`;
   if(n)mk+=lab(p.x,p.y,n,L.f*sz/s,mt?r*1.1:r)});
  if(ED.pts.length)pv=`<path d="${pathD(ED.pts,ED.curve)}" fill="none" stroke="#1c7ed6" stroke-width="${3/s}" stroke-dasharray="${6/s} ${5/s}"/>`+ED.pts.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="${4.5/s}" fill="#fff" stroke="#1c7ed6" stroke-width="${2/s}"/>`).join('');
  if(pin)pv+=`<g transform="translate(${pin.x} ${pin.y}) scale(${1/s})"><path d="M0 0C-8-10-12-16-12-22a12 12 0 1 1 24 0c0 6-4 12-12 22z" fill="#1c7ed6" stroke="#fff" stroke-width="2"/><circle cy="-22" r="4.5" fill="#fff"/></g>`;
@@ -898,13 +917,13 @@ $('#pc').onclick=e=>{const b=e.target.closest('[data-a]');if(!b||!pin)return;con
  if(a==='cp')copy(pin.x+', '+pin.y,'คัดลอกพิกัดแล้ว');else if(a==='sh')shareLink(baseUrl()+HX()+'p='+pin.x+','+pin.y+viewQ());else if(a==='add')openForm({kind:'place',x:pin.x,y:pin.y});else{pin=null;showPc();drawPl()}};
 // ฟอร์มสถานที่
 const plText=p=>{if(p.kind==='car')return p.name+' '+(p.note||'')+' รถ car '+carRoute(p);const c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'';return p.name+' '+(p.note||'')+' '+(p.kind==='road'?(RT[p.rt]||RT.local).n:p.kind==='nature'?(NT[p.nt]||{n:''}).n+' ธรรมชาติ natural':c[1]+' '+c[2]+' '+sb+' '+(LV[p.lvl]||LV.local).n)};
-const placeRow=p=>{if(p.kind==='car')return carRow(p);const rd=p.kind==='road',nt=p.kind==='nature',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':nt?(NT[p.nt]||{e:'🌿'}).e:c[4]}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:nt?(NT[p.nt]||{n:'ธรรมชาติ'}).n:c[1]}</small></div></div>`};
+const placeRow=p=>{if(p.kind==='car')return carRow(p);const rd=p.kind==='road',nt=p.kind==='nature',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':nt?(NT[p.nt]||{e:'🌿'}).e:esc(pinIc(p))}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:nt?(NT[p.nt]||{n:'ธรรมชาติ'}).n:c[1]}</small></div></div>`};
 const opt=(a,v)=>a.map(x=>`<option value="${x[0]}"${x[0]===v?' selected':''}>${x[1]}</option>`).join('');
 function openForm(p){tab=1;FORM={p:{name:'',note:'',lvl:'local',cat:'food',sub:'restaurant',rt:'secondary',size:1,color:'',curve:false,...p},isNew:!p.id};ED.tool=null;ED.pts=[];syncEd();setSt(1);panel();$('#body').scrollTop=0}
 function showPlace(id){const p=PL.find(a=>a.id===id);if(!p)return;if(p.kind==='car'){FORM={p:{...p},isNew:false};addRc(id);tab=1;setSt(1);const q=carPos(p);follow=ED.on?null:{id,at:performance.now()+800};fit({x:q.x-30,y:q.y-30,w:60,h:60},1.2);panel();$('#body').scrollTop=0;return}FORM={p:{...p},isNew:false};addRc(id);tab=1;setSt(1);
  const b=hasPts(p)&&p.pts&&p.pts.length>1?bb([p.pts.map(a=>a.join(',')).join(' ')]):{x:p.x-30,y:p.y-30,w:60,h:60};fit(b,hasPts(p)?1.6:1);panel();$('#body').scrollTop=0}
 function syncForm(){if(FORM&&FORM.p.kind==='car')return carSync();const p=FORM.p,g=id=>{const e=$('#'+id);return e?e.value:undefined},v={name:g('fn'),note:g('fnote'),rt:g('frt'),lvl:g('flv'),cat:g('fcat'),sub:g('fsub')};
- for(const k in v)if(v[k]!==undefined)p[k]=v[k];const f=g('fk');if(f!==undefined){if(['river','canal','bay','mountain'].includes(f)){p.kind='nature';p.nt=f}else p.kind=f}const cv=g('fcurve');if(cv!==undefined){p.curve=cv==='1';ED.curve=p.curve}const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub))p.sub=c[5][0][0]}
+ const oldIc=icOf(p);for(const k in v)if(v[k]!==undefined)p[k]=v[k];if(p.cat==='other'&&p.sub==='custom'){const fi=g('fic');p.sub='c:'+(icClip(fi!==undefined?fi:oldIc)||'📍')}const f=g('fk');if(f!==undefined){if(['river','canal','bay','mountain'].includes(f)){p.kind='nature';p.nt=f}else p.kind=f}const cv=g('fcurve');if(cv!==undefined){p.curve=cv==='1';ED.curve=p.curve}const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub)&&!icOf(p))p.sub=c[5][0][0]}
 function tabUI(){const t=$('#tth');if(!t)return;t.style.transform=`translateX(${tab*100}%)`;$('#tabs').querySelectorAll('button').forEach(b=>b.classList.toggle('a',+b.dataset.t===tab))}
 function setTab(n){if(tab===n&&!qi.value)return;tab=n;FORM=null;qi.value='';panel()}
 function stag(B){[...B.children].forEach((c,i)=>c.style.animationDelay=Math.min(i,14)*30+'ms')}
@@ -922,15 +941,15 @@ $('#body').addEventListener('click',async e=>{const b=e.target.closest('[data-mg
   drawPl();panel();toast('รวมเป็นสายเดียวแล้ว');for(const p of all)await push('upsert',p)}
  else if(m==='split'){rs.forEach(p=>p.grp='');drawPl();panel();toast('แยกออกจากสายแล้ว');for(const p of rs)await push('upsert',p)}});
 const fkv=p=>p.kind==='nature'?p.nt:p.kind;
-function formHtml(){if(FORM.p.kind==='car')return carForm();const p=FORM.p,ed=ED.on&&ED.auth,hp=hasPts(p),pl=p.kind==='place',mt=p.kind==='nature'&&p.nt==='mountain',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'',bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
- if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${pl?`<span>${c[4]} ${c[1]}</span><span>${sb}</span>`:`<span>${p.kind==='road'?(RT[p.rt]||RT.local).n:(NT[p.nt]||{n:''}).n}</span>`}${pl||mt?`<span>${(LV[p.lvl]||LV.local).n}</span>`:''}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
+function formHtml(){if(FORM.p.kind==='car')return carForm();const p=FORM.p,ed=ED.on&&ED.auth,hp=hasPts(p),pl=p.kind==='place',mt=p.kind==='nature'&&p.nt==='mountain',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||(icOf(p)?'กำหนดเอง':''),bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
+ if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${pl?`<span>${esc(pinIc(p))} ${c[1]}</span><span>${sb}</span>`:`<span>${p.kind==='road'?(RT[p.rt]||RT.local).n:(NT[p.nt]||{n:''}).n}</span>`}${pl||mt?`<span>${(LV[p.lvl]||LV.local).n}</span>`:''}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
  const dc=p.kind==='road'?(RT[p.rt]||RT.local).c:pl?c[3]:mt?'#8d6e63':'#8ec9ee',ab=k=>ED.ext===k?' style="background:var(--ac);color:#fff"':'';
  return bk+`<h2>${FORM.isNew?'เพิ่ม':'แก้ไข'}${pl?'สถานที่':'รายการ'}</h2><div class="fm"><label>ชื่อ<input id="fn" value="${esc(p.name||'')}" placeholder="เช่น ร้านก๋วยเตี๋ยว / ถนนประชาธิป / คลองเจ๋ง"></label>
 <label>ชนิด<select id="fk">${opt([['place','สถานที่ (หมุด)'],['road','ถนน (เส้น)'],['river','แม่น้ำ (เส้น)'],['canal','คลอง (เส้น)'],['bay','อ่าว/พื้นน้ำ (พื้นที่)'],['mountain','ภูเขา (หมุด)']],fkv(p))}</select></label>`+
  (p.kind==='road'&&p.grp?`<small style="color:var(--mut)">ถนนสายเดียวกับอีก ${PL.filter(a=>a.grp===p.grp&&a.id!==p.id).length} เส้น — แก้ชื่อจะเปลี่ยนทั้งสาย</small>`:'')+(p.kind==='road'?`<label>ประเภทถนน<select id="frt">${opt(Object.entries(RT).map(([k,v])=>[k,v.n]),p.rt)}</select></label>`:'')+
  (hp?`<label>รูปแบบเส้น<select id="fcurve">${opt([['0','เส้นตรง (ล็อกตามกริด)'],['1','เส้นโค้งผ่านจุดกริด']],p.curve?'1':'0')}</select></label><div class="act" style="margin:0 0 2px"><button data-ext="end"${ab('end')}>ต่อปลายท้าย</button><button data-ext="start"${ab('start')}>ต่อปลายต้น</button><button data-trim="end">ตัดจุดท้าย</button><button data-trim="start">ตัดจุดต้น</button></div>`:'')+
  (pl||mt?`<label>ระดับการแสดงผล / ขนาด<select id="flv">${opt(Object.entries(LV).map(([k,v])=>[k,v.n]),p.lvl)}</select></label>`:'')+
- (pl?`<label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(c[5],p.sub)}</select></label>`:'')+
+ (pl?`<label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(p.cat==='other'?c[5].concat([['custom','✏️ กำหนดเอง (อิโมจิ/อักษร 1–2 ตัว)']]):c[5],icOf(p)?'custom':p.sub)}</select></label>${icOf(p)?`<div class="icp"><div class="r"><span id="icpv">${esc(icOf(p))}</span><input id="fic" value="${esc(icOf(p))}" maxlength="12" placeholder="พิมพ์อิโมจิ หรืออักษร 1–2 ตัว" autocomplete="off"></div><div class="icg">${IC_PAL.map(e=>`<button type="button" data-ic="${e}">${e}</button>`).join('')}</div></div>`:''}`:'')+
  `<label>${pl||mt?'ขนาดหมุด':p.nt==='bay'?'ขนาดข้อความ':'ความกว้างเส้น'} <b id="fszv">${Math.round((p.size||1)*100)}%</b><input id="fsz" type="range" min="50" max="250" step="10" value="${Math.round((p.size||1)*100)}"></label>
 <label>สี<div class="row2"><input id="fc" type="color" value="${p.color||dc}"><div class="act" style="margin:0"><button data-fcr="1">ค่าเริ่มต้น</button></div></div></label>
 <label>หมายเหตุ<textarea id="fnote" rows="3">${esc(p.note||'')}</textarea></label><small id="fcnt" style="color:var(--mut)">${hp?(p.pts?p.pts.length:0)+' จุด':p.x+', '+p.y}</small></div><div class="act"><button data-fsave="1">บันทึก</button>${FORM.isNew?'':'<button data-fdel="1">ลบ</button>'}</div>`}
@@ -938,7 +957,10 @@ function saveForm(){if(FORM.p.kind==='car')return carSave();syncForm();const p=F
  const it={id:p.id||'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:p.kind,nt:p.nt||'',name:p.name.trim(),note:(p.note||'').trim(),x:hp?p.pts[0][0]:p.x,y:hp?p.pts[0][1]:p.y,pts:hp?p.pts:[],curve:!!p.curve,lvl:p.lvl,cat:p.cat,sub:p.sub,rt:p.rt,grp:p.grp||'',color:p.color||'',size:p.size||1},n=PL.findIndex(a=>a.id===it.id);
  n<0?PL.push(it):PL[n]=it;FORM=null;push('upsert',it);PL.filter(a=>it.grp&&a.grp===it.grp&&a.id!==it.id&&a.name!==it.name).forEach(a=>{a.name=it.name;push('upsert',a)});drawPl();panel();toast('บันทึกแล้ว')}
 function delForm(b){if(!b.dataset.c){b.dataset.c=1;b.textContent='กดอีกครั้งเพื่อลบ';return}const p=FORM.p;PL=PL.filter(a=>a.id!==p.id);FORM=null;push('delete',p);drawPl();panel();toast('ลบแล้ว')}
-$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat'||e.target.id==='fcurve')){syncForm();panel()}});
+$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat'||e.target.id==='fcurve'||(e.target.id==='fsub'&&(e.target.value==='custom'||icOf(FORM.p))))){syncForm();panel()}
+ if(FORM&&e.target.id==='fic'){e.target.value=icClip(e.target.value)||e.target.value.slice(0,0)}});
+$('#body').addEventListener('input',e=>{if(FORM&&e.target.id==='fic'){const v=icClip(e.target.value);FORM.p.sub='c:'+(v||'📍');const pv=$('#icpv');if(pv)pv.textContent=v||'📍'}});
+$('#body').addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ic]');if(!b||!FORM)return;const i=$('#fic');if(!i)return;i.value=b.dataset.ic;FORM.p.sub='c:'+b.dataset.ic;const pv=$('#icpv');if(pv)pv.textContent=b.dataset.ic});
 $('#body').addEventListener('input',e=>{if(!FORM)return;if(e.target.id==='fc')FORM.p.color=e.target.value;if(e.target.id==='fsz')$('#fszv').textContent=e.target.value+'%'});
 $('#body').addEventListener('click',e=>{if(!FORM)return;const x=e.target.closest('[data-ext]'),t=e.target.closest('[data-trim]');
  if(e.target.closest('[data-fcr]')){syncForm();FORM.p.color='';panel()}
@@ -1340,6 +1362,13 @@ body.mv .fl,body.mv #sh{-webkit-backdrop-filter:none;backdrop-filter:none;backgr
 .hp{vector-effect:non-scaling-stroke;stroke-width:2;fill-opacity:.28;cursor:pointer}.hp.on{stroke-width:4;fill-opacity:.5}.hm{cursor:pointer}.hm path{filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
 .fm .row2{align-items:flex-end}.row2>label{flex:1;min-width:0}.fm .row2 select,.fm .row2 input{width:100%}.fm select:disabled{opacity:.5}
 #hpk{display:flex;align-items:center;gap:6px;padding:3px 4px 3px 14px;border-radius:22px;font-weight:600;color:#e8590c;white-space:nowrap;animation:in .3s ease both}#hpk[hidden]{display:none}
+
+.icp{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:16px;background:var(--row)}
+.icp .r{display:flex;align-items:center;gap:10px}.icp #icpv{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--bd);display:grid;place-items:center;font-size:22px;flex:none}
+.icp input{flex:1;min-width:0}
+.icg{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;max-height:170px;overflow:auto;padding:2px}
+.icg button{font-size:20px;line-height:1;aspect-ratio:1;border:0;border-radius:10px;background:transparent;cursor:pointer;padding:0;display:grid;place-items:center;width:auto;height:auto;min-width:0}
+.icg button:hover{background:var(--hl)}.icg button:active{transform:scale(.88)}
 </style></head><body>
 <svg id="m"></svg><div id="pg"><div class="zh"><div class="zw"><div class="zt"><h1>Postal Codes</h1><button id="zmap" class="zbtn"><svg class="i" viewBox="0 0 24 24"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg>Map</button></div><label id="zsb"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input id="zq" placeholder="Search province, district or zip code" autocomplete="off"></label></div></div><div class="zw" id="zl"></div></div><div id="sm" hidden><div class="fl"><div class="smh"><h2>Share this map</h2><button id="smx" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><small id="sml" class="hint"></small>
 <div class="shr"><span>🔗</span><div class="t"><b>Link</b><small>Current area, pin &amp; zoom</small></div><button class="sb2" data-sa="link">Copy</button><button class="sb2 o" id="shnat" data-sa="native">Share</button></div>
@@ -1670,6 +1699,11 @@ const CATS=[
 ['nature','ธรรมชาติ','Natural Features','#2b8a3e','🌿',[['beach','ชายหาด'],['mountain_peak','ยอดเขา'],['lake','ทะเลสาบ'],['river','แม่น้ำ'],['national_park','อุทยานแห่งชาติ']]],
 ['other','อื่นๆ','Other','#868e96','📍',[['general','ทั่วไป']]]];
 const catOf=id=>CATS.find(c=>c[0]===id)||CATS[12];
+const IC_PAL='😀 😍 🥰 😎 🤩 😇 🤔 😴 ❤️ 💛 💚 💙 💜 🔥 ✨ 🌟 ⭐ 💯 🏠 🏡 🏢 🏬 🏪 🏫 🏥 🏦 🏨 🏰 ⛪ 🕌 🛕 ⛩️ 🕍 🚗 🚌 🚕 🏍️ 🚲 🚆 ✈️ 🚢 ⛽ 🅿️ 🚏 🚉 🍜 🍚 🍔 🍕 🍟 🌮 🍣 🍰 🍩 🍦 ☕ 🍺 🍷 🥤 🍎 🍌 🍉 🥭 🌳 🌴 🌲 🌵 🌸 🌻 🌈 ⛰️ 🏝️ 🏖️ 🌊 💧 🐶 🐱 🐔 🐟 🐘 📦 📚 🎓 💼 💊 🔧 🔨 💡 📷 🎵 🎮 ⚽ 🏀 🏊 💈 🧺 🛒 🎁 🔔 🔑 🚻 🚰 ♿ ℹ️ ⚠️ ❗ ❓ ✅ ❌ 📍 🚩 🏁'.split(' ');
+const icSeg=s=>{s=String(s||'');try{return Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(s),x=>x.segment)}catch(_){return Array.from(s)}};
+const icClip=s=>icSeg(String(s||'').trim()).slice(0,2).join('');
+const icOf=p=>(p&&p.cat==='other'&&typeof p.sub==='string'&&p.sub.indexOf('c:')===0)?p.sub.slice(2):'';
+const pinIc=p=>icOf(p)||catOf(p.cat)[4];
 const EDIT=false,isEdit=()=>/\/edit\/?$/i.test(location.pathname)||/[?&]edit\b/.test(location.search)||/^#\/?(map\/?)?edit/i.test(location.hash);
 let FORM=null,pin=null,pend=0,lt=0,lx=0,ly=0,lpT=0,lpf=false,PL=[],rev=0,PW='',pulling=0,OCC=[],inflight=0,lastChg=0,hdr=null,tab=0,loaded=true;const ED={on:false,auth:false,tool:null,pts:[],curve:false,lock:true,ext:null,msel:false,sel:[]};
 
@@ -1793,7 +1827,7 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
   if(FLT&&!isFm(p)){const bx=[p.x-r*.85,p.y-r*.85,p.x+r*.85,p.y+r*.85];if(++nm>MAXM||mo.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))return;mo.push(bx)}
   occ.push([p.x-r,p.y-r,p.x+r,p.y+r]);
   if(mt){const q=r*1.25,col=p.color||'#8d6e63';mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${q+6/s}" fill="transparent"/><path d="M${p.x-q} ${p.y+q*.7}L${p.x} ${p.y-q}L${p.x+q} ${p.y+q*.7}Z" fill="${col}" stroke="#fff" stroke-width="${1.6/s}" stroke-linejoin="round"/><path d="M${p.x-q*.32} ${p.y-q*.35}L${p.x} ${p.y-q}L${p.x+q*.32} ${p.y-q*.35}L${p.x+q*.1} ${p.y-q*.2}L${p.x-q*.12} ${p.y-q*.3}Z" fill="#fff"/></g>`}
-  else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*1.15}" style="stroke:none">${c[4]}</text>`:''}</g>`;
+  else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*((icOf(p)&&icSeg(icOf(p)).length>1)?.8:1.15)}" style="stroke:none">${esc(pinIc(p))}</text>`:''}</g>`;
   if(n)mk+=lab(p.x,p.y,n,L.f*sz/s,mt?r*1.1:r)});
  if(ED.pts.length)pv=`<path d="${pathD(ED.pts,ED.curve)}" fill="none" stroke="#1c7ed6" stroke-width="${3/s}" stroke-dasharray="${6/s} ${5/s}"/>`+ED.pts.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="${4.5/s}" fill="#fff" stroke="#1c7ed6" stroke-width="${2/s}"/>`).join('');
  if(pin)pv+=`<g transform="translate(${pin.x} ${pin.y}) scale(${1/s})"><path d="M0 0C-8-10-12-16-12-22a12 12 0 1 1 24 0c0 6-4 12-12 22z" fill="#1c7ed6" stroke="#fff" stroke-width="2"/><circle cy="-22" r="4.5" fill="#fff"/></g>`;
@@ -1807,13 +1841,13 @@ $('#pc').onclick=e=>{const b=e.target.closest('[data-a]');if(!b||!pin)return;con
  if(a==='cp')copy(pin.x+', '+pin.y,'คัดลอกพิกัดแล้ว');else if(a==='sh')shareLink(baseUrl()+HX()+'p='+pin.x+','+pin.y+viewQ());else if(a==='add')openForm({kind:'place',x:pin.x,y:pin.y});else{pin=null;showPc();drawPl()}};
 // ฟอร์มสถานที่
 const plText=p=>{const c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'';return p.name+' '+(p.note||'')+' '+(p.kind==='road'?(RT[p.rt]||RT.local).n:p.kind==='nature'?(NT[p.nt]||{n:''}).n+' ธรรมชาติ natural':c[1]+' '+c[2]+' '+sb+' '+(LV[p.lvl]||LV.local).n)};
-const placeRow=p=>{const rd=p.kind==='road',nt=p.kind==='nature',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':nt?(NT[p.nt]||{e:'🌿'}).e:c[4]}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:nt?(NT[p.nt]||{n:'ธรรมชาติ'}).n:c[1]}</small></div></div>`};
+const placeRow=p=>{const rd=p.kind==='road',nt=p.kind==='nature',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':nt?(NT[p.nt]||{e:'🌿'}).e:esc(pinIc(p))}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:nt?(NT[p.nt]||{n:'ธรรมชาติ'}).n:c[1]}</small></div></div>`};
 const opt=(a,v)=>a.map(x=>`<option value="${x[0]}"${x[0]===v?' selected':''}>${x[1]}</option>`).join('');
 function openForm(p){tab=1;FORM={p:{name:'',note:'',lvl:'local',cat:'food',sub:'restaurant',rt:'secondary',size:1,color:'',curve:false,...p},isNew:!p.id};ED.tool=null;ED.pts=[];syncEd();setSt(1);panel();$('#body').scrollTop=0}
 function showPlace(id){const p=PL.find(a=>a.id===id);if(!p)return;FORM={p:{...p},isNew:false};addRc(id);tab=1;setSt(1);
  const b=hasPts(p)&&p.pts&&p.pts.length>1?bb([p.pts.map(a=>a.join(',')).join(' ')]):{x:p.x-30,y:p.y-30,w:60,h:60};fit(b,hasPts(p)?1.6:1);panel();$('#body').scrollTop=0}
 function syncForm(){const p=FORM.p,g=id=>{const e=$('#'+id);return e?e.value:undefined},v={name:g('fn'),note:g('fnote'),rt:g('frt'),lvl:g('flv'),cat:g('fcat'),sub:g('fsub')};
- for(const k in v)if(v[k]!==undefined)p[k]=v[k];const f=g('fk');if(f!==undefined){if(['river','canal','bay','mountain'].includes(f)){p.kind='nature';p.nt=f}else p.kind=f}const cv=g('fcurve');if(cv!==undefined){p.curve=cv==='1';ED.curve=p.curve}const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub))p.sub=c[5][0][0]}
+ const oldIc=icOf(p);for(const k in v)if(v[k]!==undefined)p[k]=v[k];if(p.cat==='other'&&p.sub==='custom'){const fi=g('fic');p.sub='c:'+(icClip(fi!==undefined?fi:oldIc)||'📍')}const f=g('fk');if(f!==undefined){if(['river','canal','bay','mountain'].includes(f)){p.kind='nature';p.nt=f}else p.kind=f}const cv=g('fcurve');if(cv!==undefined){p.curve=cv==='1';ED.curve=p.curve}const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub)&&!icOf(p))p.sub=c[5][0][0]}
 function tabUI(){const t=$('#tth');if(!t)return;t.style.transform=`translateX(${tab*100}%)`;$('#tabs').querySelectorAll('button').forEach(b=>b.classList.toggle('a',+b.dataset.t===tab))}
 function setTab(n){if(tab===n&&!qi.value)return;tab=n;FORM=null;qi.value='';panel()}
 function stag(B){[...B.children].forEach((c,i)=>c.style.animationDelay=Math.min(i,14)*30+'ms')}
@@ -1831,15 +1865,15 @@ $('#body').addEventListener('click',async e=>{const b=e.target.closest('[data-mg
   drawPl();panel();toast('รวมเป็นสายเดียวแล้ว');for(const p of all)await push('upsert',p)}
  else if(m==='split'){rs.forEach(p=>p.grp='');drawPl();panel();toast('แยกออกจากสายแล้ว');for(const p of rs)await push('upsert',p)}});
 const fkv=p=>p.kind==='nature'?p.nt:p.kind;
-function formHtml(){const p=FORM.p,ed=ED.on&&ED.auth,hp=hasPts(p),pl=p.kind==='place',mt=p.kind==='nature'&&p.nt==='mountain',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'',bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
- if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${pl?`<span>${c[4]} ${c[1]}</span><span>${sb}</span>`:`<span>${p.kind==='road'?(RT[p.rt]||RT.local).n:(NT[p.nt]||{n:''}).n}</span>`}${pl||mt?`<span>${(LV[p.lvl]||LV.local).n}</span>`:''}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
+function formHtml(){const p=FORM.p,ed=ED.on&&ED.auth,hp=hasPts(p),pl=p.kind==='place',mt=p.kind==='nature'&&p.nt==='mountain',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||(icOf(p)?'กำหนดเอง':''),bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
+ if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${pl?`<span>${esc(pinIc(p))} ${c[1]}</span><span>${sb}</span>`:`<span>${p.kind==='road'?(RT[p.rt]||RT.local).n:(NT[p.nt]||{n:''}).n}</span>`}${pl||mt?`<span>${(LV[p.lvl]||LV.local).n}</span>`:''}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
  const dc=p.kind==='road'?(RT[p.rt]||RT.local).c:pl?c[3]:mt?'#8d6e63':'#8ec9ee',ab=k=>ED.ext===k?' style="background:var(--ac);color:#fff"':'';
  return bk+`<h2>${FORM.isNew?'เพิ่ม':'แก้ไข'}${pl?'สถานที่':'รายการ'}</h2><div class="fm"><label>ชื่อ<input id="fn" value="${esc(p.name||'')}" placeholder="เช่น ร้านก๋วยเตี๋ยว / ถนนประชาธิป / คลองเจ๋ง"></label>
 <label>ชนิด<select id="fk">${opt([['place','สถานที่ (หมุด)'],['road','ถนน (เส้น)'],['river','แม่น้ำ (เส้น)'],['canal','คลอง (เส้น)'],['bay','อ่าว/พื้นน้ำ (พื้นที่)'],['mountain','ภูเขา (หมุด)']],fkv(p))}</select></label>`+
  (p.kind==='road'&&p.grp?`<small style="color:var(--mut)">ถนนสายเดียวกับอีก ${PL.filter(a=>a.grp===p.grp&&a.id!==p.id).length} เส้น — แก้ชื่อจะเปลี่ยนทั้งสาย</small>`:'')+(p.kind==='road'?`<label>ประเภทถนน<select id="frt">${opt(Object.entries(RT).map(([k,v])=>[k,v.n]),p.rt)}</select></label>`:'')+
  (hp?`<label>รูปแบบเส้น<select id="fcurve">${opt([['0','เส้นตรง (ล็อกตามกริด)'],['1','เส้นโค้งผ่านจุดกริด']],p.curve?'1':'0')}</select></label><div class="act" style="margin:0 0 2px"><button data-ext="end"${ab('end')}>ต่อปลายท้าย</button><button data-ext="start"${ab('start')}>ต่อปลายต้น</button><button data-trim="end">ตัดจุดท้าย</button><button data-trim="start">ตัดจุดต้น</button></div>`:'')+
  (pl||mt?`<label>ระดับการแสดงผล / ขนาด<select id="flv">${opt(Object.entries(LV).map(([k,v])=>[k,v.n]),p.lvl)}</select></label>`:'')+
- (pl?`<label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(c[5],p.sub)}</select></label>`:'')+
+ (pl?`<label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(p.cat==='other'?c[5].concat([['custom','✏️ กำหนดเอง (อิโมจิ/อักษร 1–2 ตัว)']]):c[5],icOf(p)?'custom':p.sub)}</select></label>${icOf(p)?`<div class="icp"><div class="r"><span id="icpv">${esc(icOf(p))}</span><input id="fic" value="${esc(icOf(p))}" maxlength="12" placeholder="พิมพ์อิโมจิ หรืออักษร 1–2 ตัว" autocomplete="off"></div><div class="icg">${IC_PAL.map(e=>`<button type="button" data-ic="${e}">${e}</button>`).join('')}</div></div>`:''}`:'')+
  `<label>${pl||mt?'ขนาดหมุด':p.nt==='bay'?'ขนาดข้อความ':'ความกว้างเส้น'} <b id="fszv">${Math.round((p.size||1)*100)}%</b><input id="fsz" type="range" min="50" max="250" step="10" value="${Math.round((p.size||1)*100)}"></label>
 <label>สี<div class="row2"><input id="fc" type="color" value="${p.color||dc}"><div class="act" style="margin:0"><button data-fcr="1">ค่าเริ่มต้น</button></div></div></label>
 <label>หมายเหตุ<textarea id="fnote" rows="3">${esc(p.note||'')}</textarea></label><small id="fcnt" style="color:var(--mut)">${hp?(p.pts?p.pts.length:0)+' จุด':p.x+', '+p.y}</small></div><div class="act"><button data-fsave="1">บันทึก</button>${FORM.isNew?'':'<button data-fdel="1">ลบ</button>'}</div>`}
@@ -1847,7 +1881,10 @@ function saveForm(){syncForm();const p=FORM.p,hp=hasPts(p);if(!p.name.trim())ret
  const it={id:p.id||'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:p.kind,nt:p.nt||'',name:p.name.trim(),note:(p.note||'').trim(),x:hp?p.pts[0][0]:p.x,y:hp?p.pts[0][1]:p.y,pts:hp?p.pts:[],curve:!!p.curve,lvl:p.lvl,cat:p.cat,sub:p.sub,rt:p.rt,grp:p.grp||'',color:p.color||'',size:p.size||1},n=PL.findIndex(a=>a.id===it.id);
  n<0?PL.push(it):PL[n]=it;FORM=null;push('upsert',it);PL.filter(a=>it.grp&&a.grp===it.grp&&a.id!==it.id&&a.name!==it.name).forEach(a=>{a.name=it.name;push('upsert',a)});drawPl();panel();toast('บันทึกแล้ว')}
 function delForm(b){if(!b.dataset.c){b.dataset.c=1;b.textContent='กดอีกครั้งเพื่อลบ';return}const p=FORM.p;PL=PL.filter(a=>a.id!==p.id);FORM=null;push('delete',p);drawPl();panel();toast('ลบแล้ว')}
-$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat'||e.target.id==='fcurve')){syncForm();panel()}});
+$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat'||e.target.id==='fcurve'||(e.target.id==='fsub'&&(e.target.value==='custom'||icOf(FORM.p))))){syncForm();panel()}
+ if(FORM&&e.target.id==='fic'){e.target.value=icClip(e.target.value)||e.target.value.slice(0,0)}});
+$('#body').addEventListener('input',e=>{if(FORM&&e.target.id==='fic'){const v=icClip(e.target.value);FORM.p.sub='c:'+(v||'📍');const pv=$('#icpv');if(pv)pv.textContent=v||'📍'}});
+$('#body').addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ic]');if(!b||!FORM)return;const i=$('#fic');if(!i)return;i.value=b.dataset.ic;FORM.p.sub='c:'+b.dataset.ic;const pv=$('#icpv');if(pv)pv.textContent=b.dataset.ic});
 $('#body').addEventListener('input',e=>{if(!FORM)return;if(e.target.id==='fc')FORM.p.color=e.target.value;if(e.target.id==='fsz')$('#fszv').textContent=e.target.value+'%'});
 $('#body').addEventListener('click',e=>{if(!FORM)return;const x=e.target.closest('[data-ext]'),t=e.target.closest('[data-trim]');
  if(e.target.closest('[data-fcr]')){syncForm();FORM.p.color='';panel()}
@@ -2479,6 +2516,11 @@ const CATS=[
 ['nature','ธรรมชาติ','Natural Features','#2b8a3e','🌿',[['beach','ชายหาด'],['mountain_peak','ยอดเขา'],['lake','ทะเลสาบ'],['river','แม่น้ำ'],['national_park','อุทยานแห่งชาติ']]],
 ['other','อื่นๆ','Other','#868e96','📍',[['general','ทั่วไป']]]];
 const catOf=id=>CATS.find(c=>c[0]===id)||CATS[12];
+const IC_PAL='😀 😍 🥰 😎 🤩 😇 🤔 😴 ❤️ 💛 💚 💙 💜 🔥 ✨ 🌟 ⭐ 💯 🏠 🏡 🏢 🏬 🏪 🏫 🏥 🏦 🏨 🏰 ⛪ 🕌 🛕 ⛩️ 🕍 🚗 🚌 🚕 🏍️ 🚲 🚆 ✈️ 🚢 ⛽ 🅿️ 🚏 🚉 🍜 🍚 🍔 🍕 🍟 🌮 🍣 🍰 🍩 🍦 ☕ 🍺 🍷 🥤 🍎 🍌 🍉 🥭 🌳 🌴 🌲 🌵 🌸 🌻 🌈 ⛰️ 🏝️ 🏖️ 🌊 💧 🐶 🐱 🐔 🐟 🐘 📦 📚 🎓 💼 💊 🔧 🔨 💡 📷 🎵 🎮 ⚽ 🏀 🏊 💈 🧺 🛒 🎁 🔔 🔑 🚻 🚰 ♿ ℹ️ ⚠️ ❗ ❓ ✅ ❌ 📍 🚩 🏁'.split(' ');
+const icSeg=s=>{s=String(s||'');try{return Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(s),x=>x.segment)}catch(_){return Array.from(s)}};
+const icClip=s=>icSeg(String(s||'').trim()).slice(0,2).join('');
+const icOf=p=>(p&&p.cat==='other'&&typeof p.sub==='string'&&p.sub.indexOf('c:')===0)?p.sub.slice(2):'';
+const pinIc=p=>icOf(p)||catOf(p.cat)[4];
 const EDIT=/\/edit\/?$/.test(location.pathname)||/[?&]edit\b/.test(location.search)||/^#\/?(map\/?)?edit/i.test(location.hash);
 let FORM=null,pin=null,pend=0,lt=0,lx=0,ly=0,lpT=0,lpf=false,PL=[],rev=0,PW='',pulling=0,OCC=[],inflight=0,lastChg=0,hdr=null,tab=0,loaded=true;const ED={on:false,auth:false,tool:null,pts:[],curve:false,lock:true,ext:null,msel:false,sel:[]};
 
@@ -2602,7 +2644,7 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
   if(FLT&&!isFm(p)){const bx=[p.x-r*.85,p.y-r*.85,p.x+r*.85,p.y+r*.85];if(++nm>MAXM||mo.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))return;mo.push(bx)}
   occ.push([p.x-r,p.y-r,p.x+r,p.y+r]);
   if(mt){const q=r*1.25,col=p.color||'#8d6e63';mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${q+6/s}" fill="transparent"/><path d="M${p.x-q} ${p.y+q*.7}L${p.x} ${p.y-q}L${p.x+q} ${p.y+q*.7}Z" fill="${col}" stroke="#fff" stroke-width="${1.6/s}" stroke-linejoin="round"/><path d="M${p.x-q*.32} ${p.y-q*.35}L${p.x} ${p.y-q}L${p.x+q*.32} ${p.y-q*.35}L${p.x+q*.1} ${p.y-q*.2}L${p.x-q*.12} ${p.y-q*.3}Z" fill="#fff"/></g>`}
-  else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*1.15}" style="stroke:none">${c[4]}</text>`:''}</g>`;
+  else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`<text x="${p.x}" y="${p.y}" font-size="${r*((icOf(p)&&icSeg(icOf(p)).length>1)?.8:1.15)}" style="stroke:none">${esc(pinIc(p))}</text>`:''}</g>`;
   if(n)mk+=lab(p.x,p.y,n,L.f*sz/s,mt?r*1.1:r)});
  if(ED.pts.length)pv=`<path d="${pathD(ED.pts,ED.curve)}" fill="none" stroke="#1c7ed6" stroke-width="${3/s}" stroke-dasharray="${6/s} ${5/s}"/>`+ED.pts.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="${4.5/s}" fill="#fff" stroke="#1c7ed6" stroke-width="${2/s}"/>`).join('');
  if(pin)pv+=`<g transform="translate(${pin.x} ${pin.y}) scale(${1/s})"><path d="M0 0C-8-10-12-16-12-22a12 12 0 1 1 24 0c0 6-4 12-12 22z" fill="#1c7ed6" stroke="#fff" stroke-width="2"/><circle cy="-22" r="4.5" fill="#fff"/></g>`;
@@ -2616,13 +2658,13 @@ $('#pc').onclick=e=>{const b=e.target.closest('[data-a]');if(!b||!pin)return;con
  if(a==='cp')copy(pin.x+', '+pin.y,'คัดลอกพิกัดแล้ว');else if(a==='sh')shareLink(baseUrl()+HX()+'p='+pin.x+','+pin.y+viewQ());else if(a==='add')openForm({kind:'place',x:pin.x,y:pin.y});else{pin=null;showPc();drawPl()}};
 // ฟอร์มสถานที่
 const plText=p=>{const c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'';return p.name+' '+(p.note||'')+' '+(p.kind==='road'?(RT[p.rt]||RT.local).n:p.kind==='nature'?(NT[p.nt]||{n:''}).n+' ธรรมชาติ natural':c[1]+' '+c[2]+' '+sb+' '+(LV[p.lvl]||LV.local).n)};
-const placeRow=p=>{const rd=p.kind==='road',nt=p.kind==='nature',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':nt?(NT[p.nt]||{e:'🌿'}).e:c[4]}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:nt?(NT[p.nt]||{n:'ธรรมชาติ'}).n:c[1]}</small></div></div>`};
+const placeRow=p=>{const rd=p.kind==='road',nt=p.kind==='nature',c=catOf(p.cat);return`<div class="it" data-pl="${p.id}"><span style="font-size:18px;width:20px;text-align:center">${rd?'🛣️':nt?(NT[p.nt]||{e:'🌿'}).e:esc(pinIc(p))}</span><div class="t"><b>${esc(p.name)}</b><small>${rd?(RT[p.rt]||RT.local).n:nt?(NT[p.nt]||{n:'ธรรมชาติ'}).n:c[1]}</small></div></div>`};
 const opt=(a,v)=>a.map(x=>`<option value="${x[0]}"${x[0]===v?' selected':''}>${x[1]}</option>`).join('');
 function openForm(p){tab=1;FORM={p:{name:'',note:'',lvl:'local',cat:'food',sub:'restaurant',rt:'secondary',size:1,color:'',curve:false,...p},isNew:!p.id};ED.tool=null;ED.pts=[];syncEd();setSt(1);panel();$('#body').scrollTop=0}
 function showPlace(id){const p=PL.find(a=>a.id===id);if(!p)return;FORM={p:{...p},isNew:false};addRc(id);tab=1;setSt(1);
  const b=hasPts(p)&&p.pts&&p.pts.length>1?bb([p.pts.map(a=>a.join(',')).join(' ')]):{x:p.x-30,y:p.y-30,w:60,h:60};fit(b,hasPts(p)?1.6:1);panel();$('#body').scrollTop=0}
 function syncForm(){const p=FORM.p,g=id=>{const e=$('#'+id);return e?e.value:undefined},v={name:g('fn'),note:g('fnote'),rt:g('frt'),lvl:g('flv'),cat:g('fcat'),sub:g('fsub')};
- for(const k in v)if(v[k]!==undefined)p[k]=v[k];const f=g('fk');if(f!==undefined){if(['river','canal','bay','mountain'].includes(f)){p.kind='nature';p.nt=f}else p.kind=f}const cv=g('fcurve');if(cv!==undefined){p.curve=cv==='1';ED.curve=p.curve}const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub))p.sub=c[5][0][0]}
+ const oldIc=icOf(p);for(const k in v)if(v[k]!==undefined)p[k]=v[k];if(p.cat==='other'&&p.sub==='custom'){const fi=g('fic');p.sub='c:'+(icClip(fi!==undefined?fi:oldIc)||'📍')}const f=g('fk');if(f!==undefined){if(['river','canal','bay','mountain'].includes(f)){p.kind='nature';p.nt=f}else p.kind=f}const cv=g('fcurve');if(cv!==undefined){p.curve=cv==='1';ED.curve=p.curve}const z=g('fsz');if(z)p.size=z/100;const c=catOf(p.cat);if(!c[5].some(a=>a[0]===p.sub)&&!icOf(p))p.sub=c[5][0][0]}
 function tabUI(){const t=$('#tth');if(!t)return;t.style.transform=`translateX(${tab*100}%)`;$('#tabs').querySelectorAll('button').forEach(b=>b.classList.toggle('a',+b.dataset.t===tab))}
 function setTab(n){if(tab===n&&!qi.value)return;tab=n;FORM=null;qi.value='';panel()}
 function stag(B){[...B.children].forEach((c,i)=>c.style.animationDelay=Math.min(i,14)*30+'ms')}
@@ -2640,15 +2682,15 @@ $('#body').addEventListener('click',async e=>{const b=e.target.closest('[data-mg
   drawPl();panel();toast('รวมเป็นสายเดียวแล้ว');for(const p of all)await push('upsert',p)}
  else if(m==='split'){rs.forEach(p=>p.grp='');drawPl();panel();toast('แยกออกจากสายแล้ว');for(const p of rs)await push('upsert',p)}});
 const fkv=p=>p.kind==='nature'?p.nt:p.kind;
-function formHtml(){const p=FORM.p,ed=ED.on&&ED.auth,hp=hasPts(p),pl=p.kind==='place',mt=p.kind==='nature'&&p.nt==='mountain',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||'',bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
- if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${pl?`<span>${c[4]} ${c[1]}</span><span>${sb}</span>`:`<span>${p.kind==='road'?(RT[p.rt]||RT.local).n:(NT[p.nt]||{n:''}).n}</span>`}${pl||mt?`<span>${(LV[p.lvl]||LV.local).n}</span>`:''}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
+function formHtml(){const p=FORM.p,ed=ED.on&&ED.auth,hp=hasPts(p),pl=p.kind==='place',mt=p.kind==='nature'&&p.nt==='mountain',c=catOf(p.cat),sb=(c[5].find(a=>a[0]===p.sub)||[])[1]||(icOf(p)?'กำหนดเอง':''),bk=`<div style="padding:0 4px"><span class="bk" data-fx="1">${I.back}กลับ</span></div>`;
+ if(!ed)return bk+`<h2>${esc(p.name)}</h2><div class="chips">${pl?`<span>${esc(pinIc(p))} ${c[1]}</span><span>${sb}</span>`:`<span>${p.kind==='road'?(RT[p.rt]||RT.local).n:(NT[p.nt]||{n:''}).n}</span>`}${pl||mt?`<span>${(LV[p.lvl]||LV.local).n}</span>`:''}<span>${p.x}, ${p.y}</span></div>${p.note?`<p style="margin:0 6px 10px;color:var(--mut)">${esc(p.note)}</p>`:''}<div class="act"><button data-pcp="1">${I.cp}คัดลอกพิกัด</button><button data-psh="1">${I.link}แชร์</button></div>`;
  const dc=p.kind==='road'?(RT[p.rt]||RT.local).c:pl?c[3]:mt?'#8d6e63':'#8ec9ee',ab=k=>ED.ext===k?' style="background:var(--ac);color:#fff"':'';
  return bk+`<h2>${FORM.isNew?'เพิ่ม':'แก้ไข'}${pl?'สถานที่':'รายการ'}</h2><div class="fm"><label>ชื่อ<input id="fn" value="${esc(p.name||'')}" placeholder="เช่น ร้านก๋วยเตี๋ยว / ถนนประชาธิป / คลองเจ๋ง"></label>
 <label>ชนิด<select id="fk">${opt([['place','สถานที่ (หมุด)'],['road','ถนน (เส้น)'],['river','แม่น้ำ (เส้น)'],['canal','คลอง (เส้น)'],['bay','อ่าว/พื้นน้ำ (พื้นที่)'],['mountain','ภูเขา (หมุด)']],fkv(p))}</select></label>`+
  (p.kind==='road'&&p.grp?`<small style="color:var(--mut)">ถนนสายเดียวกับอีก ${PL.filter(a=>a.grp===p.grp&&a.id!==p.id).length} เส้น — แก้ชื่อจะเปลี่ยนทั้งสาย</small>`:'')+(p.kind==='road'?`<label>ประเภทถนน<select id="frt">${opt(Object.entries(RT).map(([k,v])=>[k,v.n]),p.rt)}</select></label>`:'')+
  (hp?`<label>รูปแบบเส้น<select id="fcurve">${opt([['0','เส้นตรง (ล็อกตามกริด)'],['1','เส้นโค้งผ่านจุดกริด']],p.curve?'1':'0')}</select></label><div class="act" style="margin:0 0 2px"><button data-ext="end"${ab('end')}>ต่อปลายท้าย</button><button data-ext="start"${ab('start')}>ต่อปลายต้น</button><button data-trim="end">ตัดจุดท้าย</button><button data-trim="start">ตัดจุดต้น</button></div>`:'')+
  (pl||mt?`<label>ระดับการแสดงผล / ขนาด<select id="flv">${opt(Object.entries(LV).map(([k,v])=>[k,v.n]),p.lvl)}</select></label>`:'')+
- (pl?`<label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(c[5],p.sub)}</select></label>`:'')+
+ (pl?`<label>หมวดหมู่หลัก<select id="fcat">${opt(CATS.map(a=>[a[0],a[4]+' '+a[1]+' · '+a[2]]),p.cat)}</select></label><label>ประเภทสถานที่ย่อย<select id="fsub">${opt(p.cat==='other'?c[5].concat([['custom','✏️ กำหนดเอง (อิโมจิ/อักษร 1–2 ตัว)']]):c[5],icOf(p)?'custom':p.sub)}</select></label>${icOf(p)?`<div class="icp"><div class="r"><span id="icpv">${esc(icOf(p))}</span><input id="fic" value="${esc(icOf(p))}" maxlength="12" placeholder="พิมพ์อิโมจิ หรืออักษร 1–2 ตัว" autocomplete="off"></div><div class="icg">${IC_PAL.map(e=>`<button type="button" data-ic="${e}">${e}</button>`).join('')}</div></div>`:''}`:'')+
  `<label>${pl||mt?'ขนาดหมุด':p.nt==='bay'?'ขนาดข้อความ':'ความกว้างเส้น'} <b id="fszv">${Math.round((p.size||1)*100)}%</b><input id="fsz" type="range" min="50" max="250" step="10" value="${Math.round((p.size||1)*100)}"></label>
 <label>สี<div class="row2"><input id="fc" type="color" value="${p.color||dc}"><div class="act" style="margin:0"><button data-fcr="1">ค่าเริ่มต้น</button></div></div></label>
 <label>หมายเหตุ<textarea id="fnote" rows="3">${esc(p.note||'')}</textarea></label><small id="fcnt" style="color:var(--mut)">${hp?(p.pts?p.pts.length:0)+' จุด':p.x+', '+p.y}</small></div><div class="act"><button data-fsave="1">บันทึก</button>${FORM.isNew?'':'<button data-fdel="1">ลบ</button>'}</div>`}
@@ -2656,7 +2698,10 @@ function saveForm(){syncForm();const p=FORM.p,hp=hasPts(p);if(!p.name.trim())ret
  const it={id:p.id||'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:p.kind,nt:p.nt||'',name:p.name.trim(),note:(p.note||'').trim(),x:hp?p.pts[0][0]:p.x,y:hp?p.pts[0][1]:p.y,pts:hp?p.pts:[],curve:!!p.curve,lvl:p.lvl,cat:p.cat,sub:p.sub,rt:p.rt,grp:p.grp||'',color:p.color||'',size:p.size||1},n=PL.findIndex(a=>a.id===it.id);
  n<0?PL.push(it):PL[n]=it;FORM=null;push('upsert',it);PL.filter(a=>it.grp&&a.grp===it.grp&&a.id!==it.id&&a.name!==it.name).forEach(a=>{a.name=it.name;push('upsert',a)});drawPl();panel();toast('บันทึกแล้ว')}
 function delForm(b){if(!b.dataset.c){b.dataset.c=1;b.textContent='กดอีกครั้งเพื่อลบ';return}const p=FORM.p;PL=PL.filter(a=>a.id!==p.id);FORM=null;push('delete',p);drawPl();panel();toast('ลบแล้ว')}
-$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat'||e.target.id==='fcurve')){syncForm();panel()}});
+$('#body').addEventListener('change',e=>{if(FORM&&(e.target.id==='fk'||e.target.id==='fcat'||e.target.id==='fcurve'||(e.target.id==='fsub'&&(e.target.value==='custom'||icOf(FORM.p))))){syncForm();panel()}
+ if(FORM&&e.target.id==='fic'){e.target.value=icClip(e.target.value)||e.target.value.slice(0,0)}});
+$('#body').addEventListener('input',e=>{if(FORM&&e.target.id==='fic'){const v=icClip(e.target.value);FORM.p.sub='c:'+(v||'📍');const pv=$('#icpv');if(pv)pv.textContent=v||'📍'}});
+$('#body').addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ic]');if(!b||!FORM)return;const i=$('#fic');if(!i)return;i.value=b.dataset.ic;FORM.p.sub='c:'+b.dataset.ic;const pv=$('#icpv');if(pv)pv.textContent=b.dataset.ic});
 $('#body').addEventListener('input',e=>{if(!FORM)return;if(e.target.id==='fc')FORM.p.color=e.target.value;if(e.target.id==='fsz')$('#fszv').textContent=e.target.value+'%'});
 $('#body').addEventListener('click',e=>{if(!FORM)return;const x=e.target.closest('[data-ext]'),t=e.target.closest('[data-trim]');
  if(e.target.closest('[data-fcr]')){syncForm();FORM.p.color='';panel()}
