@@ -3018,11 +3018,11 @@ const iconOf=p=>{try{return pinIc(p)}catch(_){return '📍'}};
 const RTN={highway:'ทางหลวง/ทางด่วน',main:'ถนนสายหลัก',secondary:'ถนนสายรอง',local:'ถนนท้องถิ่น'};
 /* ---------- ตั้งค่า (แก้ได้ในหน้า ⚙️ เก็บในเครื่อง) ---------- */
 const DEF={unit:'เจ๋ง',mu:0.1,
- speed:{walk:8,car:{highway:120,main:80,secondary:60,local:40}},
+ speed:{walk:12,car:{highway:120,main:80,secondary:60,local:45}},
   svc:{
-  bus:{name:'รถประจำทาง',emoji:'🚌',color:'#e8590c',speed:60,base:0,perKm:0,wait:3,roads:['highway','main','secondary'],stops:'อู่รถเมล์|สถานีขนส่ง|ป้ายรถ',exclude:'อุทยาน|พิพิธภัณฑ์'},
-  train:{name:'รถไฟ/รถราง',emoji:'🚆',color:'#7048e8',speed:70,base:0,perKm:0,wait:5,stops:'รถไฟ|รถราง|รถไฟฟ้า',exclude:'พิพิธภัณฑ์|ร้าน|โรงไฟฟ้า'},
-  boat:{name:'เรือ',emoji:'⛴️',color:'#0c8599',speed:55,base:0,perKm:0,wait:5,stops:'ท่าเรือ|ท่าน้ำ',exclude:''}},
+  bus:{name:'รถประจำทาง',emoji:'🚌',color:'#e8590c',speed:80,base:0,perKm:0,wait:2.5,roads:['highway','main','secondary'],stops:'อู่รถเมล์|สถานีขนส่ง|ป้ายรถ',exclude:'อุทยาน|พิพิธภัณฑ์'},
+  train:{name:'รถไฟ/รถราง',emoji:'🚆',color:'#7048e8',speed:200,base:0,perKm:0,wait:5,stops:'รถไฟ|รถราง|รถไฟฟ้า',exclude:'พิพิธภัณฑ์|ร้าน|โรงไฟฟ้า'},
+  boat:{name:'เรือ',emoji:'⛴️',color:'#0c8599',speed:75,base:0,perKm:0,wait:5,stops:'ท่าเรือ|ท่าน้ำ',exclude:''}},
  custom:[]};
 const clone=o=>JSON.parse(JSON.stringify(o));
 const merge=(a,b)=>{for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object')merge(a[k],b[k]);else a[k]=b[k]}return a};
