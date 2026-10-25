@@ -2,7 +2,7 @@
 <html lang="th"><head><link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com" crossorigin><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>รหัสไปรษณีย์ฝาแตก โดยพันรัฐ</title>    <link rel="icon" type="image/png" href="./sFT.png">
-<style>
+        <style>
         
 @font-face {
   font-family: 'SaoChingcha';
@@ -903,10 +903,21 @@ function bkItems(t){let R=bkCsv(t);if(!R.length)return[];let H=R[0].map(h=>Strin
   let pts=[];const ps=g('pts')||g('points')||g('path');if(ps){const o=ps.charAt(0)==='['?J(ps):undefined;if(Array.isArray(o))pts=o;else{const m=ps.match(/-?\d+(?:\.\d+)?/g)||[];for(let i=0;i+1<m.length;i+=2)pts.push([+m[i],+m[i+1]])}}
   let x=parseFloat(g('x')),y=parseFloat(g('y'));if(isNaN(x)&&pts.length)x=pts[0][0];if(isNaN(y)&&pts.length)y=pts[0][1];
   if(isNaN(x)||isNaN(y))return;
-  let kd=g('kind').toLowerCase();const KM2={'สถานที่':'place','หมุด':'place','ถนน':'road','แม่น้ำ':'river','คลอง':'canal','อ่าว':'bay','ภูเขา':'mountain'};if(KM2[kd])kd=KM2[kd];
-  if(kd==='river'||kd==='canal'||kd==='bay'||kd==='mountain'){meta.nt=kd;kd='nature'}
+  let kd=g('kind').trim().toLowerCase();if(BK_KDX[kd])kd=BK_KDX[kd];
+  if(kd!=='place'&&kd!=='road'&&kd!=='nature'&&kd!=='shop'&&kd!=='other'){const nt0=bkNorm(kd,NT,'',BK_NTX);if(nt0){meta.nt=nt0;kd='nature'}else kd=''}
+  if(!kd){const nt1=bkNorm(meta.nt,NT,'',BK_NTX);kd=nt1?'nature':(pts.length?'road':'place')}
+  if(kd==='nature'){let nt2=bkNorm(meta.nt,NT,'',BK_NTX);if(!nt2)nt2=pts.length>=3?'bay':pts.length>=2?'river':'mountain';meta.nt=nt2}else if(meta.nt)meta.nt=bkNorm(meta.nt,NT,'',BK_NTX);
+  meta.rt=bkNorm(meta.rt,RT,'local',BK_RTX);meta.lvl=bkNorm(meta.lvl,LV,'local',BK_LVX);if(meta.curve!==undefined)meta.curve=(meta.curve===true||/^(1|true|yes|ใช่)$/i.test(String(meta.curve)));
   const it={id:g('id')||('bk'+n),kind:kd||'place',name:g('name'),x:x,y:y,meta:meta};const nt=g('note');if(nt)it.note=nt;if(pts.length)it.pts=pts;out.push(it)});
  return out}
+const BK_RTX={'ทางด่วน':'highway','มอเตอร์เวย์':'highway','motorway':'highway','trunk':'highway','expressway':'highway','primary':'main','arterial':'main','สายหลัก':'main','ถนนหลัก':'main','tertiary':'secondary','สายรอง':'secondary','ถนนรอง':'secondary','residential':'local','ท้องถิ่น':'local','ซอย':'local','street':'local','4':'highway','3':'main','2':'secondary','1':'local'},
+ BK_LVX={'ประเทศ':'national','ใหญ่':'major','สำคัญ':'major','ทั่วไป':'poi','จุดสนใจ':'poi','minor':'poi','4':'national','3':'major','2':'local','1':'poi'},
+ BK_NTX={'แม่น้ำ':'river','แม่นํ้า':'river','สายน้ำ':'river','อ่าว':'bay','พื้นน้ำ':'bay','ทะเล':'bay','water':'bay','lake':'bay','sea':'bay','เขา':'mountain','ภูเขา':'mountain','hill':'mountain','peak':'mountain','ลำคลอง':'canal','ลำธาร':'canal','stream':'canal'},
+ BK_KDX={'สถานที่':'place','หมุด':'place','poi':'place','point':'place','marker':'place','pin':'place','ถนน':'road','street':'road','highway':'road','line':'road','ธรรมชาติ':'nature'};
+function bkNorm(v,tab,def,ex){const s=String(v==null?'':v).trim().toLowerCase();if(!s)return def;if(tab[s])return s;
+ for(const k in tab){const n=String(tab[k].n||'').toLowerCase();if(n&&(n===s||n.replace(/\s/g,'')===s.replace(/\s/g,'')))return k}
+ if(ex[s])return ex[s];for(const k in ex)if(s.indexOf(k)>=0)return ex[k];
+ for(const k in tab){const n=String(tab[k].n||'').toLowerCase();if(n&&(s.indexOf(n)>=0||n.indexOf(s)>=0))return k}return def}
 async function bkLoad(){if(!ADDONS.mapPlaces||BKAPI||Date.now()-BKT<8000)return;BKT=Date.now();
  try{const r=await fetch(encodeURI(BK_CSV),{cache:'no-store'});if(!r.ok)return;const raw=bkItems(await r.text());if(!raw.length||BKAPI)return;
   PL=raw.map(unwire);BKON=1;loaded=true;lastChg=Date.now();reqR(1);if(!FORM)panel();if(typeof hideLd==='function')hideLd()}catch(_){}}
@@ -917,7 +928,9 @@ function ftCsvItems(t){let R=bkCsv(t);if(!R.length)return[];let H=R[0].map(h=>St
  R.slice(1).forEach(r=>{const o={};H.forEach((h,i)=>{if(h)o[h]=r[i]==null?'':String(r[i]).trim()});
   if(/^(1|true|yes)$/i.test(o.deleted||''))return;
   if(o.meta){const m=J(o.meta);if(m&&typeof m==='object')Object.assign(o,m)}
-  const ty=String(o.type||o.kind||'').toLowerCase();if(['train','bus','boat','toll'].indexOf(ty)<0)return;o.type=ty;
+  let ty=String(o.type||o.kind||'').trim().toLowerCase();const TX=[['toll',['toll','ด่าน','ทางด่วน','expressway']],['train',['train','รถไฟ','รถราง','bts','mrt','รถไฟฟ้า']],['bus',['bus','รถประจำทาง','รถเมล์','รถบัส']],['boat',['boat','เรือ','ferry']]];
+  if(['train','bus','boat','toll'].indexOf(ty)<0){ty='';for(const[k,al]of TX){if(al.some(a=>String(o.type||o.kind||'').toLowerCase().indexOf(a)>=0)){ty=k;break}}}
+  if(!ty)return;o.type=ty;
   ['pts','stops'].forEach(k=>{let v=o[k];if(typeof v==='string')v=v.trim().charAt(0)==='['?J(v):undefined;o[k]=Array.isArray(v)?v:[]});
   if(!o.pts.length&&o.x!==undefined&&o.x!==''&&o.y!==undefined&&o.y!=='')o.pts=[[+o.x,+o.y]];
   o.pts=o.pts.map(p=>[+p[0],+p[1]]).filter(p=>isFinite(p[0])&&isFinite(p[1]));
