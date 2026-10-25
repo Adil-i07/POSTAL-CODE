@@ -894,10 +894,10 @@ function bkCsv(t){t=String(t).replace(/^\uFEFF/,'');const fl=t.split(/\r?\n/,1)[
  if(c!==''||r.length){r.push(c);R.push(r)}return R.filter(x=>x.some(v=>String(v).trim()!==''))}
 function bkItems(t){let R=bkCsv(t);if(!R.length)return[];let H=R[0].map(h=>String(h).trim().toLowerCase().replace(/^\uFEFF/,''));
  if(H.indexOf('kind')<0&&H.indexOf('name')<0){H=['id','kind','name','note','x','y','pts',(R[0][7]||'').trim().charAt(0)==='{'?'meta':'grp','nt','curve','lvl','cat','sub','rt','color','size'];R=[H].concat(R)}
- const J=v=>{try{return JSON.parse(v)}catch(_){return undefined}},out=[];
+ const J=v=>{try{return JSON.parse(v)}catch(_){return undefined}},out=[];let MI=H.indexOf('meta');if(MI<0)MI=H.findIndex(h=>h===''||h==='json'||h==='data');
  R.slice(1).forEach((r,n)=>{const g=k=>{const i=H.indexOf(k);return i<0?'':String(r[i]==null?'':r[i]).trim()};
   if(/^(1|true|yes)$/i.test(g('deleted')))return;
-  let meta={};const mj=g('meta');if(mj){const o=J(mj);if(o&&typeof o==='object')meta=o}
+  let meta={};const mj=(MI>=0&&r[MI]!=null?String(r[MI]).trim():'')||g('meta');if(mj){const o=J(mj);if(o&&typeof o==='object'&&!Array.isArray(o))meta=o}
   ['grp','nt','lvl','cat','sub','rt','color','size'].forEach(k=>{const v=g(k);if(v!=='')meta[k]=k==='size'?(+v||1):v});
   const cv=g('curve');if(cv!=='')meta.curve=/^(1|true|yes)$/i.test(cv);
   let pts=[];const ps=g('pts')||g('points')||g('path');if(ps){const o=ps.charAt(0)==='['?J(ps):undefined;if(Array.isArray(o))pts=o;else{const m=ps.match(/-?\d+(?:\.\d+)?/g)||[];for(let i=0;i+1<m.length;i+=2)pts.push([+m[i],+m[i+1]])}}
@@ -927,7 +927,7 @@ function ftCsvItems(t){let R=bkCsv(t);if(!R.length)return[];let H=R[0].map(h=>St
  const J=v=>{try{return JSON.parse(v)}catch(_){return undefined}},out=[];
  R.slice(1).forEach(r=>{const o={};H.forEach((h,i)=>{if(h)o[h]=r[i]==null?'':String(r[i]).trim()});
   if(/^(1|true|yes)$/i.test(o.deleted||''))return;
-  if(o.meta){const m=J(o.meta);if(m&&typeof m==='object')Object.assign(o,m)}
+  ['json','meta','data'].forEach(k=>{if(o[k]){const m=J(o[k]);if(m&&typeof m==='object'&&!Array.isArray(m)){delete o[k];Object.assign(o,m)}}});
   let ty=String(o.type||o.kind||'').trim().toLowerCase();const TX=[['toll',['toll','ด่าน','ทางด่วน','expressway']],['train',['train','รถไฟ','รถราง','bts','mrt','รถไฟฟ้า']],['bus',['bus','รถประจำทาง','รถเมล์','รถบัส']],['boat',['boat','เรือ','ferry']]];
   if(['train','bus','boat','toll'].indexOf(ty)<0){ty='';for(const[k,al]of TX){if(al.some(a=>String(o.type||o.kind||'').toLowerCase().indexOf(a)>=0)){ty=k;break}}}
   if(!ty)return;o.type=ty;
