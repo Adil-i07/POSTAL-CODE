@@ -2323,7 +2323,7 @@ const I={
  back:'<path d="m15 6-6 6 6 6"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>'};
 const BD=$('#body'),SR=$('#srow-mapedit');
 let MEV=false,tool='move',selv=null,shared=true,snapOn=true,cells=true,hist=[],redoS=[],dirty=false,drag=null,ov=null,msg='',tol=6;
-let apiUrl='';try{apiUrl=localStorage.getItem('map_api')||''}catch(_){}
+let apiUrl='https://script.google.com/macros/s/AKfycbwgYQu7ylG04NsOhPHNN0nB95LAXin17ulZBqTKU_WnxlNItho8tuEhareb-RRB3QVS/exec';try{apiUrl=localStorage.getItem('map_api')||''}catch(_){}
 /* ---------- helpers ---------- */
 const P2A=s=>s.split(' ').map(q=>q.split(',').map(Number)),A2P=a=>a.map(q=>q[0]+','+q[1]).join(' ');
 const alias=i=>i===9;
