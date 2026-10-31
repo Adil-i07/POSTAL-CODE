@@ -2407,7 +2407,7 @@ function resetAll(){if(!confirm('Reset the map to the original shape? · คื�
  for(const k in GEO0.d)DS[k].forEach((s,j)=>{if(typeof s==='string'&&typeof GEO0.d[k][j]==='string')DS[k][j]=GEO0.d[k][j]});
  CVR={};selv=null;dirty=true;saveLocal();refresh(true);msg='Reset to original · คืนค่าเริ่มต้นแล้ว';render()}
 /* ---------- API ---------- */
-const apiOK=()=>{const u=(apiUrl||'').trim();if(!/^https?:\/\//i.test(u)){msg='Enter a Map API URL first · ใส่ URL ของ Map API ก่อน';render();return null}return u};
+const apiOK=()=>{const u=(apiUrl||'https://script.google.com/macros/s/AKfycbwgYQu7ylG04NsOhPHNN0nB95LAXin17ulZBqTKU_WnxlNItho8tuEhareb-RRB3QVS/exec').trim();if(!/^https?:\/\//i.test(u)){msg='Enter a Map API URL first · ใส่ URL ของ Map API ก่อน';render();return null}return u};
 async function loadApi(silent){const u=apiOK();if(!u)return;
  try{const r=await fetch(u+(u.includes('?')?'&':'?')+'action=map&_='+Date.now(),{cache:'no-store'}),j=await r.json();
   if(j&&j.ok&&j.data&&j.data.v===1){if(silent&&(+j.data.rev||0)<=GEOREV)return;if(!silent)pushH();geoApply(j.data);refresh(true);saveLocal();dirty=false;msg='Loaded from API · โหลดจาก API แล้ว (rev '+GEOREV+')';if(MEV)render();if(silent)toast('Map updated from API · อัปเดตแผนที่จาก API')}
