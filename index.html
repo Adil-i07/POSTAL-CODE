@@ -2409,7 +2409,7 @@ function resetAll(){if(!confirm('Reset the map to the original shape? · คื�
 /* ---------- API ---------- */
 const apiOK=()=>{const u=(apiUrl||'').trim();if(!/^https?:\/\//i.test(u)){msg='Enter a Map API URL first · ใส่ URL ของ Map API ก่อน';render();return null}return u};
 async function loadApi(silent){const u=apiOK();if(!u)return;
- try{const r=await fetch(u+(u.includes('?')?'&':'?')+'{ ok:true, rev, data }'+Date.now(),{cache:'no-store'}),j=await r.json();
+ try{const r=await fetch(u+(u.includes('?')?'&':'?')+'action=map&_='+Date.now(),{cache:'no-store'}),j=await r.json();
   if(j&&j.ok&&j.data&&j.data.v===1){if(silent&&(+j.data.rev||0)<=GEOREV)return;if(!silent)pushH();geoApply(j.data);refresh(true);saveLocal();dirty=false;msg='Loaded from API · โหลดจาก API แล้ว (rev '+GEOREV+')';if(MEV)render();if(silent)toast('Map updated from API · อัปเดตแผนที่จาก API')}
   else if(!silent){msg='API has no saved map yet · ยังไม่มีข้อมูลแผนที่ใน API';render()}}
  catch(_){if(!silent){msg='Cannot reach Map API · เชื่อมต่อ Map API ไม่สำเร็จ';render()}}}
