@@ -2326,9 +2326,9 @@ setTimeout(show,900);
 
 /* ================= Terrain · ภูมิประเทศ 3D (locked data) ================= */
 (function(){
-const FORCED={"v":1,"rev":0,"t":1793455657146,"hv":"AP8A/wBQAQQACwEBAEcBAQIBAQcAIQIBBAEFAgQBAwECAQEDAgIDAQQDAgEBAQIBAQIABQEBAwECAQBCAQIABAMBBgEFAgMBAgEDAgAeAQIDAQUEBwEFAQMEBAEFAgcCBQEEAQMBAgIBBAIBBAIDAQEBAEEEAgIBAAMFAQsCCgEIAQIBCAEFAQIBABwKAgcBAwEEAQUBBwEKAQkBBgEEAQMFBAEFAQYBBQIEAQMBAgIDAwQDAgEBAQBAAQEGAQsBBAEAAwUBEwERAQ4BCwEEAQUBBAECAQAaBwELAQ4BEQEPAQoBCAEHAQgBCgEJAQYBBAECAwEDAgEDAgIFAwICAQMDAQEAQgUBDAEIAQADBgEWARIBDQEIAQUBBAEDAQIBABkGAggBCQEMAQ4BCgEIAQcCCAIGAQMBAQMABAEBAAMBCQBDAQEHAQQBAAIDAQwBEgEOAQsBBwEFAQQBAgEAGQcBBgEIAgQBBgEIAgcEBgEFAQIBAFcBAQUBBgEDAgYBEQIMAQoBBgEEAQMBABkGAQkBDAEOAQsBBgQHAQgDBgEEAQIBAFcBAQIBBAEGAQgBCgENAQwBEgEIAQQBAQEAGAMBBgEFAQgBDQIKAQgBBwMGAQoBDAEKAQcBAwEBAQBZAgEEAQcBBgEIAQwBBgEFAQIBABcCAQMBBQEGAQQBBwEJAQcBBQEHAwgBCgEOARABDgEHAQEBAFwDAgQCAwECAQEBABcDAQUBBwQFAQMCBgMIAQ0BDgEMAQoBBgEBAQBeAQQAFwEBBgEIAQkBCgIHAQQDBQEGAgUBBgIFAgQBAQEAeQMBCgEMAQsCCgEIAQYDBQMEAQECAgEEAQMBAQEAeQgBDgIMAQoBCQEHAgYBBQQGAQUBAwMCAQEBADICAgMCAQEAQggBEQEOAQkBBwEGAQQHBQEGAQUBAwECAQEBADIDAQUBBgEKAQkBBgEDAQAFAgEGAwEBADcGAQsBCQEGAQUBAwECAwMDAgEDAQQBAwECAQEBADICAQYBCgENARMBCwEGAQMBAAQBAQUEAwEANwUBBwIFAQQBAQcAOAcBCwEPARQBEQEHAQMBAQEABAEBAwECAQMCAQIANgMBBQMEAQEBAD4MAg4BDwEGAQAFAQUAOgIBBQIEAQMBAD8OAQoBCwEJAQsBAAgCAQA7AgEIAQcBBAECAQA6AQEABAEBBwICAQAJAgEAOwMBCwEHAQQBAgEAOQMBCQEDAQEBAAMBAQUBAQEARQEBBgEFAQMBAQEAOQIBCgENAQIBAA4BAQA8AQECAgEBADoDAQcBCgEDAQAOAQEAPQECADoDAQUBBwEGAQMBAAsBAQACAQEATQECACkBAQUBCQELAQgBBQEBAgBJAQIACQEBAgEBBAICAQEAKAIBCQEWARkBEAEHAQAKAQEAQAEBAgEBAQABAQQAAQEBAgEDAQQBAwEBAwICACkDAQsBGwEfARYBCQEACgECAD8BAwMCBAQDAQIBAwICAQEBACsBAQMBBQEJARMBGAEUAQoBAQEASwECAgEDAQQBBQIEAQMBAgEBAQIBAC0FAQwBEwEZARcBEQEMAQUBAQEATAECAgIDAQQBAwECAQAwBAEMASABJgEYAQsBBwEEAQMBAIcCAQcBAgEDAQgBCgECAQCIAQECAQoBDAEEAQCJAgEEAQYBAgEAiQEBAAEBAQD/AP8A/wD/AP8A/wC6AQMAigEBAwECAgEBAIkCAQMCAgEAiQIBAwICAgEBAA0BAQB4AwEJAQoBBgEFAQYBAwEADAIBAwEBAQB3BwESARUBDQEJAQYBAwEABwEBBQEIAQoCCAEGAQIBAHcEAQ8BEgEOAQoBBAEBAQAHAgEJAQ0BCgEIAQYBBQECAQB3AQEFAQcBCQEHAQIBAAgBAQYCAgEDAQQBAgEAegEBAwIACgECAwEHAQUBAIsDAQIBAP8A/wD/AP8A/wD/AP8A/wD/AP8AEQ==","sf":"AP8A0QQBAgQAdQQEAggECwAEBAMANgUDAAEFCwQDABkECwUHBAoFAQQHAAQEBQAyBREEBgAVBAwFDAQDBQQEBgAEBAYAMAIBBQQAAQUMBA0ADQQMBRUEBQAEBAYAMAIBBQUAAQUKBA4ACwQOBRQEBgAEBAcALwIBBQUAAwUIBA4ACgQOBRUEBgAEBAYAMAIBBREEDQAJBBAFBQQEBQoEBwAEBAYAMQIBBRAEDQAIBBIFAgQNBQEECQAEBAYANAUOBA0ABgQtAAMEBAA5BQwECQECBAIABAQtAgEEAQAEBAMAOwULBAcBBQADBCwCAwBGBQkEBgEDBAIAAwQrAgEAIgIJAB8FCAQGAQIEAwADBCkCAgAdAhQAGwUGBAwAAwQoAgMAGwIDBAcCAgQFAgMEAQIFABgFBQQMAAMEHwILABkCBQQUAgkAFAUDBA0AAwQcAgsAGwIBBBsCAgQCAgUAFAUBBA0AAwQYACgCAwQGBgEEHAICABUEDAADBBYAKQIEBAUFAQQBAAEEBQABBBUCBAAXBAgAAwQWACcCBgQHAAEEBQABBBcCAwAaBAQAAwQVACcCBwQIAAIEAgAEBAsAAQQKAgMAIAQVACYCAQQDAgIECgADBAIABAQKAAUEBwICACAEFAAnAgEEBgABBAcAAwQEAAQECQAGBAYCAwAfBBQAJgIBBAIFAwQBAAsEBAAIBAUACAQGAgIAHwQUACUCAgQBBQUACwQDAAsEAQALBAUCAwAeBBMAJQICBAIFBQALBAMAGAQFAgIAHgQSACYCAQQEBQQAJgQFAgMAHQQPACgCAgQDBgIFAwAnBAUCAgAdBAwAKwIBBAQGAwUCACcEBQIDABwECQAtAgIEBAYDBQEAKQQEAgMAHAQGADACAQQGBgEEAgAqBAMCBAAbBAQAMQICBAkAKgQEAgMAGwQBADMCAgQKACoEBAIDAE8CAQQFAAIEBAAqBAUCAgBOAgIEBgAvBAQCAwBOAgEECAAuBAQCBABMAgEECQAvBAQCAwBMAgEECQAvBAUCAgBLAgIECAAwBAUCAgBLAgEECQAxBAQCAgBLAgEECAAyBAQCAgBLAgEEBwAzBAQCAgBKAgIEBAA2BAUCAQBKAgIEBAA2BAUCAQBKAgIEBAA2BAUCAQBKAgIEBQA1BAUCAQBKAgIEBgAzBAYCAQBKAgIEBwAyBAYCAQBKAgIECAAxBAYCAQBKAgIECAAxBAYCAQBKAgIECQAwBAUCAgBKAgIECQAwBAUCAQBMAgEECgAuBAUCAgBMAgIECQAuBAUCAgBNAgEECQAfBAUABAQDAAMEBQICAE0CAQQNABAEAgAIBAgAAQQFAAIEBQICAE4CAQQNAAYEAgAFBAcABAQVAgIAUAIBBA4AAgQHAAIECAADBBQCAgBSAgIEIQABBBMCAgBUAgIEMQIEAFYCBAQtAgUAWAIGBAECBAQjAgQAXQIKBAECAwQSAgQEAQIBBAQCAwBlAggEEAIMAG8CEgD/AP8A/wD/AJQ=","bh":{"12:1":3},"bc":{"12:1":"#cce8b5"},"col":{"water":"#5aa9e0","beach":"#f1e4b8","sand":"#e2b96f","grass":"#7bbf5e","snow":"#caf0fe","rock":"#9b9a94","bld":"#d5dae3"},"base":"grass","snow":0.3,"beachW":5,"kz":6};
+const FORCED={"v":1,"rev":0,"t":1793496236206,"hv":"AP8A/wBQAQQACwEBAEcBAQIBAQcAIQIBBAEFAgQBAwECAQEDAgIDAQQDAgEBAQIBAQIABQEBAwECAQBCAQIABAMBBgEFAgMBAgEDAgAeAQIDAQUEBwEFAQMEBAEFAgcCBQEEAQMBAgIBBAIBBAIDAQEBAEEEAgIBAAMFAQsCCgEIAQIBCAEFAQIBABwKAgcBAwEEAQUBBwEKAQkBBgEEAQMFBAEFAQYBBQIEAQMBAgIDAwQDAgEBAQBAAQEGAQsBBAEAAwUBEwERAQ4BCwEEAQUBBAECAQAaBwELAQ4BEQEPAQoBCAEHAQgBCgEJAQYBBAECAwEDAgEDAgIFAwICAQMDAQEAQgUBDAEIAQADBgEWARIBDQEIAQUBBAEDAQIBABkGAggBCQEMAQ4BCgEIAQcCCAIGAQMBAQMABAEBAAMBCQBDAQEHAQQBAAIDAQwBEgEOAQsBBwEFAQQBAgEAGQcBBgEIAgQBBgEIAgcEBgEFAQIBAFcBAQUBBgEDAgYBEQIMAQoBBgEEAQMBABkGAQkBDAEOAQsBBgQHAQgDBgEEAQIBAFcBAQIBBAEGAQgBCgENAQwBEgEIAQQBAQEAGAMBBgEFAQgBDQIKAQgBBwMGAQoBDAEKAQcBAwEBAQBZAgEEAQcBBgEIAQwBBgEFAQIBABcCAQMBBQEGAQQBBwEJAQcBBQEHAwgBCgEOARABDgEHAQEBAFwDAgQCAwECAQEBABcDAQUBBwQFAQMCBgMIAQ0BDgEMAQoBBgEBAQBeAQQAFwEBBgEIAQkBCgIHAQQDBQEGAgUBBgIFAgQBAQEAeQMBCgEMAQsCCgEIAQYDBQMEAQECAgEEAQMBAQEAeQgBDgIMAQoBCQEHAgYBBQQGAQUBAwMCAQEBADICAgMCAQEAQggBEQEOAQkBBwEGAQQHBQEGAQUBAwECAQEBADIDAQUBBgEKAQkBBgEDAQAFAgEGAwEBADcGAQsBCQEGAQUBAwECAwMDAgEDAQQBAwECAQEBADICAQYBCgENARMBCwEGAQMBAAQBAQUEAwEANwUBBwIFAQQBAQcAOAcBCwEPARQBEQEHAQMBAQEABAEBAwECAQMCAQIANgMBBQMEAQEBAD4MAg4BDwEGAQAFAQUAOgIBBQIEAQMBAD8OAQoBCwEJAQsBAAgCAQA7AgEIAQcBBAECAQA6AQEABAEBBwICAQAJAgEAOwMBCwEHAQQBAgEANwEBAAEDAQkBBAECAQADAQEFAQEBAEUBAQYBBQEDAQEBADYBAQUBBAIKAQgBAwEADgEBADwBAQICAQEANwIBCAEHARABCgEJAQQBAA4BAQA9AQIAOAUBDAEVARoBEAEHAQQBAAsBAQACAQEATQECACcBAQwBDgEZARcBEgEJAQUBAQIASQECAAkBAQIBAQQCAgEBACYGAR8BGwEdARkBEgEMAQYBAAoBAQBAAQECAQEBAAEBBAABAQECAQMBBAEDAQEDAgIAJgMBEgEjASEBHQEWAQ8BCAECAQAKAQIAPwEDAwIEBAMBAgEDAgIBAQEAKgkBDQEWARkBFAENAQYBBAEBAQBMAQICAQMBBAEFAgQBAwECAQEBAgEAKwEBCQEKAQ4BCwEIAQIBAQIATgECAgIDAQQBAwECAQAvAQQACgEBAIsCAQUBAwEAgwEBAAUCAQYBCAEGAQCJAgEHAQYBBQEAiQEBBwEFAQMBAIoBAgD/AP8A/wD/AP8A/wAoAQMAigEBAwECAgEBAIkCAQMCAgEAiQIBAwICAgEBAA0BAQB4AwEJAQoBBgEFAQYBAwEADAIBAwEBAQB3BwESARUBDQEJAQYBAwEABwEBBQEIAQoCCAEGAQIBAHcEAQ8BEgEOAQoBBAEBAQAHAgEJAQ0BCgEIAQYBBQECAQB3AQEFAQcBCQEHAQIBAAgBAQYCAgEDAQQBAgEAegEBAwIACgECAwEHAQUBAIsDAQIBAP8A/wD/AP8A/wD/AP8A/wD/AP8AEQ==","sf":"AP8A0QQBAgQAdQQEAggECwAEBAMANgUDAAEFCwQDABkECwUHBAoFAQQHAAQEBQAyBREEBgAVBAwFDAQDBQQEBgAEBAYAMAIBBQQAAQUMBA0ADQQMBRUEBQAEBAYAMAIBBQUAAQUKBA4ACwQOBRQEBgAEBAcALwIBBQUAAwUIBA4ACgQOBRUEBgAEBAYAMAIBBREEDQAJBBAFBQQEBQoEBwAEBAYAMQIBBRAEDQAIBBIFAgQNBQEECQAEBAYANAUOBA0ABgQtAAMEBAA5BQwECQECBAIABAQtAgEEAQAEBAMAOwULBAcBBQADBCwCAwBGBQkEBgEDBAIAAwQrAgEAIgIJAB8FCAQGAQIEAwADBCkCAgAdAhQAGwUGBAwAAwQoAgMAGwIDBAcCAgQFAgMEAQIFABgFBQQMAAMEHwILABkCBQQUAgkAFAUDBA0AAwQcAgsAGwIBBBsCAgQCAgUAFAUBBA0AAwQYACgCAwQGBgEEHAICABUEDAADBBYAKQIEBAUFAQQBAAEEBQABBBUCBAAXBAgAAwQWACcCBgQHAAEEBQABBBcCAwAaBAQAAwQVACcCBwQIAAIEAgAEBAsAAQQKAgMAIAQVACYCAQQDAgIECgADBAIABAQKAAUEBwICACAEFAAnAgEEBgABBAcAAwQEAAQECQAGBAYCAwAfBBQAJgIBBAIFAwQBAAsEBAAIBAUACAQGAgIAHwQUACUCAgQBBQUACwQDAAsEAQALBAUCAwAeBBMAJQICBAIFBQALBAMAGAQFAgIAHgQSACYCAQQEBQQAJgQFAgMAHQQPACgCAgQDBgIFAwAnBAUCAgAdBAwAKwIBBAQGAwUCACcEBQIDABwECQAtAgIEBAYDBQEAKQQEAgMAHAQGADACAQQGBgEEAgAqBAMCBAAbBAQAMQICBAkAKgQEAgMAGwQBADMCAgQKACoEBAIDAE8CAQQFAAIEBAAqBAUCAgBOAgIEBgAvBAQCAwBOAgEECAAuBAQCBABMAgEECQAvBAQCAwBMAgEECQAvBAUCAgBLAgIECAAwBAUCAgBLAgEECQAxBAQCAgBLAgEECAAyBAQCAgBLAgEEBwAzBAQCAgBKAgIEBAA2BAUCAQBKAgIEBAA2BAUCAQBKAgIEBAA2BAUCAQBKAgIEBQA1BAUCAQBKAgIEBgAzBAYCAQBKAgIEBwAyBAYCAQBKAgIECAAxBAYCAQBKAgIECAAxBAYCAQBKAgIECQAwBAUCAgBKAgIECQAwBAUCAQBMAgEECgAuBAUCAgBMAgIECQAuBAUCAgBNAgEECQAfBAUABAQDAAMEBQICAE0CAQQNABAEAgAIBAgAAQQFAAIEBQICAE4CAQQNAAYEAgAFBAcABAQVAgIAUAIBBA4AAgQHAAIECAADBBQCAgBSAgIEIQABBBMCAgBUAgIEMQIEAFYCBAQtAgUAWAIGBAECBAQjAgQAXQIKBAECAwQSAgQEAQIBBAQCAwBlAggEEAIMAG8CEgD/AP8A/wD/AJQ=","bh":{"12:1":3},"bc":{"12:1":"#cce8b5"},"col":{"water":"#5aa9e0","beach":"#f1e4b8","sand":"#e2b96f","grass":"#7bbf5e","snow":"#caf0fe","rock":"#9b9a94","bld":"#d5dae3"},"base":"grass","snow":0.3,"beachW":5,"kz":2.4181391751897525};
 const CG=10,CNX=140,CNY=76,CVX=CNX+1,CVY=CNY+1;           // stored (coarse) grid
-const F=2,GS=CG/F,NX=CNX*F,NY=CNY*F,VX=NX+1,VY=NY+1,MAXH=130; // rendered (fine) grid
+const F=3,GS=CG/F,NX=CNX*F,NY=CNY*F,VX=NX+1,VY=NY+1,MAXH=130; // rendered (fine) grid
 const SN=['auto','water','beach','sand','grass','snow','rock'];
 const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
 const unrle=(s,len)=>{const b=atob(s),a=new Uint8Array(len);let p=0;for(let i=0;i+1<b.length;i+=2){const v=b.charCodeAt(i),n=b.charCodeAt(i+1);for(let k=0;k<n&&p<len;k++)a[p++]=v}return a};
@@ -2364,7 +2364,7 @@ function buildGeo(){REG=[];DATA.forEach((_,i)=>OUT[i].forEach((s,k)=>{const pts=
  for(let cy=0;cy<NY;cy++)for(let cx=0;cx<NX;cx++){const x=cx*GS+GS/2,y=cy*GS+GS/2;for(const r of REG){if(x<r.x0||x>r.x1||y<r.y0||y>r.y1)continue;if(pip(x,y,r.pts)){LM[cy*NX+cx]=1;break}}}
  DC.fill(255);const q=[];for(let c=0;c<LM.length;c++){if(!LM[c])continue;const x=c%NX,y=(c/NX)|0;if(x===0||y===0||x===NX-1||y===NY-1||!LM[c-1]||!LM[c+1]||!LM[c-NX]||!LM[c+NX]){DC[c]=0;q.push(c)}}
  for(let h=0;h<q.length;h++){const c=q[h],x=c%NX,y=(c/NX)|0,d=DC[c]+1;for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=NX||ny>=NY)continue;const n=ny*NX+nx;if(LM[n]&&DC[n]>d){DC[n]=d;q.push(n)}}}
- LAND=[];LAND2=[];for(let c=0;c<LM.length;c++)if(LM[c]){LAND.push(c);if(!((c%NX)&1)&&!(((c/NX)|0)&1))LAND2.push(c)}
+ LAND=[];LAND2=[];for(let c=0;c<LM.length;c++)if(LM[c]){LAND.push(c);if(c%F===0&&((c/NX)|0)%F===0)LAND2.push(c)}
  BL=[];DATA.forEach((d,i)=>DS[i].forEach((s,j)=>{let parts=[];
   if(typeof s==='string')parts=[sample(s,CVR['c:'+i+':'+j])];
   else if(i<=1)parts=[[[s[0],s[1]],[s[2],s[1]],[s[2],s[3]],[s[0],s[3]]]];
@@ -2378,13 +2378,13 @@ const cellSurf=c=>{const s=SF[c];if(s)return s;const x=c%NX,y=(c/NX)|0,i=y*VX+x,
 let CF=[];
 function recolor(){CF=new Array(NX*NY);const L=[-.45,-.55,.7];
  for(const c of LAND){const x=c%NX,y=(c/NX)|0,i=y*VX+x,a=HV[i],b=HV[i+1],cc=HV[i+VX],d=HV[i+VX+1],sr=cellSurf(c),nm=SN[sr],col=CRGB[nm]||CRGB.grass;
-  const gx=eAt((b+d-a-cc)/2),gy=eAt((cc+d-a-b)/2),nx=-gx/GS*1.1,ny=-gy/GS*1.1,nl=Math.hypot(nx,ny,1),dot=(nx*L[0]+ny*L[1]+L[2])/nl,sh=nm==='water'?1:Math.max(.55,Math.min(1.25,.78+.55*dot));
+  const gx=eAt((b+d-a-cc)/2),gy=eAt((cc+d-a-b)/2),nx=-gx/GS*1.1,ny=-gy/GS*1.1,nl=Math.hypot(nx,ny,1),dot=(nx*L[0]+ny*L[1]+L[2])/nl,sh=nm==='water'?1:Math.max(.5,Math.min(1.32,.74+.66*dot));
   CF[c]=`rgb(${Math.min(255,col[0]*sh)|0},${Math.min(255,col[1]*sh)|0},${Math.min(255,col[2]*sh)|0})`}}
 const shade=(col,f)=>{const c=hex(col);return `rgb(${Math.min(255,c[0]*f)|0},${Math.min(255,c[1]*f)|0},${Math.min(255,c[2]*f)|0})`};
 /* ---------- canvas / camera ---------- */
 const cv=document.createElement('canvas');cv.id='t3d';cv.style.cssText='position:fixed;left:0;top:0;width:100vw;height:100vh;display:none;touch-action:none';
 document.body.insertBefore(cv,document.getElementById('m').nextSibling);const ctx=cv.getContext('2d');
-let W=0,H=0,dpr=1,raf=0,lod=false,lodT=0;
+let W=0,H=0,dpr=1,raf=0,lod=false,lodT=0,hitRoads=[],selId=null,selPt=null,selName='',selType='';
 const vx=new Float32Array(VX*VY),vy=new Float32Array(VX*VY),vd=new Float32Array(VX*VY);
 function fitCanvas(){dpr=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr}
 function cam(){const th=T.th*Math.PI/180,ph=T.ph*Math.PI/180;return{s:W/vb.w,cx:vb.x+vb.w/2,cy:vb.y+vb.h/2,c:Math.cos(th),sn:Math.sin(th),cp:Math.cos(ph),sp:Math.sin(ph),kz:T.kz}}
@@ -2401,30 +2401,40 @@ function roadPts(p){let r=RSC.get(p);if(r&&r.n===p.pts.length&&r.c===!!p.curve&&
  else{o.push(P[0]);for(let i=0;i<P.length-1;i++){const a=P[i-1]||P[i],b=P[i],c=P[i+1],e=P[i+2]||c;for(let t=1;t<=8;t++){const u=t/8,w=1-u,x1=b[0]+(c[0]-a[0])/6,y1=b[1]+(c[1]-a[1])/6,x2=c[0]-(e[0]-b[0])/6,y2=c[1]-(e[1]-b[1])/6;
    o.push([w*w*w*b[0]+3*w*w*u*x1+3*w*u*u*x2+u*u*u*c[0],w*w*w*b[1]+3*w*w*u*y1+3*w*u*u*y2+u*u*u*c[1]])}}}
  RSC.set(p,{n:P.length,c:!!p.curve,x:P[0][0],o});return o}
-function roadItems(K,step){const items=[],src=window.lyFilt?window.lyFilt(PL):PL,Wv=vb.w,zf=Math.min(2.6,Math.max(1,Math.pow(1380/Wv,.35)));
- for(const p of src){if(p.kind!=='road'||!p.pts||p.pts.length<2)continue;const t=RT[p.rt]||RT.local;if(Wv>t.vw)continue;
-  const wpx=t.w*zf*(p.size||1)*.8,col=p.color||t.c,cas=p.color?shade(p.color,.55):t.cs,pts=roadPts(p);
+const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function roadItems(K,step){const items=[],src=window.lyFilt?window.lyFilt(PL):PL,Wv=vb.w,zf=Math.min(2.6,Math.max(1,Math.pow(1380/Wv,.35))),wt=cssv('--wt')||'#8ec9ee',wtc=cssv('--wtc')||'#5aa3d1';
+ for(const p of src){if(!p.pts)continue;
+  if(p.kind==='nature'&&p.nt==='bay'){if(p.pts.length<3)continue;const S=p.pts.map(q=>pj(K,q[0],q[1],hAt(q[0],q[1])+.5));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,dy=0;S.forEach(q=>{x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1]);dy+=q[2]});
+   if(x1<-30||x0>W+30||y1<-30||y0>H+30)continue;items.push({b:1,d:2*dy/S.length+GS*.6,S,col:p.color||wt,cas:p.color?shade(p.color,.6):wtc});continue}
+  const isRoad=p.kind==='road',isWater=p.kind==='nature'&&(p.nt==='river'||p.nt==='canal');if(!(isRoad||isWater)||p.pts.length<2)continue;
+  const t=isRoad?(RT[p.rt]||RT.local):NT[p.nt];if(Wv>t.vw)continue;
+  const wpx=t.w*zf*(p.size||1)*.8,col=p.color||(isRoad?t.c:wt),cas=p.color?shade(p.color,.55):(isRoad?t.cs:wtc),pts=roadPts(p),zo=isRoad?.9:.5,eps=isRoad?GS*1.7:GS*1.4;
   for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1],L=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.ceil(L/step));
    for(let k=0;k<n;k++){const x0=a[0]+(b[0]-a[0])*k/n,y0=a[1]+(b[1]-a[1])*k/n,x1=a[0]+(b[0]-a[0])*(k+1)/n,y1=a[1]+(b[1]-a[1])*(k+1)/n;
-    const p0=pj(K,x0,y0,hAt(x0,y0)+.9),p1=pj(K,x1,y1,hAt(x1,y1)+.9);
+    const p0=pj(K,x0,y0,hAt(x0,y0)+zo),p1=pj(K,x1,y1,hAt(x1,y1)+zo);
     if(Math.max(p0[0],p1[0])<-30||Math.min(p0[0],p1[0])>W+30||Math.max(p0[1],p1[1])<-30||Math.min(p0[1],p1[1])>H+30)continue;
-    items.push({r:1,d:p0[2]+p1[2]+GS*1.2,x0:p0[0],y0:p0[1],x1:p1[0],y1:p1[1],w:wpx,col,cas})}}}
+    items.push({r:1,p,wx0:x0,wy0:y0,wx1:x1,wy1:y1,d:p0[2]+p1[2]+eps,x0:p0[0],y0:p0[1],x1:p1[0],y1:p1[1],w:wpx,col,cas})}}}
  return items}
 /* ---------- drawing ---------- */
 function draw(){raf=0;if(!T.on)return;if(cv.width!==Math.round(innerWidth*dpr)||cv.height!==Math.round(innerHeight*dpr))fitCanvas();
  let busy=false;const ea=(k,t)=>{const d=T[t]-T[k];if(Math.abs(d)>.05){T[k]+=d*.2;busy=true}else T[k]=T[t]};ea('ph','phT');ea('th','thT');
- const st=(lod||busy)?2:1,OV=overlay();
+ const st=(lod||busy)?F:1,OV=overlay();hitRoads=[];
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle=T.col.water;ctx.fillRect(0,0,W,H);
  const K=cam(),kk=K.s*K.sp*K.kz,sy0=K.s*K.cp;
  for(let y=0;y<VY;y+=st)for(let x=0;x<VX;x+=st){const i=y*VX+x,dx=x*GS-K.cx,dy=y*GS-K.cy,rx=dx*K.c-dy*K.sn,ry=dx*K.sn+dy*K.c;vx[i]=W/2+rx*K.s;vy[i]=H/2+ry*sy0-eAt(HV[i])*kk;vd[i]=ry}
- const items=[],m=40,cells=st===2?LAND2:LAND;
+ const items=[],m=40,cells=st===F?LAND2:LAND;
  for(const c of cells){const x=c%NX,y=(c/NX)|0,i=y*VX+x,j=i+st*VX;const a=vx[i],b=vx[i+st],cc=vx[j],d=vx[j+st],e=vy[i],f=vy[i+st],g=vy[j],h=vy[j+st];
   if(Math.max(a,b,cc,d)<-m||Math.min(a,b,cc,d)>W+m||Math.max(e,f,g,h)<-m||Math.min(e,f,g,h)>H+m)continue;items.push({c,d:vd[i]+vd[j+st]})}
- if(OV)roadItems(K,GS*2*st).forEach(r=>items.push(r));
+ if(OV)roadItems(K,st>1?20:9).forEach(r=>items.push(r));
  items.sort((p,q)=>p.d-q.d);
  const slab=7,wallOn=K.sp>.03;ctx.lineCap='round';ctx.lineJoin='round';
  for(const it of items){
-  if(it.r){ctx.lineWidth=it.w+2;ctx.strokeStyle=it.cas;ctx.beginPath();ctx.moveTo(it.x0,it.y0);ctx.lineTo(it.x1,it.y1);ctx.stroke();ctx.lineWidth=it.w;ctx.strokeStyle=it.col;ctx.beginPath();ctx.moveTo(it.x0,it.y0);ctx.lineTo(it.x1,it.y1);ctx.stroke();continue}
+  if(it.b){ctx.beginPath();it.S.forEach((q,n)=>n?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.globalAlpha=.85;ctx.fillStyle=it.col;ctx.fill();ctx.globalAlpha=1;ctx.lineWidth=1.5;ctx.strokeStyle=it.cas;ctx.stroke();continue}
+  if(it.r){const sel=selId&&it.p.id===selId,w=it.w+(sel?3:0),ux=it.x1-it.x0,uy=it.y1-it.y0,L=Math.hypot(ux,uy)||1,ex=ux/L*.9,ey=uy/L*.9;
+   hitRoads.push(it);ctx.lineCap='butt';
+   ctx.lineWidth=w+2.4;ctx.strokeStyle=sel?'#e8590c':it.cas;ctx.beginPath();ctx.moveTo(it.x0-ex,it.y0-ey);ctx.lineTo(it.x1+ex,it.y1+ey);ctx.stroke();
+   const fc=sel?'#fff3bf':it.col;ctx.lineWidth=w;ctx.strokeStyle=fc;ctx.beginPath();ctx.moveTo(it.x0-ex,it.y0-ey);ctx.lineTo(it.x1+ex,it.y1+ey);ctx.stroke();
+   ctx.beginPath();ctx.arc(it.x1,it.y1,w/2,0,7);ctx.fillStyle=fc;ctx.fill();continue}
   const c=it.c,x=c%NX,y=(c/NX)|0,i=y*VX+x,j=i+st*VX,col=CF[c]||'#7bbf5e',water=SF[c]===1;
   let p0x=vx[i],p0y=vy[i],p1x=vx[i+st],p1y=vy[i+st],p2x=vx[j+st],p2y=vy[j+st],p3x=vx[j],p3y=vy[j];
   if(water){const q=[[x,y],[x+st,y],[x+st,y+st],[x,y+st]].map(a=>pj(K,a[0]*GS,a[1]*GS,.5));p0x=q[0][0];p0y=q[0][1];p1x=q[1][0];p1y=q[1][1];p2x=q[2][0];p2y=q[2][1];p3x=q[3][0];p3y=q[3][1]}
@@ -2446,7 +2456,18 @@ function draw(){raf=0;if(!T.on)return;if(cv.width!==Math.round(innerWidth*dpr)||
   if(K.s<1.5)DATA.forEach((d,i)=>{if(!d.provName||i<2&&K.s>1)return;const P=OUT[i][0].split(' ').map(q=>q.split(',').map(Number));let sx=0,sy=0;P.forEach(p=>{sx+=p[0];sy+=p[1]});const x=sx/P.length,y=sy/P.length;lab(d.provName,x,y,hAt(x,y),Math.max(11,Math.min(15,12*K.s+4)))});
   if(K.s>=.95)BL.forEach(b=>{if(b.name)lab(b.name,b.cx,b.cy,hAt(b.cx,b.cy)+(T.bh[b.key]||0),11)});
   if(window.PL)PL.forEach(p=>{if(p.kind&&p.kind!=='place'||p.x==null)return;const q=pj(K,p.x,p.y,hAt(p.x,p.y)+1);if(q[0]<-10||q[0]>W+10||q[1]<-10||q[1]>H+10)return;ctx.beginPath();ctx.arc(q[0],q[1],5,0,7);ctx.fillStyle=p.color||'#e8590c';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke()})}
+ if(OV&&selId&&selPt){const q=pj(K,selPt.x,selPt.y,hAt(selPt.x,selPt.y)+.9),lift=44+Math.min(40,K.sp*30*K.kz);
+  const ff2=getComputedStyle(document.body).fontFamily;ctx.beginPath();ctx.ellipse(q[0],q[1],5,2.5,0,0,7);ctx.fillStyle='rgba(0,0,0,.25)';ctx.fill();
+  ctx.strokeStyle='#e8590c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(q[0],q[1]);ctx.lineTo(q[0],q[1]-lift);ctx.stroke();ctx.beginPath();ctx.arc(q[0],q[1],4,0,7);ctx.fillStyle='#e8590c';ctx.fill();
+  ctx.font=`700 15px ${ff2}`;const w1=ctx.measureText(selName).width;ctx.font=`500 11px ${ff2}`;const w2=selType?ctx.measureText(selType).width:0,bw=Math.max(w1,w2)+24,bh=selType?44:30,bx=q[0]-bw/2,by=q[1]-lift-bh;
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.28)';ctx.shadowBlur=10;ctx.shadowOffsetY=3;ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect?ctx.roundRect(bx,by,bw,bh,10):ctx.rect(bx,by,bw,bh);ctx.fill();ctx.restore();
+  ctx.strokeStyle='#e8590c';ctx.lineWidth=1.5;ctx.stroke();ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#17301b';ctx.font=`700 15px ${ff2}`;ctx.fillText(selName,q[0],by+(selType?15:bh/2));
+  if(selType){ctx.font=`500 11px ${ff2}`;ctx.fillStyle='#6b7a6c';ctx.fillText(selType,q[0],by+31)}}
  if(busy)raf=requestAnimationFrame(draw);else if((OV?'0':'-1')!==cv.style.zIndex)applyMode()}
+function pickRoad(sx,sy){let best=null,bd=1e9;for(const it of hitRoads){const dx=it.x1-it.x0,dy=it.y1-it.y0,L2=dx*dx+dy*dy||1;let u=((sx-it.x0)*dx+(sy-it.y0)*dy)/L2;u=Math.max(0,Math.min(1,u));const d=Math.hypot(sx-(it.x0+u*dx),sy-(it.y0+u*dy));
+  if(d<bd&&d<=Math.max(9,it.w/2+7)){bd=d;best={it,u}}}
+ if(best){const p=best.it.p,t=p.kind==='road'?(RT[p.rt]||RT.local):NT[p.nt];selId=p.id;selName=p.name||t.n;selType=p.name?t.n:'';selPt={x:best.it.wx0+(best.it.wx1-best.it.wx0)*best.u,y:best.it.wy0+(best.it.wy1-best.it.wy0)*best.u}}else{selId=null;selPt=null}
+ need()}
 const moving=()=>{lod=true;clearTimeout(lodT);lodT=setTimeout(()=>{lod=false;need()},220);need()};
 /* ---------- interaction (pan / zoom / rotate) ---------- */
 let ptr=new Map(),gest=null,rotMode=false;
@@ -2454,13 +2475,13 @@ const toVBpan=(dsx,dsy)=>{const K=cam(),rx=dsx/K.s,ry=dsy/(K.s*Math.max(K.cp,.2)
 function zoomAt(f,sx,sy){const K=cam(),rx=(sx-W/2)/K.s,ry=(sy-H/2)/(K.s*Math.max(K.cp,.2)),ox=rx*K.c+ry*K.sn,oy=-rx*K.sn+ry*K.c,ns=Math.max(.2,Math.min(12,K.s*f)),k=K.s/ns;
  const ncx=K.cx+ox-ox*k,ncy=K.cy+oy-oy*k;vb.w=W/ns;vb.h=H/ns;vb.x=ncx-vb.w/2;vb.y=ncy-vb.h/2;upd()}
 cv.addEventListener('contextmenu',e=>e.preventDefault());
-cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});rotMode=e.button===2||e.shiftKey||e.ctrlKey;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:Date.now()});rotMode=e.button===2||e.shiftKey||e.ctrlKey;
  if(ptr.size===2){const a=[...ptr.values()];gest={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),ang:Math.atan2(a[1].y-a[0].y,a[1].x-a[0].x),my:(a[0].y+a[1].y)/2}}});
 cv.addEventListener('pointermove',e=>{const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;
  if(ptr.size===1){if(rotMode){T.thT=T.th=T.th+dx*.4;T.phT=T.ph=Math.max(0,Math.min(75,T.ph-dy*.3));moving();return}moving();toVBpan(dx,dy)}
  else if(ptr.size===2&&gest){const a=[...ptr.values()],d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),ang=Math.atan2(a[1].y-a[0].y,a[1].x-a[0].x),mx=(a[0].x+a[1].x)/2,my=(a[0].y+a[1].y)/2;
   if(gest.d>0)zoomAt(d/gest.d,mx,my);T.thT=T.th=T.th-(ang-gest.ang)*180/Math.PI;T.phT=T.ph=Math.max(5,Math.min(75,T.ph-(my-gest.my)*.25));gest={d,ang,my};moving()}});
-const up=e=>{ptr.delete(e.pointerId);if(ptr.size<2)gest=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+const up=e=>{const p=ptr.get(e.pointerId);ptr.delete(e.pointerId);if(ptr.size<2)gest=null;if(e.type==='pointerup'&&p&&ptr.size===0&&Math.hypot(e.clientX-p.sx,e.clientY-p.sy)<6&&!rotMode)pickRoad(e.clientX,e.clientY)};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 cv.addEventListener('wheel',e=>{e.preventDefault();if(e.shiftKey)T.thT=T.th=T.th+e.deltaY*.1;else zoomAt(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);moving()},{passive:false});
 /* ---------- 3D button: tap = on/off, drag up/down = height ---------- */
 const rcg=document.querySelector('#zr').parentNode;rcg.style.display='none';
@@ -2471,11 +2492,11 @@ b3.addEventListener('pointermove',e=>{if(!bd||e.pointerId!==bd.id)return;const d
  if(bd.moved){T.kz=Math.max(.2,Math.min(8,bd.kz*Math.exp(dy/140)));tip.textContent='Height ×'+T.kz.toFixed(1);const r=b3.getBoundingClientRect();tip.style.cssText=`display:block;top:${r.top+r.height/2-14}px;right:${innerWidth-r.left+8}px`;need()}});
 b3.addEventListener('pointerup',e=>{if(!bd||e.pointerId!==bd.id)return;const m=bd.moved;bd=null;tip.style.display='none';if(m){saveView();return}set3D(!(T.phT>.5&&T.on))});
 b3.addEventListener('pointercancel',()=>{bd=null;tip.style.display='none'});
-function set3D(on){if(on&&!T.on){T.on=true;recolor()}T.phT=on?55:0;if(!on)T.thT=0;applyMode();saveView();need();refreshTile()}
+function set3D(on){if(!on){selId=null;selPt=null}if(on&&!T.on){T.on=true;recolor()}T.phT=on?55:0;if(!on)T.thT=0;applyMode();saveView();need();refreshTile()}
 /* ---------- terrain on/off (Layers → Terrain tile) ---------- */
 function refreshTile(){const t=document.querySelector('[data-lya="tile:terrain"]');if(t){t.classList.toggle('on',T.on);const s=t.querySelector('small');if(s)s.textContent=T.on?'On':'Off'}}
-function setTerrain(on){T.on=on;if(on)recolor();else{T.phT=0;T.thT=0;T.ph=0;T.th=0}applyMode();saveView();need();refreshTile()}
-window.trToggle=()=>setTerrain(!T.on);window.trIsOn=()=>T.on;window.trOpen=()=>setTerrain(!T.on);
+function setTerrain(on){T.on=on;if(!on){selId=null;selPt=null}if(on)recolor();else{T.phT=0;T.thT=0;T.ph=0;T.th=0}applyMode();saveView();need();refreshTile()}
+window.trDebug=()=>({n:hitRoads.length,selId,all:hitRoads.map(r=>[r.x0,r.y0,r.x1,r.y1])});window.trToggle=()=>setTerrain(!T.on);window.trIsOn=()=>T.on;window.trOpen=()=>setTerrain(!T.on);
 buildGeo();recolor();fitCanvas();addEventListener('resize',()=>{fitCanvas();need()});
 const _upd=upd;upd=function(){const r=_upd.apply(this,arguments);need();return r};
 applyMode();if(T.on)need();
