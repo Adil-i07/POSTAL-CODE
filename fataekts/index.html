@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<script>(function(){var r=location.pathname.replace(/\/(?:(?:card|train|bus|boat|toll)\/?)?(?:edit\/?)?$/i,"/").replace(/[^/]*\.[^/]*$/,"");if(/^https?:$/.test(location.protocol))document.write('<base href="'+(r.endsWith("/")?r:r+"/")+'">')})()</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กรมการขนส่งทางบน | ระบบข้อมูลการเดินทางสาธารณะ</title>
+<link rel="icon" type="image/png" href="ขสมฝใหม่.png">
+<link rel="apple-touch-icon" href="ขสมฝใหม่.png">
+<meta name="theme-color" content="#01f231">
+<style>
+
+@font-face {
+  font-family: 'SaoChingcha';
+  src: url('./SaoChingcha-Light.otf') format('opentype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'SaoChingcha';
+  src: url('./SaoChingcha-Regular.otf') format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SaoChingcha';
+  src: url('./SaoChingcha-Bold.otf') format('opentype');
+  font-weight: 700;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'SaoChingcha',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+h1,h2,h3,.display{
+  font-family:'SaoChingcha',sans-serif;
+}
+
+button{
+  font-family:'SaoChingcha',sans-serif;
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+  :root{
+    --yellow: linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%);
+    --yellow-deep: linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%);
+    --cream: #FFFBF1;
+    --ink: #241F14;
+    --charcoal: #262421;
+    --charcoal-2: #322F2A;
+    --white: #FFFFFF;
+    --train-blue: #015caf;
+    --bus-orange: #f4901e;
+    --boat-cyan: #018dda;
+    --toll-red: #ea0107;
+    --card-green: #00e500;
+    --shuttle-green: #2E9E5B;
+    --shadow-soft: 0 10px 30px rgba(36,31,20,0.10);
+    --shadow-pop: 0 16px 40px rgba(36,31,20,0.18);
+    --radius-lg: 32px;
+    --radius-md: 20px;
+    --radius-sm: 12px;
+  }
+  *{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'SaoChingcha',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+h1,h2,h3,.display{
+  font-family:'SaoChingcha',sans-serif;
+}
+
+button{
+  font-family:'SaoChingcha',sans-serif;
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    background: linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%);
+    border-radius: 0 0 46px 46px;
+    padding: 34px 20px 46px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.25) 0, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(255,255,255,0.18) 0, transparent 45%);
+    pointer-events:none;
+  }
+  .logo-wrap{
+    width:118px; height:118px; margin:0 auto 14px;
+    border-radius:50%;
+    background: linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 8px 22px rgba(150,105,0,0.28), inset 0 0 0 4px rgba(255,255,255,0.35);
+    position:relative; z-index:1;
+    overflow:hidden;
+  }
+  .logo-wrap img{width:82%; height:82%; object-fit:contain;}
+  .logo-fallback{font-size:46px;}
+  header.hero h1{
+    color:var(--white);
+    font-size: clamp(26px, 6vw, 40px);
+    font-weight:800;
+    margin: 6px 0 6px;
+    text-shadow: 0 3px 10px rgba(120,80,0,0.25);
+    position:relative; z-index:1;
+    letter-spacing:.5px;
+  }
+  header.hero p.subtitle{
+    color: rgba(255,255,255,0.92);
+    font-size: clamp(14px,3.4vw,18px);
+    margin:0; font-weight:500;
+    position:relative; z-index:1;
+  }
+
+  /* ---------- Nav ---------- */
+  main{flex:1; width:100%;}
+  .nav-section{
+    max-width: 980px; margin: 34px auto 10px; padding:0 18px;
+    text-align:center;
+  }
+  .nav-section h2{
+    font-size: clamp(19px,4.4vw,26px);
+    font-weight:700; margin: 0 0 18px;
+  }
+  .nav-pill{
+    background: linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%);
+    border-radius: 44px;
+    padding: 14px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    flex-wrap:wrap;
+    box-shadow: var(--shadow-soft);
+  }
+  .nav-inner{
+    background: var(--white);
+    border-radius: 34px;
+    padding: 10px 18px;
+    display:flex; align-items:center; justify-content:center; gap: clamp(10px, 2.6vw, 26px);
+    flex-wrap:wrap;
+    width:100%;
+  }
+  .nav-item{
+    background:none; border:none; padding:8px;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    border-radius: 16px;
+    transition: transform .18s ease, background .18s ease;
+    width: 74px;
+  }
+  .nav-item:hover, .nav-item:focus-visible{
+    background: rgba(255,206,71,0.18);
+    transform: translateY(-3px);
+    outline:none;
+  }
+  .nav-item.active{ background: rgba(255,206,71,0.35); }
+  .nav-icon{
+    width:52px; height:52px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px;
+  }
+  .nav-icon img{width:100%; height:100%; object-fit:contain;}
+  .nav-label{font-size:11.5px; font-weight:600; line-height:1.2; color:var(--ink);}
+
+  .icon-card{ color:var(--card-green); }
+  .icon-train{ color:var(--train-blue); }
+  .icon-bus{ color:var(--bus-orange); }
+  .icon-boat{ color:var(--boat-cyan); }
+  .icon-toll{ color:var(--toll-red); }
+  .icon-shuttle{ color:var(--shuttle-green); }
+
+  /* ---------- Content panel ---------- */
+  .panel{
+    max-width: 980px; margin: 30px auto 60px; padding: 0 18px;
+  }
+  .panel-card{
+    background:var(--white);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px,4vw,40px);
+    box-shadow: var(--shadow-soft);
+    animation: fadeUp .35s ease;
+  }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  .panel-title{
+    display:flex; align-items:center; gap:12px;
+    font-size: clamp(20px,4.4vw,26px); font-weight:700; margin: 0 0 20px;
+  }
+  .panel-title .dot{width:10px; height:10px; border-radius:50%; background:var(--card-green); flex-shrink:0;}
+
+  /* Card section & NFC Simulation */
+  .card-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom: 22px; justify-content:center; }
+  .btn{
+    border:none; border-radius: 999px; padding: 13px 26px; font-weight:600; font-size:15px;
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+  .btn-primary{ background: var(--card-green); color:var(--white); }
+  .btn-outline{ background:var(--white); color:var(--ink); border:2px solid #00e500; }
+
+  .nfc-card-btn {
+    width: 100%; max-width: 340px; margin: 0 auto 18px;
+    aspect-ratio: 1.586/1; border-radius: 18px;
+    background: linear-gradient(135deg, #01f231 0%, #00e500 50%, #ffffff 100%);
+    box-shadow: var(--shadow-pop); position:relative; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    cursor:pointer; border:none; padding:16px; text-align:center; transition:transform 0.2s;
+  }
+  .nfc-card-btn:active { transform: scale(0.97); }
+  .nfc-card-btn img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  .nfc-card-overlay {
+    position:absolute; inset:0; background:rgba(0,0,0,0.3);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.8);
+  }
+  .nfc-pulse {
+    width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.3);
+    display:flex; align-items:center; justify-content:center; font-size: 28px;
+    animation: pulse 1.5s infinite; margin-bottom: 8px;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+
+  .nfc-status-box {
+    text-align:center; padding: 20px; background:#fff; border-radius:16px;
+    box-shadow: var(--shadow-soft); margin-bottom:20px;
+  }
+  .spinner {
+    width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #00e500;
+    border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+  .code-form{ display:flex; flex-direction:column; gap:12px; max-width:340px; margin: 0 auto 20px; }
+  .code-form input{
+    width:100%; border:2px solid #EEE3C4; border-radius: 14px;
+    padding: 13px 16px; font-size:16px; font-family:'Sarabun',sans-serif;
+  }
+  .code-form input:focus{ outline:none; border-color: #00e500; }
+
+  .card-info{
+    background:#FBF7EA; border-radius:16px; padding:18px 20px;
+    max-width:340px; margin: 0 auto 20px; font-size:14.5px; line-height:1.9;
+  }
+  .card-info b{ color:#8A6A00; }
+  
+  .history-box {
+    background:#fff; border-radius:16px; padding:18px; max-width:480px; margin:20px auto 0;
+    box-shadow: var(--shadow-soft);
+  }
+  .history-list { list-style:none; padding:0; margin:10px 0 0; }
+  .history-item {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 0; border-bottom:1px solid #eee; font-size:14px;
+  }
+  .history-item:last-child { border-bottom:none; }
+  .history-item .type-tag {
+    padding:3px 8px; border-radius:8px; font-size:12px; color:#fff; font-weight:600;
+  }
+  /* Gallery */
+  .gallery{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+    gap: 12px;
+  }
+  .gallery figure{
+    margin:0; background:#F4F0E2; border-radius: 14px; overflow:hidden;
+    aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .gallery img{ width:100%; height:100%; object-fit:cover; }
+  .gallery figcaption{
+    position:absolute; bottom:6px; right:8px;
+    font-size:11px; background:rgba(0,0,0,0.45); color:#fff; padding:2px 7px; border-radius:8px;
+  }
+  .img-fallback{ font-size:12px; color:#8b8471; text-align:center; padding:8px; }
+
+  .empty-state{ text-align:center; padding: 30px 10px; }
+  .empty-state .emoji{ font-size:44px; margin-bottom:10px; }
+  .empty-state p{ color:#6b6350; font-size:15px; }
+  .example-shot{
+    max-width: 320px; margin: 18px auto 6px; border-radius:16px; overflow:hidden;
+    box-shadow: var(--shadow-soft);
+  }
+  .example-caption{ text-align:center; font-size:13px; color:#8b8471; margin-top:8px; }
+
+  /* Toast */
+  .toast{
+    position: fixed; left:50%; bottom: 24px; transform: translateX(-50%) translateY(140%);
+    background: var(--charcoal); color:#fff; padding: 14px 22px; border-radius: 14px;
+    font-size:14.5px; box-shadow: var(--shadow-pop); z-index:999; max-width: 90vw; text-align:center;
+    transition: transform .3s ease;
+  }
+  .toast.show{ transform: translateX(-50%) translateY(0); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background: var(--charcoal);
+    color:#EDEAE2;
+    border-radius: 40px 40px 0 0;
+    padding: 40px 22px 30px;
+    margin-top:auto;
+  }
+  .footer-grid{
+    max-width: 980px; margin:0 auto;
+    display:grid; grid-template-columns: 1fr 1fr; gap: 30px;
+  }
+  .footer-col a{
+    display:block; color:#EDEAE2; text-decoration:underline; text-underline-offset:4px;
+    font-weight:600; font-size: clamp(16px,3.6vw,20px); margin-bottom:10px; opacity:.95;
+  }
+  .footer-col a:hover{ color: #00e500; }
+  .social-row{
+    display:flex; gap:12px; margin-top:18px; align-items:center; flex-wrap:wrap;
+  }
+  .social-pill{
+    background:#3A3733; border-radius:999px; padding:10px 20px; display:flex; gap:16px;
+  }
+  .social-pill a{
+    width:34px; height:34px; border-radius:50%; background:#4A4741;
+    display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:16px;
+  }
+  .footer-tag{ font-size:13px; color:#B9B4A6; margin-top:14px; letter-spacing:1px; }
+  @media (max-width:640px){
+    .footer-grid{ grid-template-columns: 1fr; }
+  }
+
+  .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+
+/* ===== สีตามประเภท / ธีมจากไอคอน ===== */
+:root{ --card-grad: linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%); }
+header.hero h1{ text-shadow:0 2px 8px rgba(150,110,0,.45); }
+.btn-primary{ background:var(--card-grad); color:#0b3d16; }
+.transit-card{ background:var(--card-grad); }
+.transit-card .fallback-face{ color:#0b3d16; }
+.nav-icon{ border:3px solid #fff; box-shadow:0 0 0 2px var(--tc,#ddd),0 4px 10px rgba(0,0,0,.12); background:var(--tc,#eee); }
+.nav-icon.icon-card{ --tc:#00e500; background:var(--card-grad); }
+.nav-icon.icon-train{ --tc:var(--train-blue); }
+.nav-icon.icon-bus{ --tc:var(--bus-orange); }
+.nav-icon.icon-boat{ --tc:var(--boat-cyan); }
+.nav-icon.icon-toll{ --tc:var(--toll-red); }
+.nav-icon.icon-shuttle{ --tc:var(--shuttle-green); }
+.nav-icon{ color:#fff; }
+.nav-icon.icon-card{ color:#0b3d16; }
+
+/* ===== แผนที่เส้นทาง ===== */
+.edtag{ font-size:12px; background:linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%); color:#8a6a00; border-radius:999px; padding:3px 10px; font-weight:600; }
+.mapfr{position:absolute;inset:0;width:100%;height:100%;border:0;background:#cfe6f5;display:block}
+.mapbox{ position:relative; height:min(68vh,560px); min-height:340px; border-radius:22px; overflow:hidden; background:#cfe6f5; box-shadow:inset 0 0 0 3px #fff,var(--shadow-soft); }
+#mapsvg{ width:100%; height:100%; display:block; touch-action:none; cursor:grab; user-select:none; }
+.mapctl{ position:absolute; right:10px; top:10px; display:flex; flex-direction:column; gap:6px; }
+.mapctl button{ width:40px; height:40px; border:0; border-radius:12px; background:#fff; box-shadow:var(--shadow-soft); font-size:18px; }
+#side{ margin-top:18px; }
+#side h2{ font-size:20px; margin:6px 0 10px; }
+.rt{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:14px; cursor:pointer; background:#faf6e8; margin-bottom:8px; }
+.rt:hover{ background:linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%); }
+.rt i{ width:14px; height:14px; border-radius:50%; flex:none; box-shadow:0 0 0 3px #fff; }
+.rt b{ flex:1; }
+.rt small{ color:#8b8471; }
+.bk{ display:inline-block; cursor:pointer; font-weight:600; margin-bottom:6px; }
+.chips{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.chips span{ padding:3px 12px; border-radius:12px; background:#faf6e8; font-size:13px; }
+.fm{ display:flex; flex-direction:column; gap:10px; }
+.fm label{ display:flex; flex-direction:column; gap:4px; font-size:13px; color:#6b6350; }
+.fm input,.fm textarea,.sr input,.lgb input{ border:2px solid #EEE3C4; border-radius:12px; padding:10px 12px; font:inherit; font-size:15px; }
+.fm input:focus,.fm textarea:focus,.sr input:focus,.lgb input:focus{ outline:none; border-color:var(--tcur,#00e500); }
+.tools{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.tools button,.sr button{ border:2px solid var(--tcur,#00e500); background:#fff; border-radius:999px; padding:8px 16px; font-weight:600; }
+.tools button.a,.tools button.go{ background:var(--tcur,#0b3d16); color:#fff; }
+.sr{ display:flex; gap:8px; margin:6px 0; }
+.sr input{ flex:1; min-width:0; }
+.lgm{ position:fixed; inset:0; background:rgba(0,0,0,.4); display:grid; place-items:center; z-index:998; }
+.lgb{ background:#fff; border-radius:20px; padding:22px; width:min(340px,90vw); display:flex; flex-direction:column; gap:12px; }
+
+/* ===== แถบล่างแบบแอป + แผนที่เต็มจอ ===== */
+:root{ --bar:calc(70px + env(safe-area-inset-bottom,0px)); }
+body{ padding-bottom:calc(var(--bar) + 24px); }
+.bottombar{ position:fixed; left:0; right:0; bottom:0; z-index:50; padding:6px 10px calc(6px + env(safe-area-inset-bottom,0px));
+  background:rgba(255,255,255,.82); backdrop-filter:blur(18px) saturate(1.6); -webkit-backdrop-filter:blur(18px) saturate(1.6);
+  border-top:1px solid rgba(36,31,20,.08); box-shadow:0 -8px 28px rgba(36,31,20,.10); }
+.bottombar .nav-inner{ background:none; border-radius:0; padding:0; max-width:640px; margin:0 auto; width:100%; gap:0; flex-wrap:nowrap; justify-content:space-around; }
+.bottombar .nav-item{ width:auto; flex:1; padding:4px 0; background:none!important; position:relative; gap:0; }
+.bottombar .nav-item:hover{ transform:none; }
+.bottombar .nav-icon{ width:46px; height:46px; border-radius:16px; transition:transform .25s cubic-bezier(.3,.9,.3,1), box-shadow .25s; }
+.bottombar .nav-item:not(.active) .nav-icon{ transform:scale(.82); opacity:.78; }
+.bottombar .nav-item.active .nav-icon{ transform:translateY(-4px) scale(1.04); box-shadow:0 0 0 2px var(--tc),0 8px 16px rgba(0,0,0,.2); }
+.bottombar .nav-item.active::after{ content:""; position:absolute; bottom:-1px; width:5px; height:5px; border-radius:50%; background:var(--tc,#333); }
+.toast{ bottom:calc(var(--bar) + 14px); }
+/* map mode */
+body.mapmode{ overflow:hidden; height:100dvh; padding-bottom:0; }
+body.mapmode header.hero{ display:none; }
+body.mapmode .panel{ max-width:none; margin:0; padding:0; }
+body.mapmode .panel-card{ padding:0; background:none; box-shadow:none; border-radius:0; animation:none; }
+body.mapmode .mapbox{ position:fixed; inset:0 0 var(--bar) 0; height:auto; min-height:0; border-radius:0; box-shadow:none; z-index:1; }
+body.mapmode .panel-title{ position:fixed; z-index:5; top:calc(12px + env(safe-area-inset-top,0px)); left:12px; margin:0; padding:9px 16px; font-size:16px; border-radius:999px;
+  background:rgba(255,255,255,.85); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:var(--shadow-soft); }
+body.mapmode .mapctl{ top:calc(12px + env(safe-area-inset-top,0px)); }
+body.mapmode #side{ position:fixed; z-index:6; left:10px; right:10px; bottom:calc(var(--bar) + 10px); margin:0; max-width:430px; max-height:46vh; overflow:auto;
+  padding:14px 16px; border-radius:22px; background:rgba(255,255,255,.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:var(--shadow-pop); }
+body.mapmode #side:empty{ display:none; }
+@media (min-width:700px){ body.mapmode #side{ left:16px; } }
+
+/* ===== แจ้งเตือนด้านบน + แถบล่างโค้ง ===== */
+.toast{ bottom:auto; top:calc(14px + env(safe-area-inset-top,0px)); transform:translateX(-50%) translateY(-170%);
+  background:rgba(38,36,33,.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-radius:999px; padding:12px 22px; }
+.toast.show{ transform:translateX(-50%) translateY(0); }
+body.mapmode .toast{ top:calc(62px + env(safe-area-inset-top,0px)); }
+.bottombar{ border-radius:30px 30px 0 0; padding-top:10px; box-shadow:0 -10px 34px rgba(36,31,20,.14); }
+.bottombar .nav-item.active .nav-icon{ transform:translateY(-14px) scale(1.12); box-shadow:0 0 0 6px #fff,0 0 0 8px var(--tc),0 10px 20px rgba(0,0,0,.22); }
+.bottombar .nav-item.active::after{ bottom:2px; }
+.bottombar .nav-inner{ padding-top:6px; }
+
+/* ===== Skeleton loading ===== */
+.sk{ position:relative; overflow:hidden; background:#ece8d8; border-radius:12px; }
+.sk::after,.skmap::before{ content:""; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent); animation:skm 1.3s ease-in-out infinite; }
+@keyframes skm{ to{ transform:translateX(100%); } }
+.skrow{ height:54px; margin-bottom:10px; border-radius:14px; }
+.skpage{ display:flex; flex-direction:column; gap:14px; }
+.skpage .sk1{ order:1; height:28px; width:42%; } .skpage .sk2{ order:2; height:150px; } .skpage .sk3{ order:3; height:90px; }
+.skmap{ position:absolute; inset:0; z-index:4; background:#dfe8ea; overflow:hidden; transition:opacity .45s; }
+.skmap.sk-h{ opacity:0; pointer-events:none; }
+.skmap i{ position:absolute; border-radius:8px; background:#cfdadd; }
+body.mapmode .skpage{ position:fixed; inset:0 0 var(--bar) 0; z-index:3; background:#dfe8ea; display:block; }
+body.mapmode .skpage .sk{ position:absolute; }
+body.mapmode .skpage .sk2{ inset:0; height:auto; border-radius:0; background:#dfe8ea; }
+body.mapmode .skpage .sk1{ top:calc(12px + env(safe-area-inset-top,0px)); left:12px; width:150px; height:38px; border-radius:999px; background:#fff; }
+body.mapmode .skpage .sk3{ left:10px; right:10px; bottom:10px; height:150px; border-radius:22px; background:#fff; max-width:430px; }
+/* ===== Bottom sheet (มือถือ) ===== */
+body.mapmode #side{ transition:height .35s cubic-bezier(.3,.9,.3,1); }
+@media (max-width:699px){
+  body.mapmode #side{ left:0; right:0; bottom:0; max-width:none; max-height:none; height:46vh; border-radius:26px 26px 0 0; padding:10px 16px calc(var(--bar) + 18px); overscroll-behavior:contain; }
+  body.mapmode #side::before{ content:""; display:block; width:44px; height:5px; border-radius:3px; background:#d6cfb6; margin:0 auto 12px; }
+  body.mapmode #side.sfull{ z-index:60; border-radius:0; padding-top:calc(10px + env(safe-area-inset-top,0px)); }
+}
+.mapctl button{ transition:transform .15s; } .mapctl button:active{ transform:scale(.9); }
+
+/* ===== Toast: ซ่อนเมื่อไม่มีแจ้งเตือน ===== */
+.toast{ opacity:0; visibility:hidden; pointer-events:none; transform:translateX(-50%) translateY(-24px);
+  transition:opacity .25s ease, transform .3s cubic-bezier(.2,.9,.3,1), visibility 0s linear .3s; }
+.toast.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); transition-delay:0s; }
+.toast:empty{ display:none; }
+/* ===== ค้นหา ===== */
+.nav-icon.icon-search{ --tc:linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%); background:linear-gradient(135deg,#01f231 0%,#00e500 50%,#ffffff 100%); color:#0b3d16; }
+.bottombar .nav-item[data-nav=search] .nav-icon{ transform:scale(.95); opacity:1; }
+#srch{ position:fixed; inset:0; z-index:90; display:flex; align-items:flex-start; justify-content:center; padding:14vh 16px 16px;
+  background:rgba(255,255,255,.10); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  opacity:0; visibility:hidden; transition:opacity .25s, visibility 0s linear .25s; }
+#srch.on{ opacity:1; visibility:visible; transition-delay:0s; }
+.sbox{ width:min(520px,100%); transform:translateY(14px) scale(.97); transition:transform .3s cubic-bezier(.2,.9,.3,1); }
+#srch.on .sbox{ transform:none; }
+.sin,#sres{ background:rgba(255,255,255,.55); backdrop-filter:blur(22px) saturate(1.6); -webkit-backdrop-filter:blur(22px) saturate(1.6); border:1px solid rgba(255,255,255,.75); box-shadow:0 12px 40px rgba(0,0,0,.18); }
+.sin{ display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px; }
+.sin input{ flex:1; min-width:0; border:0; background:transparent; font:inherit; font-size:17px; outline:none; color:var(--ink,#241f14); }
+.sin button{ border:0; background:rgba(0,0,0,.08); width:30px; height:30px; border-radius:50%; }
+#sres{ margin-top:10px; max-height:52vh; overflow:auto; border-radius:22px; padding:6px; }
+#sres:empty{ display:none; }
+.sr1{ display:flex; gap:12px; align-items:center; padding:10px 12px; border-radius:16px; cursor:pointer; }
+.sr1:hover,.sr1:active{ background:rgba(255,255,255,.7); }
+.sr1 i{ width:38px; height:38px; border-radius:12px; display:grid; place-items:center; font-style:normal; border:2px solid #fff; flex:none; }
+.sr1 small{ display:block; color:#6b6350; }
+.sno{ padding:14px; text-align:center; color:#6b6350; }
+
+/* ===== ปุ่มบนขวา (สไตล์ postalcodeft) + เครดิต ===== */
+#mrc{ position:absolute; z-index:5; top:calc(12px + env(safe-area-inset-top,0px)); right:12px; display:flex; flex-direction:column; align-items:flex-end; gap:10px; animation:mbx .5s cubic-bezier(.2,.9,.3,1) .1s backwards; }
+@keyframes mbx{ from{ opacity:0; transform:translateY(-8px) scale(.96); } }
+.mfl{ display:flex; flex-direction:column; padding:2px; border-radius:24px; background:rgba(255,255,255,.58); backdrop-filter:blur(18px) saturate(1.5); -webkit-backdrop-filter:blur(18px) saturate(1.5); box-shadow:0 8px 28px rgba(20,50,25,.18); border:1px solid rgba(30,60,35,.1); }
+.mfl button{ display:grid; place-items:center; width:46px; height:46px; border:0; background:none; color:#17301b; cursor:pointer; border-radius:22px; transition:background .2s,transform .15s; }
+.mfl button:hover{ background:rgba(47,138,59,.09); } .mfl button:active{ transform:scale(.92); }
+.mfl.grp button+button{ border-top:1px solid rgba(30,60,35,.1); border-radius:0; }
+.mfl svg.i{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.mfl .cmp{ font-size:15px; color:#2f8a3b; }
+.mname{ display:flex; align-items:center; gap:9px; height:46px; padding:0 18px; max-width:calc(100vw - 24px); font-weight:600; font-size:14.5px; color:#17301b; white-space:nowrap; }
+.mname .dot{ width:12px; height:12px; border-radius:50%; flex:none; box-shadow:0 0 0 3px #fff; }
+.mname .mn{ overflow:hidden; text-overflow:ellipsis; }
+.mapcr{ position:absolute; z-index:3; right:10px; bottom:8px; padding:4px 6px; font:700 11px/1 system-ui,sans-serif; color:#8b908a; text-decoration:none;
+  text-shadow:-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff,0 0 4px #fff; transition:bottom .35s cubic-bezier(.3,.9,.3,1); }
+.mapcr:hover{ color:#5f645e; }
+body.mapmode .toast{ top:calc(14px + env(safe-area-inset-top,0px)); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo-wrap">
+    <img src="โลโก้กรมการขนส่งทางบน-ลบพื้นหลัง.png" alt="โลโก้กรมการขนส่งทางบน"
+         onerror="this.onerror=null; this.src='โลโก้กรมการขนส่งทางบน.jpg'; this.parentElement.querySelector('.logo-fallback')?.remove();">
+  </div>
+  <h1>กรมการขนส่งทางบน</h1>
+  <p class="subtitle">ระบบข้อมูลการเดินทางสาธารณะ</p>
+</header>
+
+<main>
+    <section class="panel">
+    <div class="panel-card" id="panelCard">
+      <!-- content injected by JS -->
+    </div>
+  </section>
+</main>
+
+<nav class="bottombar" aria-label="เลือกประเภทการขนส่ง"><div class="nav-inner" id="navInner" role="tablist"></div></nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------------------------------------
+   Config: nav items + icon assets
+--------------------------------------------- */
+const NAV_ITEMS = [
+  { id:'card',    label:'บัตรตั๋วร่วม',     img:'กรมการขนส่งทางบน-บัตรตั่วร่วม.png',       cls:'icon-card',    emoji:'💳' },
+  { id:'train',   label:'รถไฟ/รถไฟฟ้า',    img:'กรมการขนส่งทางบน-รถไฟรถไฟฟ้า.png',       cls:'icon-train',   emoji:'🚆' },
+  { id:'bus',     label:'รถประจำทาง',      img:'กรมการขนส่งทางบน-รถประจำทาง.png',        cls:'icon-bus',     emoji:'🚌' },
+  { id:'boat',    label:'เรือประจำทาง',    img:'กรมการขนส่งทางบน-เรือประจำทาง.png',       cls:'icon-boat',    emoji:'⛴️' },
+  { id:'toll',    label:'ทางด่วนช่อง E',   img:'กรมการขนส่งทางบน-ทางด่วนช่องE.png',       cls:'icon-toll',    emoji:'🛣️' },
+  { id:'search',  label:'ค้นหา',           img:'',                                       cls:'icon-search',  emoji:'🔍' },
+];
+
+/* Gallery folder configs: {folder, count, exclude[]} */
+const GALLERIES = {
+  train:   { folder:'ฝาแตกเลิฟรฟฟท.jX',       count:11, exclude:[] },
+  bus:     { folder:'ฝาแตกเลิฟบัส จำกัด',      count:18, exclude:[13] },
+  toll:    { folder:'ฝาแตกเลิฟJX-Line',        count:12, exclude:[] },
+};
+
+/* Card lookup data */
+const CARD_DB = {
+  '4396': { img:'./4396.png', idNumber:'3-2032-00003-01-7', issueLabel:'25 ตุลาคม ฝ.ต.39', issueMonth:10, issueDay:25, expiryMonth:11, expiryDay:25, expiryLabel:'25 พฤศจิกายน ฝ.ต.40' },
+  '****': { img:'บัตรตั่วร่วม/บัตรตั่วร่วม.png', test:true },
+};
+const CARD_VALID_DAYS = 40;
+
+let currentTab = initialTab();
+
+/* ---------------------------------------------
+   Toast helper
+--------------------------------------------- */
+function showToast(msg, duration=2300){
+  const t = document.getElementById('toast');
+  clearTimeout(t._timer); clearTimeout(t._clr);
+  t.textContent = msg;
+  void t.offsetWidth;
+  t.classList.add('show');
+  t._timer = setTimeout(()=>{ t.classList.remove('show'); t._clr = setTimeout(()=>{ t.textContent=''; }, 400); }, duration);
+}
+
+/* ---------------------------------------------
+   Nav rendering
+--------------------------------------------- */
+function renderNav(){
+  const inner = document.getElementById('navInner');
+  inner.innerHTML = NAV_ITEMS.map(item => `
+    <button class="nav-item ${item.id===currentTab?'active':''}" data-nav="${item.id}" title="${item.label}" aria-label="${item.label}" role="tab" aria-selected="${item.id===currentTab}">
+      <span class="nav-icon ${item.cls}">
+        ${item.img?`<img src="${item.img}" alt="${item.label}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${item.emoji}'}))">`:`<span>${item.emoji}</span>`}
+      </span>
+      <span class="nav-label visually-hidden">${item.label}</span>
+    </button>
+  `).join('');
+  inner.querySelectorAll('[data-nav]').forEach(btn=>{
+    btn.addEventListener('click', ()=> btn.dataset.nav==='search' ? openSearch() : setTab(btn.dataset.nav));
+  });
+}
+
+function setTab(id, noPush){
+  currentTab = id;
+  if(!noPush) navTo(id);
+  renderNav();
+  renderPanel();
+  document.querySelector('.panel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* footer quick links */
+document.querySelectorAll('footer [data-nav]').forEach(a=>{
+  a.addEventListener('click', (e)=>{ e.preventDefault(); setTab(a.dataset.nav); });
+});
+
+/* ---------------------------------------------
+   Panel rendering per tab
+--------------------------------------------- */
+function renderPanel(){
+  clearInterval(M.poll);
+  document.body.classList.toggle('mapmode', !!MT[currentTab]);
+  const panel = document.getElementById('panelCard');
+  if(currentTab==='card') return renderCardPanel(panel);
+  if(MT[currentTab]) return renderMapPanel(panel, currentTab);
+}
+
+/* ---- Card panel (NFC System) ---- */
+function renderCardPanel(panel){
+  const activeCard = localStorage.getItem('nfc_active_card');
+  
+  if(!activeCard){
+    // หน้าฟอร์มเข้าใช้งานบัตรครั้งแรก
+    panel.innerHTML = `
+      <h2 class="panel-title"><span class="dot" style="background:var(--card-grad)"></span>เข้าสู่ระบบบัตรตั๋วร่วม</h2>
+      <form class="code-form" id="nfcLoginForm">
+        <div>
+          <label style="font-size:14px; color:#6b6350;">รหัสบัตรประชาชน (เฉพาะบัตรจริง)</label>
+          <input type="text" id="idNumInput" placeholder="X-XXXX-XXXXX-XX-X" required>
+        </div>
+        <div>
+          <label style="font-size:14px; color:#6b6350;">เลขบัตร</label>
+          <input type="text" id="cardNumInput" placeholder="กรอกเลขหลังบัตร หรือ****" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">เข้าใช้งานบัตร (NFC)</button>
+      </form>
+
+      <div class="card-actions">
+        <button class="btn btn-outline" id="btnMakeCard">ทำบัตรใหม่ (LINE)</button>
+      </div>
+
+      <div class="notice-box">
+        <h3>ข้อควรทราบ</h3>
+        <ul>
+          <li>บัตรจริง ต้องระบุรหัสบัตรประชาชนให้ถูกต้องเพื่อยืนยันตัวตน</li>
+          <li>เมื่อสมัครเข้าใช้งานแล้ว ระบบจะจำบัตรไว้ในเครื่องนี้ทันที</li>
+        </ul>
+      </div>
+    `;
+
+    document.getElementById('btnMakeCard').addEventListener('click', ()=>{
+      window.open('https://line.me/R/ti/p/@708iiass','_blank');
+    });
+
+    document.getElementById('nfcLoginForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const idNum = document.getElementById('idNumInput').value.trim();
+      const cardNum = document.getElementById('cardNumInput').value.trim();
+      
+      if(cardNum === '4396'){
+        if(idNum !== CARD_DB['4396'].idNumber){
+          showToast('รหัสบัตรประชาชนไม่ถูกต้องสำหรับบัตร 4396');
+          return;
+        }
+      } else if(cardNum !== '****'){
+        showToast('ไม่พบเลขบัตรนี้ในระบบ');
+        return;
+      }
+      
+      localStorage.setItem('nfc_active_card', cardNum);
+      showToast('เข้าสู่ระบบสำเร็จ บันทึกข้อมูลในเครื่องแล้ว');
+      renderCardPanel(panel);
+    });
+    return;
+  }
+// หน้าจอใช้งาน NFC เมื่อเข้าระบบแล้ว
+  const entry = CARD_DB[activeCard] || CARD_DB['****'];
+  const logs = JSON.parse(localStorage.getItem('nfc_usage_logs') || '[]');
+  const totalSpent = logs.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
+
+  // คำนวณวันหมดอายุของบัตร (กรณีบัตร 4396)
+  let expiryInfoHtml = '<span class="expiry-ok">พร้อมใช้งาน (NFC Active)</span>';
+  let cardDetailsHtml = '';
+  
+  if(activeCard === '4396' && entry.issueMonth) {
+    const now = new Date();
+    const year = now.getMonth() < entry.issueMonth-1 ? now.getFullYear()-1 : now.getFullYear();
+    const issueDate = new Date(year, entry.issueMonth-1, entry.issueDay);
+    let expiryDate;
+    if(entry.expiryMonth && entry.expiryDay){
+      const expYear = entry.expiryMonth < entry.issueMonth ? year+1 : year;
+      expiryDate = new Date(expYear, entry.expiryMonth-1, entry.expiryDay);
+    } else {
+      expiryDate = new Date(issueDate);
+      expiryDate.setDate(expiryDate.getDate() + CARD_VALID_DAYS);
+    }
+    const msPerDay = 1000*60*60*24;
+    const daysLeft = Math.ceil((expiryDate - now)/msPerDay);
+
+    if(daysLeft > 0){
+      const warn = daysLeft <= 7;
+      expiryInfoHtml = `<span class="${warn?'expiry-warn':'expiry-ok'}">เหลืออีก ${daysLeft} วัน (ฝ.ต.)${warn?' — ใกล้หมดอายุ':''}</span>`;
+    } else {
+      expiryInfoHtml = `<span class="expiry-warn">บัตรหมดอายุแล้ว</span>`;
+    }
+
+    cardDetailsHtml = `
+      <div><b>เลขบัตรประชาชน:</b> ${entry.idNumber}</div>
+      <div><b>วันทำบัตร:</b> ${entry.issueLabel}</div>
+      <div><b>อายุบัตรคงเหลือ:</b> ${expiryInfoHtml}</div>
+      ${entry.expiryLabel?`<div><b>วันหมดอายุ:</b> ${entry.expiryLabel}</div>`:''}
+    `;
+  } else {
+    cardDetailsHtml = `
+      <div><b>สถานะบัตร:</b> ${expiryInfoHtml}</div>
+      <div style="font-size:13px; color:#8b8471;">นี่คือบัตรตัวอย่างสำหรับทดสอบระบบ</div>
+    `;
+  }
+
+  panel.innerHTML = `
+    <h2 class="panel-title"><span class="dot" style="background:var(--card-grad)"></span>ระบบบัตรตั๋วร่วม NFC</h2>
+
+    <button class="nfc-card-btn" id="btnStartNFC">
+      <img src="${entry.img}" alt="บัตรตั๋วร่วม" onerror="this.style.display='none'">
+      <div class="nfc-card-overlay">
+        <div class="nfc-pulse">📱</div>
+        <div style="font-weight:700; font-size:18px;">แตะที่บัตรเพื่อเริ่ม NFC</div>
+      </div>
+    </button>
+
+    <div id="nfcProcessArea"></div>
+
+    <div class="card-info">
+      <div><b>เลขบัตร:</b> ${activeCard}</div>
+      ${cardDetailsHtml}
+      <div style="margin-top:10px; text-align:center; border-top:1px dashed #d6cfb6; padding-top:8px;">
+        <button id="btnLogoutCard" style="background:none; border:none; color:#D3352E; text-decoration:underline; cursor:pointer; font-size:13px;">ออกจากระบบบัตรนี้</button>
+      </div>
+    </div>
+
+    <div class="history-box">
+      <h3 style="margin:0 0 10px; font-size:16px; display:flex; justify-content:space-between;">
+        <span>สรุปการใช้งานทั้งหมด</span>
+        <span style="color:#00e500;">รวม ${totalSpent} เจ๋ง</span>
+      </h3>
+      ${logs.length === 0 ? '<p style="text-align:center; color:#8b8471; font-size:14px; margin:15px 0;">ยังไม่มีประวัติการเดินทาง</p>' : `
+        <ul class="history-list">
+          ${logs.map(log => `
+            <li class="history-item">
+              <div>
+                <span class="type-tag" style="background:${MT[log.type]?.c || '#666'}">${MT[log.type]?.n || log.type}</span>
+                <strong style="margin-left:5px;">${log.name}</strong>
+                <div style="font-size:11px; color:#8b8471;">${log.date}</div>
+              </div>
+              <div style="font-weight:700; color:#8A6A00;">${log.price} เจ๋ง</div>
+            </li>
+          `).join('')}
+        </ul>
+        <button id="btnClearLogs" style="width:100%; margin-top:10px; background:none; border:1px dashed #ccc; border-radius:8px; padding:6px; font-size:12px; color:#8b8471; cursor:pointer;">ล้างประวัติการใช้งาน</button>
+      `}
+    </div>
+  `;
+  // ออกจากระบบ
+  document.getElementById('btnLogoutCard').addEventListener('click', ()=>{
+    localStorage.removeItem('nfc_active_card');
+    renderCardPanel(panel);
+    showToast('ออกจากระบบเรียบร้อย');
+  });
+
+  // ล้างประวัติ
+  const btnClear = document.getElementById('btnClearLogs');
+  if(btnClear){
+    btnClear.addEventListener('click', ()=>{
+      localStorage.removeItem('nfc_usage_logs');
+      renderCardPanel(panel);
+      showToast('ล้างประวัติเรียบร้อย');
+    });
+  }
+
+  // กดเริ่ม NFC (สุ่ม 1-3 วินาที)
+  document.getElementById('btnStartNFC').addEventListener('click', ()=>{
+    const proc = document.getElementById('nfcProcessArea');
+    proc.innerHTML = `
+      <div class="nfc-status-box">
+        <div class="spinner"></div>
+        <div style="font-weight:600;">กำลังค้นหาสัญญาณ NFC...</div>
+      </div>
+    `;
+
+    const randomDelay = Math.floor(Math.random() * 2000) + 1000; // 1-3 วินาที
+
+    setTimeout(() => {
+      proc.innerHTML = `
+        <div class="nfc-status-box" style="border:2px solid #00e500;">
+          <div style="font-size:24px; margin-bottom:6px;">✅ เชื่อมต่อ NFC สำเร็จ</div>
+          <p style="font-size:14px; color:#6b6350; margin:0 0 12px;">กรุณาเลือกประเภทระบบขนส่งที่ต้องการเดินทาง:</p>
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="setTab('train')">🚆 รถไฟ/รถไฟฟ้า</button>
+            <button class="btn btn-primary" onclick="setTab('bus')" style="background:var(--bus-orange);">🚌 รถประจำทาง</button>
+            <button class="btn btn-primary" onclick="setTab('boat')" style="background:var(--boat-cyan);">⛴️ เรือประจำทาง</button>
+          </div>
+        </div>
+      `;
+    }, randomDelay);
+  });
+}
+
+function handleCardCode(code){
+  const resultBox = document.getElementById('cardResult');
+  const entry = CARD_DB[code];
+
+  if(!entry){
+    resultBox.className = 'card-result show';
+    resultBox.innerHTML = `<div class="notice-box"><h3>ไม่พบข้อมูล</h3><p style="margin:0;font-size:14px;color:#4A4232;">รหัสหลังบัตรไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง</p></div>`;
+    return;
+  }
+
+  if(entry.test){
+    resultBox.className = 'card-result show';
+    resultBox.innerHTML = `
+      <div class="transit-card">
+        <img src="${entry.img}" alt="บัตรตั๋วร่วมตัวอย่าง" onerror="this.parentElement.innerHTML='<div class=\\'fallback-face\\'><div style=\\'font-size:30px\\'>💳</div><div>บัตรตั๋วร่วม (ตัวอย่าง)</div></div>'">
+      </div>
+      <div class="card-info" style="text-align:center;">นี่คือบัตรตัวอย่างสำหรับทดสอบระบบ</div>
+    `;
+    return;
+  }
+
+  // compute expiry
+  const now = new Date();
+  const year = now.getMonth() < entry.issueMonth-1 ? now.getFullYear()-1 : now.getFullYear();
+  const issueDate = new Date(year, entry.issueMonth-1, entry.issueDay);
+  let expiryDate;
+  if(entry.expiryMonth && entry.expiryDay){
+    const expYear = entry.expiryMonth < entry.issueMonth ? year+1 : year;
+    expiryDate = new Date(expYear, entry.expiryMonth-1, entry.expiryDay);
+  } else {
+    expiryDate = new Date(issueDate);
+    expiryDate.setDate(expiryDate.getDate() + CARD_VALID_DAYS);
+  }
+  const msPerDay = 1000*60*60*24;
+  const daysLeft = Math.ceil((expiryDate - now)/msPerDay);
+
+  let expiryHtml;
+  if(daysLeft > 0){
+    const warn = daysLeft <= 7;
+    expiryHtml = `<span class="${warn?'expiry-warn':'expiry-ok'}">เหลืออีก ${daysLeft} วัน(ฝ.ต.)${warn?' — ใกล้หมดอายุ กรุณาทำบัตรใหม่':''}</span>`;
+  } else {
+    expiryHtml = `<span class="expiry-warn">บัตรหมดอายุแล้ว กรุณาทำบัตรใหม่</span>`;
+  }
+
+  resultBox.className = 'card-result show';
+  resultBox.innerHTML = `
+    <div class="transit-card">
+      <img src="${entry.img}" alt="บัตรตั๋วร่วม" onerror="this.parentElement.innerHTML='<div class=\\'fallback-face\\'><div style=\\'font-size:30px\\'>💳</div><div>บัตรตั๋วร่วม</div></div>'">
+    </div>
+    <div class="card-info">
+      <div><b>เลขบัตรประชาชน:</b> ${entry.idNumber}</div>
+      <div><b>วันทำบัตร:</b> ${entry.issueLabel}</div>
+      <div><b>อายุบัตรคงเหลือ:</b> ${expiryHtml}${entry.expiryLabel?` <span style="color:#6b6350;">(บัตรจะหมดอายุวันที่ ${entry.expiryLabel})</span>`:''}</div>
+    </div>
+  `;
+}
+
+/* ---- Gallery panel (train / bus / toll) ---- */
+function renderGalleryPanel(panel, key, title, cls){
+  const cfg = GALLERIES[key];
+  let items = [];
+  for(let i=1;i<=cfg.count;i++){
+    if(cfg.exclude.includes(i)) continue;
+    items.push(i);
+  }
+  const cards = items.map(n=>{
+    const num = String(n).padStart(3,'0');
+    const src = `${cfg.folder}/${num}.png`;
+    return `
+      <figure>
+        <img src="${src}" alt="${title} ${num}" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=\\'img-fallback\\'>🖼️<br>${num}.png</div>'">
+        <figcaption>${num}</figcaption>
+      </figure>
+    `;
+  }).join('');
+
+  panel.innerHTML = `
+    <h2 class="panel-title"><span class="dot" style="background:var(--card-green)"></span>${title}</h2>
+    <p style="color:#8b8471; font-size:13.5px; margin-top:-10px;">แกลเลอรี — โฟลเดอร์ "${cfg.folder}/" (${items.length} รูป)</p>
+    <div class="gallery">${cards}</div>
+  `;
+}
+
+/* ---- Boat panel ---- */
+function renderBoatPanel(panel){
+  panel.innerHTML = `
+    <h2 class="panel-title"><span class="dot" style="background:var(--boat-cyan)"></span>เรือประจำทาง</h2>
+    <div class="empty-state">
+      <div class="emoji">🗺️</div>
+      <p>ยังไม่มีแผนที่เรือประจำทาง</p>
+    </div>
+  `;
+  setTimeout(()=> showToast('ยังไม่มีแผนที่เรือประจำทาง'), 150);
+}
+
+/* ---- Shuttle panel ---- */
+
+/* ===== แผนที่เส้นทาง (รถไฟ/รถประจำทาง/เรือ/ทางด่วน E) ===== */
+const $=s=>document.querySelector(s);
+const PROV=[{"n":"นครราชธานี","d":1,"p":["780,378 860,378 860,445 780,445"]},{"n":"ราษฎรมณฑล","d":1,"p":["738,345 905,345 905,485 738,485"]},{"n":"สลัมคลองเจ๋ง","d":2,"p":["905,345 1122,303 1140,345 1148,400 1148,485 905,485"]},{"n":"เขาเจ๋ง","d":2,"p":["543,345 570,290 610,235 670,190 740,160 810,153 783,345"]},{"n":"ต้มยำไก่","d":2,"p":["612,345 738,345 738,675 615,655"]},{"n":"โอ้ลลิ่ง","d":2,"p":["543,345 612,345 615,655 570,640 520,600 490,540 487,487 500,420 520,380"]},{"n":"เลิกโง่","d":2,"p":["810,153 880,155 960,172 1040,185 1090,235 1122,303 905,345 783,345"]},{"n":"โยดก","d":2,"p":["905,485 1148,485 1148,520 1140,580 1090,640 1010,672 880,677"]},{"n":"กรุงเจ๋ง","d":2,"p":["738,485 905,485 897,560 880,677 740,675"]},{"n":"งอ","d":3,"p":["210,48 490,32 485,147 450,150 430,190 380,198 235,195 200,290","528,30 575,30 610,70 605,120 570,148 524,147"]},{"n":"พรศรี","d":3,"p":["10,140 60,115 130,55 210,48 200,290 98,327 10,357"]},{"n":"ทม","d":3,"p":["1190,150 1258,38 1330,65 1380,55 1380,235 1275,212 1230,190"]},{"n":"ยากส์","d":3,"p":["1065,70 1095,45 1150,35 1200,40 1258,38 1190,150 1130,125 1075,100"]},{"n":"ประปาแตก","d":3,"p":["1210,665 1235,645 1275,650 1290,690 1275,720 1235,725 1210,700"]}];
+const DST=[[{"n":"วังฯ","r":[780,378,807,403],"cx":793.5,"cy":390.5,"lw":27},{"n":"เวียง","r":[807,378,833,403],"cx":820,"cy":390.5,"lw":26},{"n":"คลัง","r":[833,378,860,403],"cx":846.5,"cy":390.5,"lw":27},{"n":"ประชาธิป","r":[780,403,807,425],"cx":793.5,"cy":414,"lw":27},{"n":"พรศรีแผ่นดิน","r":[807,403,833,425],"cx":820,"cy":414,"lw":26},{"n":"โรงพยาบาล","r":[833,403,860,425],"cx":846.5,"cy":414,"lw":27},{"n":"รถราง","r":[780,425,807,445],"cx":793.5,"cy":435,"lw":27},{"n":"ไฟฟ้าสถิต","r":[807,425,833,445],"cx":820,"cy":435,"lw":26},{"n":"รัฐสภาเก่า","r":[833,425,860,445],"cx":846.5,"cy":435,"lw":27}],[{"n":"บางแตงโม","r":[738,345,780,378],"cx":759,"cy":361.5,"lw":42},{"n":"บางแมวโต","r":[780,345,807,378],"cx":793.5,"cy":361.5,"lw":27},{"n":"มาลีวง","r":[807,345,833,378],"cx":820,"cy":361.5,"lw":26},{"n":"ยูเรนัส","r":[833,345,860,378],"cx":846.5,"cy":361.5,"lw":27},{"n":"สัมพันธไมต","r":[860,345,905,378],"cx":882.5,"cy":361.5,"lw":45},{"n":"พระอาทิตย์","r":[738,378,780,403],"cx":759,"cy":390.5,"lw":42},{"n":"วงรี","r":[860,378,905,403],"cx":882.5,"cy":390.5,"lw":45},{"n":"ตลาดวงรี","r":[738,403,780,425],"cx":759,"cy":414,"lw":42},{"n":"ผีเปรต","r":[860,403,905,425],"cx":882.5,"cy":414,"lw":45},{"n":"พันเก้าเล่า","r":[738,425,780,445],"cx":759,"cy":435,"lw":42},{"n":"เรือนจำ","r":[860,425,905,445],"cx":882.5,"cy":435,"lw":45},{"n":"ธนาคารกลาง","r":[738,445,780,485],"cx":759,"cy":465,"lw":42},{"n":"เสรีฝาแตก","r":[780,445,807,485],"cx":793.5,"cy":465,"lw":27},{"n":"ชาตินิยม","r":[807,445,833,485],"cx":820,"cy":465,"lw":26},{"n":"สังคมนิยม","r":[833,445,860,485],"cx":846.5,"cy":465,"lw":27},{"n":"อนุรักษ์นิยม","r":[860,445,905,485],"cx":882.5,"cy":465,"lw":45}],[{"n":"กะสี","r":[905,303,968,410],"cx":936.5,"cy":356.5,"lw":63},{"n":"สลัมคลองเจ๋ง","r":[968,303,1088,410],"cx":1028,"cy":356.5,"lw":120},{"n":"คลองเจ๋ง","r":[1088,303,1148,410],"cx":1118,"cy":356.5,"lw":60},{"n":"เขต49","r":[905,410,1030,485],"cx":967.5,"cy":447.5,"lw":125},{"n":"ทะเลเปรี้ยว","r":[1030,410,1112,485],"cx":1071,"cy":447.5,"lw":82},{"n":"กล้วยแตก","r":[1112,410,1148,485],"cx":1130,"cy":447.5,"lw":36}],[{"n":"บายาโดลิด","p":"543,345 570,290 610,235 670,190 675,198 735,285 720,340 720,345","cx":655.4,"cy":278.5,"lw":153.6},{"n":"หลุมริม","p":"675,198 670,190 740,160 810,153 783,300 735,285","cx":735.5,"cy":214.3,"lw":112},{"n":"ด้านขนาน","p":"735,285 783,300 783,345 720,345 720,340","cx":748.2,"cy":323,"lw":50.4}],[{"n":"กลีเจ๋ง","r":[612,345,738,408],"cx":675,"cy":376.5,"lw":126},{"n":"กลีดำ","r":[612,408,738,487],"cx":675,"cy":447.5,"lw":126},{"n":"กลีโอ้ล","r":[612,487,738,565],"cx":675,"cy":526,"lw":126},{"n":"กลีเปรียว","r":[612,565,738,637],"cx":675,"cy":601,"lw":126},{"n":"กลีแดง","r":[612,637,738,675],"cx":675,"cy":656,"lw":126}],[{"n":"หลอกูด","r":[480,345,612,408],"cx":549.5,"cy":376.5,"lw":125},{"n":"หลอ","r":[480,408,612,487],"cx":549.5,"cy":447.5,"lw":125},{"n":"โอ้ลซิ่ง","r":[480,487,612,565],"cx":549.5,"cy":526,"lw":125},{"n":"โอ้ลวิ่ง","r":[480,565,612,655],"cx":549.5,"cy":610,"lw":125}],[{"n":"เลิกโง่","p":"810,153 880,155 960,172 936,248 795,225","cx":876.2,"cy":190.6,"lw":132},{"n":"เลิกเหลี่ยม","p":"795,225 936,248 905,345 783,345","cx":854.8,"cy":290.8,"lw":122.4},{"n":"ประหารชีวิต","p":"960,172 1040,185 1090,235 1122,303 905,345 936,248","cx":1008.8,"cy":248,"lw":173.6}],[{"n":"ไส้ติ่งแตก","p":"905,485 1050,640 1010,672 880,677","cx":961.3,"cy":618.5,"lw":136},{"n":"สมองแตก","p":"905,485 1148,485 1148,520 1140,580 1090,640 1050,640","cx":1080.2,"cy":558.3,"lw":194.4}],[{"n":"กรุงเจ๋ง","r":[738,485,905,565],"cx":821.5,"cy":525,"lw":167},{"n":"อาณานิคม","r":[738,565,905,637],"cx":821.5,"cy":601,"lw":167},{"n":"ส้มปอด","r":[738,637,905,675],"cx":821.5,"cy":656,"lw":167}],[{"n":"งอ","p":"210,48 490,32 485,147 450,150 430,190 380,198 235,195 200,290","cx":360,"cy":156.3,"lw":232},{"n":"งอลวง","p":"528,30 575,30 610,70 605,120 570,148 524,147","cx":568.7,"cy":90.8,"lw":68.8}],[{"n":"พระพร","p":"10,140 60,115 130,242 100,290 98,327 10,357","cx":68,"cy":245.2,"lw":96},{"n":"ศรีบุแม่","p":"60,115 130,55 210,48 200,230 170,225 130,242","cx":150,"cy":152.5,"lw":120},{"n":"มุมปาน","p":"130,242 170,225 200,230 200,290 98,327 100,290","cx":149.7,"cy":267.3,"lw":81.6}],[{"n":"ทมตะวันตก","p":"1258,38 1330,65 1275,212 1230,190 1190,150","cx":1256.6,"cy":131,"lw":112},{"n":"ทมตะวันออก","p":"1330,65 1380,55 1380,235 1275,212","cx":1341.3,"cy":141.8,"lw":84}],[{"n":"ยากส์ชิบหาย","p":"1065,70 1095,45 1150,35 1200,40 1258,38 1190,150 1130,125 1075,100","cx":1175,"cy":128,"lw":110},{"n":"เมืองกรุงเขา","r":[1100,35,1170,105],"cx":1135,"cy":70,"lw":70}],[{"n":"ประปาแตก","p":"1210,665 1235,645 1275,650 1290,690 1275,720 1235,725 1210,700","cx":1247.1,"cy":685,"lw":64}]]; // เขต: เส้นเขต + ชื่อเขต (ไม่มีรหัสไปรษณีย์)
+const DLP={"1": [820, 357], "9": [350, 120]};
+const BASE_API="https://script.google.com/macros/s/AKfycbxK8Dhu68g7uIqEnF9rVV-6alcExBWOEROCQM3tMpQTATIMQctfFkYGFtkQwA_KsPrX1w/exec"; // แผนที่ฐาน (ถนน/แม่น้ำ) จาก API เดิม — อ่านอย่างเดียว
+const ROUTE_API='https://script.google.com/macros/s/AKfycbxFwVKpCbVcRWrTHOVnL56ghd_COKAhVx5XQZEz06d0j0hFSUIG2H23i1CcLty4z7UH/exec';      // ← วาง URL Web App ของ routes-api.gs (ลงท้าย /exec) ถ้าว่างจะบันทึกในเครื่องนี้เท่านั้น
+const PH="d903e4ea3ddfda42a12af1555221b32f47a2bf6b2ce15f1af42987d417a7d51a";         // รหัสผ่านเดิม (SHA-256)
+const MT={
+  train:{n:'รถไฟ/รถไฟฟ้า',c:'#015caf',s:'สถานี',e:'🚆'},
+  bus:{n:'รถประจำทาง',c:'#f4901e',s:'ป้ายรถ',e:'🚌'},
+  boat:{n:'เรือประจำทาง',c:'#018dda',s:'ท่าเรือ',e:'⛴️'},
+  toll:{n:'ทางด่วนช่อง E',c:'#ea0107',s:'ด่าน',e:'🛣️'}
+};
+const EDIT=/edit\/?$/i.test(location.pathname)||/[?&]edit\b/.test(location.search)||/(^|\/)edit\/?$/i.test(location.hash.replace(/^#/,''));
+const M={vb:{x:0,y:0,w:1380,h:750},items:[],base:[],ed:null,sel:null,auth:false,pw:'',t:null,rev:0,poll:0};
+const norm=i=>({no:'',fare:'',price:'',note:'',road:'',color:'',pts:[],stops:[],...i});
+try{M.items=JSON.parse(localStorage.getItem('routes')||'[]').map(norm)}catch(_){}
+const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mine=()=>M.items.filter(i=>i.type===M.t);
+const xName=n=>/^ทางด่วน/.test(n)?n:'ทางด่วน'+n;
+const bbox=P=>{const xs=P.map(p=>p[0]),ys=P.map(p=>p[1]),x=Math.min(...xs),y=Math.min(...ys);return{x,y,w:Math.max(...xs)-x,h:Math.max(...ys)-y}};
+const PVC=PROV.map(p=>{const b=bbox(p.p[0].split(' ').map(q=>q.split(',').map(Number)));return[b.x+b.w/2,b.y+b.h/2,b.w]});
+const PB=PROV.map(p=>{const b=bbox(p.p.join(' ').split(' ').map(q=>q.split(',').map(Number)));return[b.x,b.y,b.w,b.h]});
+const isMajor=r=>r.kind==='road'&&['highway','main'].includes(r.rt)&&r.pts&&r.pts.length>1;
+const MAP_ORDER=[1,0,2,3,4,5,6,7,8,9,10,11,12,13];
+
+/* ---------- Router: /train /bus /boat /toll /card (+ /edit) ---------- */
+/* ---------- Router แบบ Hash (/#/) ป้องกัน 404 และรีเฟรชหน้า ---------- */
+function initialTab(){
+  const hash = location.hash.replace(/^#\/?/, '').toLowerCase();
+  const found = NAV_ITEMS.map(i => i.id).find(id => hash.includes(id));
+  return found || 'card';
+}
+
+function navTo(id){
+  try {
+    const editPart = EDIT ? '/edit' : '';
+    location.hash = '#/' + id + editPart;
+  } catch(_) {}
+}
+
+addEventListener('hashchange', () => {
+  const t = initialTab();
+  if(t !== currentTab) setTab(t, true);
+});
+
+/* ---------- Panel ---------- */
+function renderMapPanel(panel,t){
+  M.t=t;M.sel=null;M.ed=null;M.loading=true;SH.k='l';const T=MT[t];
+  panel.innerHTML=`
+    <div class="mapbox">${EDIT?'<svg id="mapsvg" xmlns="http://www.w3.org/2000/svg"></svg>':`<iframe id="mapfr" class="mapfr" title="${T.n}" src="../#embed=1&ft=${t}"></iframe>`}
+      <div id="mrc"><div class="mfl grp"><div class="mname"><span class="dot" style="background:${T.c}"></span><span class="mn">${T.n}</span>${EDIT?'<span class="edtag">แก้ไข</span>':''}</div></div><div class="mfl grp"><button data-z="1.6" aria-label="Zoom in"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button data-z="0.625" aria-label="Zoom out"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button></div><div class="mfl grp"><button data-z="0" aria-label="Reset view" title="Reset view"><b class="cmp">N</b></button></div></div><a id="mapcr" class="mapcr" href="https://postalcodeft.wasmer.app" target="_blank" rel="noopener">P.C.&amp;mapft</a>
+      <div class="skmap" id="skmap"><i class="sk" style="left:10%;top:26%;width:34%;height:12px"></i><i class="sk" style="left:42%;top:44%;width:44%;height:12px"></i><i class="sk" style="left:22%;top:62%;width:28%;height:12px"></i><i class="sk" style="left:60%;top:30%;width:12px;height:30%"></i></div></div>
+    <div id="side"></div>`;
+  if(!EDIT)panel.querySelectorAll('[data-z]').forEach(b=>{const g=b.closest('.mfl');if(g)g.remove()});
+  mapBind();sheetBind();setSheet(1,true);fitAll();drawMap();side();
+  const done=()=>{if(M.t!==t||!M.loading)return;const k=$('#skmap');M.loading=false;if(k){k.classList.add('sk-h');setTimeout(()=>k.remove(),450)}
+    if(M.pend){const it=M.items.find(a=>a.id===M.pend&&a.type===t);M.pend=null;if(it){M.sel=it.id;fitItem(it)}}
+    drawMap();side()};
+  Promise.all([loadBase(),pull(),new Promise(r=>setTimeout(r,550))]).catch(()=>{}).then(done);setTimeout(done,9000);
+  M.poll=setInterval(()=>{if(!M.ed)pull()},4000);
+  if(EDIT&&!M.auth)autoLogin();
+}
+function fitAllT(){if(!$('#mapsvg'))return{x:0,y:0,w:1380};const r=$('#mapsvg').getBoundingClientRect(),ins=insetPx(),w=Math.max(1380,750*r.width/Math.max(100,r.height-ins)),hv=w*(r.height-ins)/r.width;return{x:690-w/2,y:375-hv/2,w}}
+function fitAll(){M.vb={...fitAllT(),h:750}}
+function fitItem(i){
+  const P=i.pts.concat(i.stops.map(s=>[s.x,s.y]));if(!P.length)return;
+  if(!$('#mapsvg')){const fr=$('#mapfr');if(fr&&fr.contentWindow)fr.contentWindow.postMessage({t:'ft-fit',pts:P},location.origin);return}
+  const r=$('#mapsvg').getBoundingClientRect();
+  const ins=insetPx(),b=bbox(P),w=Math.max(b.w*1.5,b.h*1.5*r.width/Math.max(100,r.height-ins),150),hv=w*(r.height-ins)/r.width;
+  animTo({x:b.x+b.w/2-w/2,y:b.y+b.h/2-hv/2,w},450);
+}
+function zoom(f,px,py){
+  if(!$('#mapsvg'))return;
+  const r=$('#mapsvg').getBoundingClientRect(),v=M.vb,wx=v.x+(px-r.left)/r.width*v.w,wy=v.y+(py-r.top)/r.width*v.w,nw=Math.min(2400,Math.max(40,v.w/f)),g=v.w/nw;
+  v.x=wx-(wx-v.x)/g;v.y=wy-(wy-v.y)/g;v.w=nw;drawMap();
+}
+function mapBind(){
+  if(!$('#mapsvg'))return;
+  const s=$('#mapsvg'),PT=new Map();let mv=0,pd=null,pinch=0,DR=null,LT=null;
+  const stop=()=>{cancelAnimationFrame(AN);M.tgt=null};
+  const world=e=>{const r=s.getBoundingClientRect();return[M.vb.x+(e.clientX-r.left)/r.width*M.vb.w,M.vb.y+(e.clientY-r.top)/r.width*M.vb.w,M.vb.w/r.width]};
+  // หาจุดที่จับย้ายได้ (โหมดแก้ไข): ป้าย/จุดเส้น/จุดกึ่งกลางเส้น (ลากเพื่อเพิ่มจุด)
+  const hit=e=>{
+    const ed=M.ed;if(!ed)return null;const[x,y,k]=world(e),R=(e.pointerType==='touch'?22:13)*k;let b=null;
+    const tt=(kind,i,px,py,off)=>{const d=Math.hypot(px-x,py-y);if(d<=R&&(!b||d<b.d))b={kind,i,d,off:off||0}};
+    ed.stops.forEach((st,i)=>tt('s',i,st.x,st.y));
+    ed.pts.forEach((p,i)=>ed.type==='toll'?tt('p',i,p[0],p[1]-20*k,20*k):tt('p',i,p[0],p[1]));
+    if(ed.type!=='toll')for(let i=0;i<ed.pts.length-1;i++)tt('m',i,(ed.pts[i][0]+ed.pts[i+1][0])/2,(ed.pts[i][1]+ed.pts[i+1][1])/2);
+    return b;
+  };
+  const moveTo=(e)=>{
+    const ed=M.ed,[x,y,k]=world(e),Y=y+DR.off;
+    if(DR.kind==='s'){const n=nearest([ed.pts],[x,Y],40*k),p=n?n.p:[Math.round(x),Math.round(Y)];ed.stops[DR.i].x=p[0];ed.stops[DR.i].y=p[1]}
+    else if(ed.type==='toll'){
+      const rs=M.base.filter(isMajor);
+      if(rs.length){const n=nearest(rs.map(r=>r.pts),[x,Y],40*k);if(!n)return;ed.pts=[n.p];ed.road=rs[n.i].name||ed.road}
+      else ed.pts=[[Math.round(x),Math.round(Y)]];
+    }else ed.pts[DR.i]=[Math.round(x),Math.round(Y)];
+    drawMap();
+  };
+  s.onpointerdown=e=>{stop();PT.set(e.pointerId,[e.clientX,e.clientY]);
+    if(PT.size===1){pd=[e.clientX,e.clientY];mv=0;DR=null;
+      const h=hit(e);
+      if(h){DR=h;DR.moved=0;if(h.kind==='m'){const a=M.ed.pts[h.i],b=M.ed.pts[h.i+1];M.ed.pts.splice(h.i+1,0,[Math.round((a[0]+b[0])/2),Math.round((a[1]+b[1])/2)]);DR={kind:'p',i:h.i+1,off:0,ins:1,moved:0}}}
+    }else{DR=null;const[a,b]=[...PT.values()];pinch=Math.hypot(a[0]-b[0],a[1]-b[1]);mv=1}
+    try{s.setPointerCapture(e.pointerId)}catch(_){}};
+  s.onpointermove=e=>{
+    if(!PT.has(e.pointerId))return;const o=PT.get(e.pointerId),n=[e.clientX,e.clientY];PT.set(e.pointerId,n);
+    if(PT.size>=2){const[a,b]=[...PT.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pinch>0&&d>0)zoom(d/pinch,(a[0]+b[0])/2,(a[1]+b[1])/2);pinch=d;return}
+    if(DR){if(!DR.moved&&Math.hypot(n[0]-pd[0],n[1]-pd[1])<4)return;DR.moved=1;mv=1;moveTo(e);return}
+    if(!mv&&Math.hypot(n[0]-pd[0],n[1]-pd[1])<5)return;
+    mv=1;const r=s.getBoundingClientRect();M.vb.x-=(n[0]-o[0])/r.width*M.vb.w;M.vb.y-=(n[1]-o[1])/r.width*M.vb.w;drawMap();
+  };
+  const up=e=>{
+    const was=PT.has(e.pointerId);PT.delete(e.pointerId);if(PT.size<2)pinch=0;
+    if(was&&DR&&PT.size===0&&e.type==='pointerup'){
+      const d=DR,ed=M.ed;DR=null;
+      if(!d.moved){
+        const now=performance.now();
+        if(d.ins)ed.pts.splice(d.i,1); // แตะจุดกึ่งกลางเฉย ๆ = ไม่เพิ่มจุด
+        else if(LT&&LT.k===d.kind&&LT.i===d.i&&now-LT.t<380){ // แตะสองครั้ง = ลบจุด
+          if(d.kind==='s'){ed.stops.splice(d.i,1);toast('ลบจุดแล้ว')}
+          else if(ed.type!=='toll'&&ed.pts.length>2){ed.pts.splice(d.i,1);toast('ลบจุดแล้ว')}
+          LT=null;sync();drawMap();side();return;
+        }
+        LT={k:d.kind,i:d.i,t:now};drawMap();return;
+      }
+      LT=null;sync();drawMap();side();return;
+    }
+    if(was&&PT.size===0&&!mv&&e.type==='pointerup')tap(e);
+  };
+  s.onpointerup=up;s.onpointercancel=up;
+  s.onwheel=e=>{e.preventDefault();const d=e.deltaMode===1?e.deltaY*16:e.deltaY;zoomTo(Math.exp(-d*.0022),e.clientX,e.clientY,180)};
+  document.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{const f=+b.dataset.z;if(!f)return animTo(fitAllT(),420);const r=s.getBoundingClientRect();zoomTo(f,r.left+r.width/2,r.top+r.height/2,260)});
+  if(!window.__rz){window.__rz=1;addEventListener('resize',()=>{drawMap();if($('#side'))setSheet(SH.s,true)})}
+}
+function tap(e){
+  const s=$('#mapsvg'),r=s.getBoundingClientRect(),w=[M.vb.x+(e.clientX-r.left)/r.width*M.vb.w,M.vb.y+(e.clientY-r.top)/r.width*M.vb.w];
+  const now=performance.now();
+  if(now-(M.lt||0)<320&&Math.hypot(e.clientX-M.lx,e.clientY-M.ly)<26&&!(M.ed&&M.ed.tool)){M.lt=0;return zoomTo(2.2,e.clientX,e.clientY,300)}
+  M.lt=now;M.lx=e.clientX;M.ly=e.clientY;
+  if(M.ed){if(M.ed.tool)addPt(w);return}
+  const el=document.elementFromPoint(e.clientX,e.clientY),g=el&&el.closest&&el.closest('[data-id]');
+  M.sel=g?g.dataset.id:null;
+  const it=M.items.find(i=>i.id===M.sel);if(it&&it.type===M.t)fitItem(it);
+  drawMap();side();
+}
+function nearest(P,q,mx){
+  let b=null;
+  P.forEach((pl,i)=>{for(let j=0;j<pl.length-1;j++){
+    const a=pl[j],c=pl[j+1],dx=c[0]-a[0],dy=c[1]-a[1],L=dx*dx+dy*dy||1,
+      t=Math.max(0,Math.min(1,((q[0]-a[0])*dx+(q[1]-a[1])*dy)/L)),p=[a[0]+t*dx,a[1]+t*dy],d=Math.hypot(p[0]-q[0],p[1]-q[1]);
+    if(d<=mx&&(!b||d<b.d))b={p:[+p[0].toFixed(1),+p[1].toFixed(1)],i,d};
+  }});
+  return b;
+}
+function addPt(w){
+  sync();const e=M.ed,k=M.vb.w/$('#mapsvg').getBoundingClientRect().width;let q=[Math.round(w[0]),Math.round(w[1])];
+  if(e.tool==='line'){e.pts.push(q)}
+  else if(e.tool==='stop'){
+    if(e.pts.length<2)return toast('วาดเส้นทางก่อน แล้วค่อยเพิ่ม'+MT[e.type].s);
+    const n=nearest([e.pts],q,40*k),p=n?n.p:q;e.stops.push({x:p[0],y:p[1],n:''});
+  }else if(e.tool==='gate'){
+    const rs=M.base.filter(isMajor);
+    if(rs.length){
+      const n=nearest(rs.map(r=>r.pts),q,18*k);
+      if(!n)return toast('กดบนถนนใหญ่ (ทางหลวง/ถนนสายหลัก) เท่านั้น');
+      q=n.p;e.road=rs[n.i].name||'';if(!e.name.trim()&&e.road)e.name=xName(e.road);
+    }else toast('ยังโหลดถนนไม่ได้ — วางจุดอิสระไปก่อน');
+    e.pts=[q];e.tool=null;$('#mapsvg').style.cursor='';
+  }
+  drawMap();side();
+}
+
+/* ---------- Drawing ---------- */
+function drawMap(){
+  const s=$('#mapsvg');if(!s)return;const r=s.getBoundingClientRect();if(!r.width)return;
+  const v=M.vb,k=v.w/r.width,T=MT[M.t],fc=['#e3f1d4','#d6eee3','#eef2cc'];
+  v.h=v.w*r.height/r.width;s.setAttribute('viewBox',`${v.x} ${v.y} ${v.w} ${v.h}`);
+  const halo=`paint-order:stroke;stroke:#fff;stroke-width:${3*k};stroke-linejoin:round`;
+  const tx=(x,y,t,f,c,o)=>`<text x="${x}" y="${y}" font-size="${f*k}" text-anchor="middle" font-weight="600" pointer-events="none" style="${halo};fill:${c||'#2a3a2a'}"${o||''}>${E(t)}</text>`;
+  const pill=(x,y,t,f,bg,bd,col)=>{const w=(String(t).length*f*.58+16)*k,hh=(f+9)*k;return `<g pointer-events="none"><rect x="${x-w/2}" y="${y-hh/2}" width="${w}" height="${hh}" rx="${hh/2}" fill="${bg}" fill-opacity=".96" stroke="${bd}" stroke-width="${1.2*k}"/><text x="${x}" y="${y}" font-size="${f*k}" text-anchor="middle" dominant-baseline="central" font-weight="700" fill="${col}">${E(t)}</text></g>`};
+  let h='';
+  h+='<defs>'+PROV.map((p,i)=>i>1?`<clipPath id="kc${i}">${p.p.map(q=>`<polygon points="${q}"/>`).join('')}</clipPath>`:'').join('')+'</defs>';
+  const showD=v.w<740,showAll=v.w<460,ln=`fill="none" stroke="#2f8a3b" vector-effect="non-scaling-stroke"`;
+  MAP_ORDER.forEach(i=>{const p=PROV[i];
+    h+=p.p.map(q=>`<polygon points="${q}" fill="${fc[p.d-1]}"/>`).join('');
+    if(showD)h+=DST[i].map(c=>c.p?`<polygon points="${c.p}" ${ln} stroke-opacity=".5" stroke-width=".8"/>`:`<rect x="${c.r[0]}" y="${c.r[1]}" width="${c.r[2]-c.r[0]}" height="${c.r[3]-c.r[1]}" ${ln} stroke-opacity=".5" stroke-width=".8"${i>1?` clip-path="url(#kc${i})"`:''}/>`).join('');
+    h+=p.p.map(q=>`<polygon points="${q}" ${ln} stroke-width="1.5" stroke-linejoin="round"/>`).join('');
+  });
+  PROV.forEach((p,i)=>{
+    if(showAll){DST[i].forEach(c=>{if(c.cx<v.x-50||c.cx>v.x+v.w+50||c.cy<v.y-50||c.cy>v.y+v.h+50)return;const fp=Math.min(11.5,c.lw*1.2/(c.n.length*.6)/k);if(fp>=5)h+=tx(c.cx,c.cy,c.n,fp,'#17301b',' dominant-baseline="central"')})}
+    else{const f=i>1?13:11,b=PB[i],lp=DLP[i]||[b[0]+b[2]/2,b[1]+b[3]/2];if(p.n.length*.6*f*k<=b[2]*1.05)h+=tx(lp[0],lp[1],p.n,f,'#4d6b4d',' dominant-baseline="central"')}
+  });
+  // base: water + roads
+  M.base.forEach(b=>{
+    if(b.kind==='nature'&&b.pts&&b.pts.length>1){
+      if(b.nt==='bay'&&b.pts.length>2)h+=`<polygon points="${b.pts.map(p=>p.join(',')).join(' ')}" fill="${b.color||'#8ec9ee'}" fill-opacity=".8"/>`;
+      else if(b.nt==='river'||b.nt==='canal')h+=`<polyline points="${b.pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${b.color||'#8ec9ee'}" stroke-width="${(b.nt==='river'?7:3.5)*k}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+  });
+  const RW={highway:[7,'#f2a33a'],main:[5.5,'#ffd76a'],secondary:[3.5,'#fff'],local:[2,'#fff']};
+  const roads=M.base.filter(b=>b.kind==='road'&&b.pts&&b.pts.length>1).sort((a,b)=>(RW[a.rt]||RW.local)[0]-(RW[b.rt]||RW.local)[0]);
+  roads.forEach(b=>{
+    const [w,c]=RW[b.rt]||RW.local,pl=b.pts.map(p=>p.join(',')).join(' '),dim=M.t==='toll'&&!isMajor(b)?.35:1;
+    if(v.w>(b.rt==='local'?700:b.rt==='secondary'?1100:2400))return;
+    h+=`<g opacity="${dim}"><polyline points="${pl}" fill="none" stroke="#c4b98f" stroke-width="${(w+2)*k}" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${pl}" fill="none" stroke="${b.color||c}" stroke-width="${w*k}" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  });
+  if(v.w<900)roads.filter(isMajor).forEach(b=>{if(b.name){const m=b.pts[b.pts.length>>1];h+=tx(m[0],m[1]-9*k,b.name,10,'#7a5b12')}});
+  // routes
+  const all=mine().filter(i=>!M.ed||i.id!==M.ed.id).concat(M.ed?[{...M.ed,id:'draft'}]:[]);
+  all.forEach(i=>{
+    const c=i.color||T.c,on=M.sel===i.id||i.id==='draft',id=i.id;
+    if(i.type==='toll'){
+      const p=i.pts[0];if(!p)return;const sc=(on?1.2:1)*k;
+      h+=`<g data-id="${id}" style="cursor:pointer;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))"><circle cx="${p[0]}" cy="${p[1]}" r="${16*k}" fill="transparent"/>`+
+        `<g transform="translate(${p[0]} ${p[1]}) scale(${sc})"><path d="M0 0C-9-11-14-17-14-24a14 14 0 1 1 28 0c0 7-5 13-14 24z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cy="-24" r="9" fill="#fff"/>`+
+        `<text y="-23.5" font-size="12" font-weight="800" text-anchor="middle" dominant-baseline="central" fill="${c}" pointer-events="none">E</text></g></g>`;
+      if(v.w<1100||on)h+=pill(p[0],p[1]-(52*sc),(i.price!==''?i.price:'?')+' เจ๋ง',11.5,c,'#fff','#fff');
+      if(on||v.w<500)h+=tx(p[0],p[1]-(70*sc),i.name||'',11.5,c);
+      return;
+    }
+    if(i.pts.length>1){
+      const pl=i.pts.map(p=>p.join(',')).join(' '),dash=i.type==='boat'?` stroke-dasharray="${11*k} ${7*k}"`:'';
+      h+=`<g data-id="${id}" style="cursor:pointer"><polyline points="${pl}" fill="none" stroke="#fff" stroke-width="${(on?11:8)*k}" stroke-linecap="round" stroke-linejoin="round"/>`+
+        `<polyline points="${pl}" fill="none" stroke="${c}" stroke-width="${(on?7:5)*k}" stroke-linecap="round" stroke-linejoin="round"${dash}/>`+
+        `<polyline points="${pl}" fill="none" stroke="transparent" pointer-events="stroke" stroke-width="${18*k}"/></g>`;
+      if(v.w<1000&&i.name){const m=i.pts[i.pts.length>>1];h+=pill(m[0],m[1]-16*k,i.name,11,c,'#fff','#fff')}
+    }
+    i.stops.forEach((st,n)=>{
+      const end=n===0||n===i.stops.length-1,r=(end?12.5:6)*(on&&!end?1.2:1)*k;
+      h+=`<g data-id="${id}" style="cursor:pointer;filter:drop-shadow(0 2px 3px rgba(0,0,0,.38))"><circle cx="${st.x}" cy="${st.y}" r="${r+3*k}" fill="#fff"/>`+
+        `<circle cx="${st.x}" cy="${st.y}" r="${r}" fill="${end?c:'#fff'}" stroke="${c}" stroke-width="${(end?0:3)*k}"/>`+
+        (end?`<text x="${st.x}" y="${st.y}" font-size="${14*k}" text-anchor="middle" dominant-baseline="central" pointer-events="none">${T.e}</text>`:`<circle cx="${st.x}" cy="${st.y}" r="${r*.34}" fill="${c}"/>`)+`</g>`;
+      if((v.w<(end?900:650)||on)&&st.n)h+=pill(st.x,st.y+(end?25:19)*k,st.n,10.5,'#fff',c,'#2a3a2a');
+    });
+    if(i.id==='draft'&&i.type!=='toll'){
+      i.pts.slice(1).forEach((p,j)=>{const q=i.pts[j];h+=`<circle cx="${(q[0]+p[0])/2}" cy="${(q[1]+p[1])/2}" r="${4*k}" fill="#fff" fill-opacity=".8" stroke="${c}" stroke-width="${1.5*k}" pointer-events="none"/>`});
+      i.pts.forEach(p=>h+=`<rect x="${p[0]-5*k}" y="${p[1]-5*k}" width="${10*k}" height="${10*k}" rx="${2.5*k}" fill="#fff" stroke="${c}" stroke-width="${2.4*k}" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))" pointer-events="none"/>`);
+    }
+  });
+  s.innerHTML=h;
+}
+
+/* ---------- Side panel: list / detail / form ---------- */
+function side(){
+  const el=$('#side');if(!el)return;
+  el.style.setProperty('--tcur',MT[M.t].c);
+  const sel=M.items.find(i=>i.id===M.sel&&i.type===M.t);
+  const key=M.loading?'l':M.ed?'e':(M.sel||'');
+  el.innerHTML=M.loading?'<div class="sk skrow"></div>'.repeat(3):M.ed?formH():sel?detH(sel):listH();
+  if(key!==SH.k){SH.k=key;if(key&&key!=='l')openSheet()}
+  placeCr(MQ.matches&&el.innerHTML&&SH.s<2?shV(SH.s):0);
+  el.onclick=sideClick;
+  if(sel&&!M.ed)setTimeout(updateCalculatedFare,0);
+  el.oninput=e=>{const n=e.target.dataset.sn;if(n!==undefined&&M.ed){M.ed.stops[+n].n=e.target.value;drawMap()}};
+}
+const rowSub=i=>i.type==='toll'?(i.price!==''?i.price+' เจ๋ง':''):(i.no?'สาย '+i.no+' · ':'')+i.stops.length+' '+MT[i.type].s;
+const rowH=i=>`<div class="rt" data-id="${i.id}"><i style="background:${i.color||MT[i.type].c}"></i><b>${E(i.name)}</b><small>${E(rowSub(i))}</small></div>`;
+function listH(){
+  const T=MT[M.t],a=mine();
+  return(EDIT?(M.auth?`<div class="tools"><button class="go" data-a="new">＋ สร้าง${M.t==='toll'?'จุดทางด่วน':'เส้นทาง'}</button></div>`:`<div class="tools"><button class="go" data-a="login">🔒 เข้าสู่ระบบเพื่อแก้ไข</button></div>`):'')+
+    a.map(rowH).join('');
+}
+
+function detH(i){
+  const T=MT[i.type],c=i.color||T.c,g=i.type==='toll';
+  const activeCard = localStorage.getItem('nfc_active_card');
+  const stops = i.stops || [];
+  
+  // เช็คว่าเป็นระบบรถไฟ/รถไฟฟ้า/รถประจำทางที่มีหลายสถานีหรือไม่
+  const hasStops = !g && stops.length > 1;
+
+  return`<span class="bk" data-a="back">‹ ทั้งหมด</span><h2 style="color:${c}">${E(i.name)}</h2><div class="chips">`+
+    (g?`<span>ราคา ${E(i.price)} เจ๋ง</span>${i.road?`<span>ถนน ${E(i.road)}</span>`:''}`:(i.no?`<span>สาย ${E(i.no)}</span>`:'')+(i.fare!==''?`<span>ค่าโดยสาร ${E(i.fare)} เจ๋ง</span>`:''))+
+    `</div>${i.note?`<p style="color:#6b6350">${E(i.note)}</p>`:''}`+
+
+    // ส่วนเลือกสถานีต้นทาง-ปลายทาง และคำนวณราคาตามสถานี
+    (hasStops ? `
+      <div style="margin:14px 0; padding:14px; background:#FBF7EA; border-radius:16px; border:1px solid #EEE3C4;">
+        <div style="font-weight:700; color:#8A6A00; margin-bottom:8px;">📍 คำนวณค่าโดยสารตามสถานี</div>
+        <div style="display:flex; gap:8px; margin-bottom:8px; flex-direction:column;">
+          <label style="font-size:13px; color:#6b6350;">สถานีต้นทาง:
+            <select id="startStation" style="width:100%; padding:8px; border-radius:10px; border:1px solid #ccc; margin-top:2px;">
+              ${stops.map((s, idx) => `<option value="${idx}">${E(s.n || 'สถานีที่ ' + (idx+1))}</option>`).join('')}
+            </select>
+          </label>
+          <label style="font-size:13px; color:#6b6350;">สถานีปลายทาง:
+            <select id="endStation" style="width:100%; padding:8px; border-radius:10px; border:1px solid #ccc; margin-top:2px;">
+              ${stops.map((s, idx) => `<option value="${idx}" ${idx === stops.length - 1 ? 'selected' : ''}>${E(s.n || 'สถานีที่ ' + (idx+1))}</option>`).join('')}
+            </select>
+          </label>
+        </div>
+        <div id="fareCalculationResult" style="font-weight:700; color:#1E8A4A; margin-bottom:10px; text-align:center;">
+          ราคา: กำลังคำนวณ...
+        </div>
+        ${activeCard ? `<button class="btn btn-primary" style="width:100%;" onclick="payNFCWithStations('${E(i.name)}', '${i.type}')">💳 แตะ NFC จ่ายตามระยะทาง</button>` : `<div style="font-size:13px; color:#D3352E; text-align:center;">กรุณาเข้าสู่ระบบบัตรตั๋วร่วมก่อนใช้งาน NFC</div>`}
+      </div>
+    ` : (activeCard ? `
+      <div style="margin:14px 0; padding:12px; background:#EAFCEB; border-radius:14px; text-align:center;">
+        <div style="font-weight:700; color:#1E8A4A; margin-bottom:6px;">💳 NFC พร้อมแตะชำระเงิน</div>
+        <button class="btn btn-primary" style="width:100%;" onclick="payWithNFC('${E(i.name)}', '${i.type}', '${(i.price!==''&&i.price!=null)?i.price:(i.fare||5)}')">แตะบัตรเพื่อจ่าย (${(i.price!==''&&i.price!=null)?i.price:(i.fare||5)} เจ๋ง)</button>
+      </div>
+    ` : '')) +
+
+    // ปุ่มแชร์เป็นรูปอวย
+    `<div style="margin-top:12px;">
+       <button class="btn btn-outline" style="width:100%; border-color:${c}; color:${c};" onclick="shareAsGreetingCard('${E(i.name)}', '${E(rowSub(i))}')">🎁 แชร์เป็นรูปอวยการเดินทาง</button>
+     </div>` +
+
+    (i.stops.length?`<h3 style="font-size:14px;margin:16px 0 6px">${T.s}</h3>`+i.stops.map((s,n)=>`<div class="rt" style="cursor:default"><i style="background:#fff;box-shadow:0 0 0 3px ${c}"></i><b>${E(s.n||T.s+' '+(n+1))}</b></div>`).join(''):'')+
+    (M.auth?`<div class="tools"><button data-a="edit">✏️ แก้ไข</button></div>`:'');
+}
+  
+/* ฟังก์ชันบันทึกข้อมูลการใช้บัตรลง LocalStorage */
+function payWithNFC(name, type, price){
+  const logs = JSON.parse(localStorage.getItem('nfc_usage_logs') || '[]');
+  const now = new Date();
+  const timeStr = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
+  
+  logs.unshift({
+    name: name,
+    type: type,
+    price: price,
+    date: timeStr
+  });
+  
+  localStorage.setItem('nfc_usage_logs', JSON.stringify(logs));
+  showToast(`ชำระเงินสำเร็จ ${price} เจ๋ง (บันทึกข้อมูลแล้ว)`);
+  setTab('card');
+}
+// ฟังก์ชันคำนวณและอัปเดตราคาตามสถานีแบบเรียลไทม์
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'startStation' || e.target.id === 'endStation') {
+    updateCalculatedFare();
+  }
+});
+
+/* ค่าโดยสาร = ราคาสายใน API (price ถ้ามี ไม่งั้น fare) ÷ จำนวนสถานีที่เดินทาง · เศษปัดเป็น .0 หรือ .5 เท่านั้น
+   เช่น 5 ÷ 2 = 2.5 · 10 ÷ 3 = 3.33 → 3.5 (ใช้สูตรเดียวกับแผนที่หลัก) */
+const fareBase=it=>{if(!it)return 0;const v=(it.price!==''&&it.price!=null)?it.price:it.fare,n=parseFloat(String(v==null?'':v).replace(/[^0-9.]/g,''));return isFinite(n)?n:0};
+const fareRound=x=>Math.round(x*2)/2;
+const fareFmt=n=>String(Math.round(n*10)/10);
+function getSelectedFareDetails() {
+  const startSel = document.getElementById('startStation');
+  const endSel = document.getElementById('endStation');
+  if (!startSel || !endSel) return { price: 0, count: 0 };
+  const it = M.items.find(i => i.id === M.sel);
+  const base = fareBase(it);
+  const count = Math.abs(parseInt(endSel.value) - parseInt(startSel.value)); // จำนวนสถานีที่เดินทาง (ไม่นับสถานีต้นทาง)
+  const resDiv = document.getElementById('fareCalculationResult');
+  if (count < 1) { if (resDiv) resDiv.textContent = 'เลือกสถานีต้นทางและปลายทางให้ต่างกัน'; return { price: 0, count: 0 }; }
+  if (!(base > 0)) { if (resDiv) resDiv.textContent = 'สายนี้ยังไม่มีราคาใน API'; return { price: 0, count }; }
+  const totalPrice = fareRound(base / count);
+  if (resDiv) {
+    resDiv.textContent = `เดินทาง ${count} สถานี · ${fareFmt(base)} ÷ ${count} = ${fareFmt(totalPrice)} เจ๋ง`;
+  }
+  return { price: totalPrice, count };
+}
+
+// เรียกคำนวณครั้งแรกหลังเรนเดอร์เสร็จ
+setTimeout(() => { updateCalculatedFare(); }, 100);
+function updateCalculatedFare() { getSelectedFareDetails(); }
+
+// ชำระเงิน NFC แบบคิดตามสถานี
+function payNFCWithStations(name, type) {
+  const details = getSelectedFareDetails();
+  if (details.price <= 0) {
+    showToast('กรุณาเลือกสถานีให้ถูกต้อง');
+    return;
+  }
+  payWithNFC(name, type, details.price);
+}
+
+// ฟังก์ชันสร้างรูปอวยและแชร์
+function shareAsGreetingCard(routeName, routeSub) {
+  const canvas = document.getElementById('shareCanvas');
+  const ctx = canvas.getContext('2d');
+  
+  // วาดพื้นหลังการ์ดอวยพรสวยๆ
+  ctx.fillStyle = '#FFFBF1';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // วาดกรอบขอบการ์ด
+  ctx.strokeStyle = '#01f231';
+  ctx.lineWidth = 8;
+  ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+  
+  // ข้อความหัวข้อ
+  ctx.fillStyle = '#241F14';
+  ctx.font = 'bold 26px SaoChingcha, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('✨ การเดินทางสุดพิเศษในฝาแตก ✨', canvas.width / 2, 70);
+  
+  // ชื่อเส้นทาง
+  ctx.fillStyle = '#015caf';
+  ctx.font = 'bold 32px SaoChingcha, sans-serif';
+  ctx.fillText(routeName, canvas.width / 2, 140);
+  
+  // รายละเอียด
+  ctx.fillStyle = '#555555';
+  ctx.font = '18px SaoChingcha, sans-serif';
+  ctx.fillText(routeSub, canvas.width / 2, 185);
+  
+  // กล่องคำอวยพรด้านล่าง
+  ctx.fillStyle = '#EAFCEB';
+  ctx.fillRect(50, 220, canvas.width - 100, 100);
+  ctx.strokeStyle = '#00e500';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(50, 220, canvas.width - 100, 100);
+  
+  ctx.fillStyle = '#1E8A4A';
+  ctx.font = 'bold 20px SaoChingcha, sans-serif';
+  ctx.fillText('“ ขอให้การเดินทางของคุณราบรื่นและปลอดภัย ”', canvas.width / 2, 260);
+  ctx.font = '14px SaoChingcha, sans-serif';
+  ctx.fillStyle = '#6b6350';
+  ctx.fillText('— กรมการขนส่งทางบน —', canvas.width / 2, 295);
+
+  // แปลงเป็นรูปภาพแล้วเปิดให้ดาวน์โหลดหรือแชร์
+  canvas.toBlob(blob => {
+    const file = new File([blob], "greeting-card.png", { type: "image/png" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({
+        title: 'การเดินทาง ' + routeName,
+        text: 'มาดูเส้นทางนี้กัน: ' + routeName,
+        files: [file]
+      }).catch(() => {});
+    } else {
+      // ดาวน์โหลดรูปภาพอัตโนมัติหากไม่รองรับการแชร์ตรง
+      const link = document.createElement('a');
+      link.download = 'fataek-route-card.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('ดาวน์โหลดรูปอวยพรเรียบร้อยแล้ว!');
+    }
+  }, 'image/png');
+}
+
+  
+const tb=(t,l)=>`<button data-tool="${t}" class="${M.ed.tool===t?'a':''}">${l}</button>`;
+function formH(){
+  const e=M.ed,T=MT[e.type],g=e.type==='toll';
+  return`<span class="bk" data-a="cancel">‹ ยกเลิก</span><h2>${e.id?'แก้ไข':'สร้าง'}${g?'จุดทางด่วน':'เส้นทาง'}${T.n}</h2><div class="fm">`+
+    `<label>${g?'ชื่อทางด่วน (ต้องเป็นทางด่วน)':'ชื่อเส้นทาง'}<input id="fname" value="${E(e.name)}" placeholder="${g?'เช่น ทางด่วนประชาธิป':'เช่น สายสีน้ำเงิน'}"></label>`+
+    (g?`<label>ราคา (เจ๋ง)<input id="fprice" type="number" min="0" step="0.5" value="${E(e.price)}"></label>`:
+      `<label>เลขสาย / รหัส<input id="fno" value="${E(e.no)}"></label><label>ค่าโดยสาร (เจ๋ง) — ไม่ใส่ก็ได้<input id="ffare" type="number" min="0" step="0.5" value="${E(e.fare)}"></label>`)+
+    `<label>สี<input id="fcol" type="color" value="${e.color||T.c}" style="height:42px;padding:2px"></label>`+
+    `<label>หมายเหตุ<textarea id="fnote" rows="2">${E(e.note)}</textarea></label></div>`+
+    `<div class="tools">${g?tb('gate','🎯 กดจุดบนถนนใหญ่'):tb('line','✏️ วาดเส้น')+tb('stop','📍 '+T.s)}<button data-a="undo">↶ ย้อน</button></div>`+
+    `<small style="color:#8b8471;display:block">${g?'':'ลากจุด ■ / ป้าย เพื่อย้าย · ลากจุดกลางเส้นเพื่อเพิ่มจุด · แตะจุดสองครั้งเพื่อลบ'}</small><small style="color:#8b8471">${g?(e.pts.length?'ตำแหน่งบนถนน: '+E(e.road||'(ไม่มีชื่อ)'):'ยังไม่ได้เลือกตำแหน่ง — กดปุ่ม 🎯 แล้วแตะถนนใหญ่บนแผนที่'):e.pts.length+' จุดเส้น · '+e.stops.length+' '+T.s}</small>`+
+    e.stops.map((s,i)=>`<div class="sr"><input data-sn="${i}" value="${E(s.n)}" placeholder="ชื่อ${T.s} ${i+1}"><button data-a="ds" data-i="${i}">✕</button></div>`).join('')+
+    `<div class="tools"><button class="go" data-a="save">บันทึก</button>${e.id?'<button data-a="del">ลบ</button>':''}</div>`;
+}
+function sync(){
+  const e=M.ed;if(!e)return;const g=id=>{const x=document.getElementById(id);return x?x.value:undefined};
+  const v={name:g('fname'),no:g('fno'),fare:g('ffare'),price:g('fprice'),color:g('fcol'),note:g('fnote')};
+  for(const k in v)if(v[k]!==undefined)e[k]=v[k];
+}
+async function sideClick(ev){
+  const b=ev.target.closest('[data-a],[data-tool],[data-id]');if(!b)return;
+  if(b.dataset.tool){sync();const e=M.ed;e.tool=e.tool===b.dataset.tool?null:b.dataset.tool;$('#mapsvg').style.cursor=e.tool?'crosshair':'';side();if(e.tool)toast('แตะแผนที่เพื่อวาง'+(e.tool==='line'?'จุดเส้นทาง':e.tool==='stop'?MT[e.type].s:'จุดบนถนนใหญ่'));return}
+  if(b.dataset.id){M.sel=b.dataset.id;const it=M.items.find(i=>i.id===M.sel);if(it)fitItem(it);drawMap();side();return}
+  const a=b.dataset.a;
+  if(a==='back'){M.sel=null;drawMap();side()}
+  else if(a==='login')autoLogin(true);
+  else if(a==='new'){M.sel=null;M.ed=norm({id:'',type:M.t,name:'',tool:M.t==='toll'?'gate':'line'});$('#mapsvg').style.cursor='crosshair';drawMap();side();toast(M.t==='toll'?'แตะถนนใหญ่บนแผนที่เพื่อวางจุดทางด่วน':'แตะแผนที่เพื่อวางจุดเส้นทาง')}
+  else if(a==='edit'){const it=M.items.find(i=>i.id===M.sel);M.ed=JSON.parse(JSON.stringify(norm(it)));M.ed.tool=null;drawMap();side()}
+  else if(a==='cancel'){M.ed=null;$('#mapsvg').style.cursor='';drawMap();side()}
+  else if(a==='undo'){sync();const e=M.ed;if(e.tool==='stop'&&e.stops.length)e.stops.pop();else if(e.tool==='gate')e.pts=[];else if(e.pts.length)e.pts.pop();drawMap();side()}
+  else if(a==='ds'){sync();M.ed.stops.splice(+b.dataset.i,1);drawMap();side()}
+  else if(a==='save')await save();
+  else if(a==='del'){
+    if(!b.dataset.c){b.dataset.c=1;b.textContent='กดอีกครั้งเพื่อลบ';return}
+    const id=M.ed.id;M.items=M.items.filter(i=>i.id!==id);M.ed=null;M.sel=null;
+    await push('delete',{id});drawMap();side();toast('ลบแล้ว');
+  }
+}
+async function save(){
+  sync();const e=M.ed,g=e.type==='toll',T=MT[e.type];e.name=String(e.name).trim();
+  if(!e.name)return toast('ใส่ชื่อก่อน');
+  if(g){
+    if(e.pts.length!==1)return toast('กดเลือกจุดบนถนนใหญ่ก่อน');
+    if(e.price===''||!(+e.price>=0))return toast('ใส่ราคา (เจ๋ง)');
+    e.name=xName(e.name);
+  }else if(e.pts.length<2)return toast('วาดเส้นอย่างน้อย 2 จุด');
+  const it=norm({id:e.id||'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),type:e.type,name:e.name,no:String(e.no||'').trim(),
+    fare:g||e.fare===''?'':+e.fare,price:g?+e.price:'',color:e.color||T.c,note:String(e.note||'').trim(),road:e.road||'',pts:e.pts,
+    stops:e.stops.map((s,i)=>({x:s.x,y:s.y,n:(s.n||'').trim()||T.s+' '+(i+1)}))});
+  const n=M.items.findIndex(a=>a.id===it.id);n<0?M.items.push(it):M.items[n]=it;
+  M.ed=null;M.sel=it.id;$('#mapsvg').style.cursor='';
+  if(await push('upsert',it))toast('บันทึกแล้ว');
+  drawMap();side();
+}
+
+/* ---------- API (routes-api.gs) ---------- */
+const post=(b,pw)=>fetch(ROUTE_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...b,pw:pw==null?M.pw:pw})}).then(r=>r.json());
+async function push(act,item){
+  if(!ROUTE_API){try{localStorage.setItem('routes',JSON.stringify(M.items))}catch(_){}return true}
+  try{const j=await post({action:act,item});if(j.ok){M.items=j.items.map(norm);M.rev=j.rev;return true}toast(j.err||'บันทึกไม่สำเร็จ')}
+  catch(_){toast('เชื่อมต่อ API ไม่ได้')}
+  return false;
+}
+async function pull(){
+  if(!ROUTE_API)return;
+  try{const j=await(await fetch(ROUTE_API+'?action=list&rev='+M.rev,{cache:'no-store'})).json();
+    if(j.ok&&!j.same){M.items=j.items.map(norm);M.rev=j.rev;if(!M.ed){drawMap();side()}}}catch(_){}
+}
+async function loadBase(){
+  if(M.base.length||!BASE_API)return;
+  try{const j=await(await fetch(BASE_API+'?action=list',{cache:'no-store'})).json();
+    if(j.ok){M.base=j.items.map(r=>({...r,...(r.meta||{}),pts:r.pts||[]}));drawMap()}}catch(_){}
+}
+
+/* ---------- Login (/edit) ---------- */
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function checkPw(pw){
+  if(ROUTE_API){try{return !!(await post({action:'auth'},pw)).ok}catch(_){return false}}
+  try{return await sha(pw)===PH}catch(_){return false}
+}
+function enterEdit(pw){M.auth=true;M.pw=pw;try{sessionStorage.setItem('rpw',pw)}catch(_){}side();toast('เข้าสู่โหมดแก้ไข')}
+async function autoLogin(force){
+  let pw='';try{pw=sessionStorage.getItem('rpw')||''}catch(_){}
+  if(pw&&!force&&await checkPw(pw))return enterEdit(pw);
+  const m=document.createElement('div');m.className='lgm';
+  m.innerHTML='<div class="lgb"><h3 style="margin:0">เข้าสู่โหมดแก้ไข</h3><input id="lgp" type="password" placeholder="รหัสผ่าน" autocomplete="off"><small id="lge" style="color:#D3352E"></small><div class="tools" style="margin:0"><button class="go" id="lgo">เข้าสู่ระบบ</button><button id="lgc">ปิด</button></div></div>';
+  document.body.appendChild(m);const p=m.querySelector('#lgp');p.focus();
+  const go=async()=>{if(await checkPw(p.value)){m.remove();enterEdit(p.value)}else m.querySelector('#lge').textContent='รหัสไม่ถูกต้อง'};
+  m.querySelector('#lgo').onclick=go;p.onkeydown=e=>{if(e.key==='Enter')go()};m.querySelector('#lgc').onclick=()=>m.remove();
+}
+/* ---------- Smooth zoom ---------- */
+let AN=0;
+const clampW=w=>Math.min(2400,Math.max(40,w));
+function animTo(t,d){
+  cancelAnimationFrame(AN);const a={...M.vb},t0=performance.now();M.tgt=t;d=d||240;
+  (function f(n){let e=Math.min(1,(n-t0)/d);e=1-Math.pow(1-e,3);const v=M.vb;v.x=a.x+(t.x-a.x)*e;v.y=a.y+(t.y-a.y)*e;v.w=a.w+(t.w-a.w)*e;drawMap();if(e<1)AN=requestAnimationFrame(f);else M.tgt=null})(t0);
+}
+function zoomTo(f,px,py,d){
+  if(!$('#mapsvg'))return;
+  const r=$('#mapsvg').getBoundingClientRect(),b=M.tgt||M.vb,wx=b.x+(px-r.left)/r.width*b.w,wy=b.y+(py-r.top)/r.width*b.w,nw=clampW(b.w/f),g=b.w/nw;
+  animTo({x:wx-(wx-b.x)/g,y:wy-(wy-b.y)/g,w:nw},d);
+}
+/* ---------- Bottom sheet (มือถือ): peek / half / full ---------- */
+const MQ=matchMedia('(max-width:699px)'),SH={s:1,k:''};
+const barH=()=>(document.querySelector('.bottombar')||{}).offsetHeight||70;
+const shV=s=>s===0?barH()+92:s===1?Math.max(barH()+200,innerHeight*.5):innerHeight;
+const insetPx=()=>MQ.matches?Math.max(0,shV(1)-barH()):0;
+function setSheet(s,inst){
+  const el=$('#side');if(!el)return;SH.s=s;el.classList.toggle('sfull',s===2&&MQ.matches);
+  if(!MQ.matches){el.style.height='';el.style.overflowY='';el.style.transition='';placeCr(0);return}
+  el.style.transition=inst?'none':'';el.style.height=shV(s)+'px';el.style.overflowY=s?'auto':'hidden';placeCr(s===2?0:shV(s));
+}
+function placeCr(h){const c=$('#mapcr');if(c)c.style.bottom=(h>0?Math.max(8,h-barH()+8):8)+'px'}
+const openSheet=()=>{if(MQ.matches&&SH.s===0)setSheet(1)};
+function sheetBind(){
+  const el=$('#side');let y0=0,h0=0,dr=0,dc=0,ly=0,lt=0,v=0;
+  el.addEventListener('touchstart',e=>{if(!MQ.matches)return;y0=ly=e.touches[0].clientY;h0=el.offsetHeight;dr=dc=0;lt=performance.now();v=0},{passive:true});
+  el.addEventListener('touchmove',e=>{
+    if(!MQ.matches)return;const y=e.touches[0].clientY,dy=y-y0;
+    if(!dc){
+      if(Math.abs(dy)<6)return;dc=1;
+      const up=dy<0,top=el.scrollTop<=0,bot=el.scrollTop+el.clientHeight>=el.scrollHeight-2;
+      dr=SH.s===0||(up&&bot)||(!up&&top);
+      if(dr){el.style.transition='none';el.style.overflowY='hidden'}
+    }
+    if(!dr)return;e.preventDefault();
+    const n=performance.now();v=(y-ly)/Math.max(1,n-lt);ly=y;lt=n;
+    el.style.height=Math.min(innerHeight,Math.max(shV(0),h0-dy))+'px';el.classList.toggle('sfull',h0-dy>innerHeight*.9);placeCr(h0-dy>innerHeight*.9?0:Math.max(shV(0),h0-dy));
+  },{passive:false});
+  const end=()=>{
+    if(!MQ.matches||!dr)return;dr=0;
+    const h=el.offsetHeight-v*180,s=[0,1,2].reduce((a,k)=>Math.abs(shV(k)-h)<Math.abs(shV(a)-h)?k:a,0);setSheet(s);
+  };
+  el.addEventListener('touchend',end);el.addEventListener('touchcancel',end);
+  el.addEventListener('click',()=>{if(MQ.matches&&SH.s===0)setSheet(1)});
+}
+/* ---------- ค้นหา (กล่องลอยพื้นหลังใส) ---------- */
+let SR=null;
+function openSearch(){
+  if(!SR){
+    SR=document.createElement('div');SR.id='srch';
+    SR.innerHTML='<div class="sbox"><label class="sin"><span>🔍</span><input id="sq" placeholder="ค้นหารถไฟ รถประจำทาง เรือ ทางด่วน…" autocomplete="off" enterkeyhint="search"><button type="button" id="sx" aria-label="ปิด">✕</button></label><div id="sres"></div></div>';
+    document.body.appendChild(SR);
+    SR.addEventListener('click',e=>{const r=e.target.closest('[data-pick]');if(r)return pickResult(r.dataset.pick);if(e.target===SR||e.target.closest('#sx'))closeSearch()});
+    SR.querySelector('#sq').addEventListener('input',renderSearch);
+    addEventListener('keydown',e=>{if(e.key==='Escape')closeSearch()});
+  }
+  SR.classList.add('on');renderSearch();setTimeout(()=>SR.querySelector('#sq').focus(),60);
+  pull().then(()=>{if(SR.classList.contains('on'))renderSearch()});
+}
+function closeSearch(){if(!SR)return;SR.classList.remove('on');SR.querySelector('#sq').blur()}
+function renderSearch(){
+  const q=SR.querySelector('#sq').value.trim().toLowerCase(),res=SR.querySelector('#sres');
+  const hay=i=>[i.name,i.no,i.road,i.note,MT[i.type].n,...i.stops.map(s=>s.n)].join(' ').toLowerCase();
+  const a=M.items.filter(i=>MT[i.type]&&(!q||hay(i).includes(q))).slice(0,40);
+  res.innerHTML=a.map(i=>{
+    const T=MT[i.type],c=i.color||T.c,m=q&&i.stops.find(s=>String(s.n).toLowerCase().includes(q));
+    return`<div class="sr1" data-pick="${i.id}"><i style="background:${c}">${T.e}</i><div><b>${E(i.name)}</b><small>${T.n}${i.type==='toll'&&i.price!==''?' · '+E(i.price)+' เจ๋ง':''}${i.no?' · สาย '+E(i.no):''}${m?' · '+E(m.n):''}</small></div></div>`;
+  }).join('')||(q?'<div class="sno">ไม่พบผลลัพธ์</div>':'');
+}
+function pickResult(id){
+  const it=M.items.find(a=>a.id===id);if(!it)return;
+  if(M.ed&&M.t===it.type)return toast('กำลังแก้ไขอยู่ — บันทึกหรือยกเลิกก่อน');
+  closeSearch();
+  if(currentTab===it.type&&M.t===it.type&&($('#mapsvg')||$('#mapfr'))){M.sel=id;fitItem(it);drawMap();side()}
+  else{M.pend=id;setTab(it.type)}
+}
+function toast(m){showToast(m)}
+try{if(/^https?:$/.test(location.protocol)&&/^#\//.test(location.hash))history.replaceState(null,'',ROOT+currentTab+(EDIT?'/edit':''))}catch(_){}
+
+/* ---------------------------------------------
+   Init
+--------------------------------------------- */
+renderNav();
+document.body.classList.toggle('mapmode', !!MT[currentTab]);
+document.getElementById('panelCard').innerHTML='<div class="skpage"><div class="sk sk2"></div><div class="sk sk1"></div><div class="sk sk3"></div></div>';
+setTimeout(renderPanel, 500);
+</script>
+<!-- Canvas สำหรับสร้างรูปอวยแชร์ -->
+<canvas id="shareCanvas" width="600" height="400" style="display:none;"></canvas>
+  
+</body>
+</html>

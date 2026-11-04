@@ -196,6 +196,8 @@ try {
   if(savedAo) ADDONS = {...ADDONS, ...JSON.parse(savedAo)};
 }catch(_){}
 function saveAo(){ try{ localStorage.setItem('ao_cfg', JSON.stringify(ADDONS)); }catch(_){} }
+/* โหมดฝังจากหน้า /fataekts : #embed=1&ft=train|bus|boat|toll|all → เปิด Transit เฉพาะประเภทนั้น (ไม่บันทึกทับค่าที่ผู้ใช้ตั้งไว้) */
+try{const m=(location.hash||'').match(/[#&]ft=(train|bus|boat|toll|all)\b/);if(m){window.FTEMB=m[1];ADDONS.fataekts=true;ADDONS.fataekTypes={train:false,bus:false,boat:false,toll:false};['train','bus','boat','toll'].forEach(k=>{ADDONS.fataekTypes[k]=(m[1]==='all'||m[1]===k)});saveAo=function(){}}}catch(_){}
 
 function addonsHtml(){
   return `
@@ -221,7 +223,7 @@ function addonsHtml(){
         <label><input type="checkbox" class="fts-t" data-type="toll" ${ADDONS.fataekTypes.toll?'checked':''}> toll</label>
       </div>
       <div style="margin-top:8px;">
-        <a href="https://fataekts.wasmer.app" target="_blank" class="sb2" style="display:inline-block;padding:6px 12px;text-decoration:none;">ดูเว็บทางการ 🔗</a>
+        <a href="/fataekts" target="_blank" class="sb2" style="display:inline-block;padding:6px 12px;text-decoration:none;">ดูเว็บทางการ 🔗</a>
       </div>
     </div>
   </div>
@@ -444,3 +446,7 @@ const pathC=(P,cv)=>{const n=P.length;if(!cv||n<3)return'M'+P.map(a=>a[0]+' '+a[
  for(let i=0;i<n;i++){const a=P[(i-1+n)%n],b=P[i],c=P[(i+1)%n],e=P[(i+2)%n];d+=`C${b[0]+(c[0]-a[0])/6} ${b[1]+(c[1]-a[1])/6} ${c[0]-(e[0]-b[0])/6} ${c[1]-(e[1]-b[1])/6} ${c[0]} ${c[1]}`}return d+'Z'};
 function ghost(e){const g=$('#gh');if(!g)return;const w=wpos(e.clientX,e.clientY),pv=ED.pts[ED.pts.length-1],q=snapPt(w,pv),s=sc();
  g.innerHTML=(pv?`<line x1="${pv[0]}" y1="${pv[1]}" x2="${q[0]}" y2="${q[1]}" stroke="#1c7ed6" stroke-width="${2/s}" stroke-dasharray="${5/s} ${4/s}" opacity=".7"/>`:'')+`<circle cx="${q[0]}" cy="${q[1]}" r="${5/s}" fill="#1c7ed6" opacity=".85"/>`}
+/* รับคำสั่งจากหน้า /fataekts (same-origin): ซูมไปที่เส้นทางที่เลือก */
+addEventListener('message',e=>{try{if(e.origin!==location.origin)return;const d=e.data;if(!d||d.t!=='ft-fit'||!Array.isArray(d.pts)||!d.pts.length)return;
+ let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;d.pts.forEach(p=>{x0=Math.min(x0,+p[0]);y0=Math.min(y0,+p[1]);x1=Math.max(x1,+p[0]);y1=Math.max(y1,+p[1])});
+ if(!isFinite(x0+y0+x1+y1))return;fit({x:x0,y:y0,w:Math.max(40,x1-x0),h:Math.max(40,y1-y0)},1.5)}catch(_){}});
