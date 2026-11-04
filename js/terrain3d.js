@@ -13,10 +13,12 @@ const saveView=()=>{try{localStorage.setItem('terr_on',T.on?'1':'0');localStorag
 let HC,SC;
 const cr=(p0,p1,p2,p3,t)=>.5*(2*p1+(p2-p0)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t);
 const HV=new Float32Array(VX*VY),SF=new Uint8Array(NX*NY);
-function initH(){HC=unrle(FORCED.hv,CVX*CVY);SC=unrle(FORCED.sf,CNX*CNY);const tmp=new Float32Array(VX*CVY);
- for(let y=0;y<CVY;y++)for(let X=0;X<VX;X++){const fx=X/F,x1=Math.floor(fx),t=fx-x1,g=i=>HC[y*CVX+Math.max(0,Math.min(CVX-1,i))];tmp[y*VX+X]=cr(g(x1-1),g(x1),g(x1+1),g(x1+2),t)}
- for(let Y=0;Y<VY;Y++){const fy=Y/F,y1=Math.floor(fy),t=fy-y1;for(let X=0;X<VX;X++){const g=j=>tmp[Math.max(0,Math.min(CVY-1,j))*VX+X];HV[Y*VX+X]=Math.max(0,Math.min(255,cr(g(y1-1),g(y1),g(y1+1),g(y1+2),t)))}}
+const runSync=g=>{while(!g.next().done);};
+function* initHg(){HC=unrle(FORCED.hv,CVX*CVY);SC=unrle(FORCED.sf,CNX*CNY);const tmp=new Float32Array(VX*CVY);
+ for(let y=0;y<CVY;y++){if(y%6===0)yield .4*y/CVY;for(let X=0;X<VX;X++){const fx=X/F,x1=Math.floor(fx),t=fx-x1,g=i=>HC[y*CVX+Math.max(0,Math.min(CVX-1,i))];tmp[y*VX+X]=cr(g(x1-1),g(x1),g(x1+1),g(x1+2),t)}}
+ for(let Y=0;Y<VY;Y++){const fy=Y/F,y1=Math.floor(fy),t=fy-y1;for(let X=0;X<VX;X++){const g=j=>tmp[Math.max(0,Math.min(CVY-1,j))*VX+X];HV[Y*VX+X]=Math.max(0,Math.min(255,cr(g(y1-1),g(y1),g(y1+1),g(y1+2),t)))}if(Y%6===0)yield .4+.5*Y/VY}
  for(let y=0;y<NY;y++)for(let x=0;x<NX;x++)SF[y*NX+x]=SC[Math.min(CNY-1,(y/F)|0)*CNX+Math.min(CNX-1,(x/F)|0)]}
+function initH(){runSync(initHg())}
 const eAt=v=>v/255*MAXH;
 function hAt(x,y){const fx=Math.max(0,Math.min(NX-.001,x/GS)),fy=Math.max(0,Math.min(NY-.001,y/GS)),ix=fx|0,iy=fy|0,tx=fx-ix,ty=fy-iy;
  const a=HV[iy*VX+ix],b=HV[iy*VX+ix+1],c=HV[(iy+1)*VX+ix],d=HV[(iy+1)*VX+ix+1];return eAt((a*(1-tx)+b*tx)*(1-ty)+(c*(1-tx)+d*tx)*ty)}
@@ -34,26 +36,28 @@ function clipRect(P,x0,y0,x1,y1){let o=P;const E=[[0,x0,1],[0,x1,-1],[1,y0,1],[1
   if(ia)o.push(a);if(ia!==ib){const t=(v-a[ax])/(b[ax]-a[ax]);o.push(ax?[a[0]+t*(b[0]-a[0]),v]:[v,a[1]+t*(b[1]-a[1])])}}}
  return o}
 const LM=new Uint8Array(NX*NY),DC=new Uint8Array(NX*NY);let REG=[],LAND=[],LAND2=[],BL=[];
-function buildGeo(){REG=[];DATA.forEach((_,i)=>OUT[i].forEach((s,k)=>{const pts=sample(s,CVR['o:'+i+':'+k]);let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;pts.forEach(p=>{x0=Math.min(x0,p[0]);y0=Math.min(y0,p[1]);x1=Math.max(x1,p[0]);y1=Math.max(y1,p[1])});REG.push({i,pts,x0,y0,x1,y1})}));
- for(let cy=0;cy<NY;cy++)for(let cx=0;cx<NX;cx++){const x=cx*GS+GS/2,y=cy*GS+GS/2;for(const r of REG){if(x<r.x0||x>r.x1||y<r.y0||y>r.y1)continue;if(pip(x,y,r.pts)){LM[cy*NX+cx]=1;break}}}
+function* buildGeog(){REG=[];DATA.forEach((_,i)=>OUT[i].forEach((s,k)=>{const pts=sample(s,CVR['o:'+i+':'+k]);let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;pts.forEach(p=>{x0=Math.min(x0,p[0]);y0=Math.min(y0,p[1]);x1=Math.max(x1,p[0]);y1=Math.max(y1,p[1])});REG.push({i,pts,x0,y0,x1,y1})}));
+ for(let cy=0;cy<NY;cy++){if(cy%4===0)yield .6*cy/NY;for(let cx=0;cx<NX;cx++){const x=cx*GS+GS/2,y=cy*GS+GS/2;for(const r of REG){if(x<r.x0||x>r.x1||y<r.y0||y>r.y1)continue;if(pip(x,y,r.pts)){LM[cy*NX+cx]=1;break}}}}
  DC.fill(255);const q=[];for(let c=0;c<LM.length;c++){if(!LM[c])continue;const x=c%NX,y=(c/NX)|0;if(x===0||y===0||x===NX-1||y===NY-1||!LM[c-1]||!LM[c+1]||!LM[c-NX]||!LM[c+NX]){DC[c]=0;q.push(c)}}
- for(let h=0;h<q.length;h++){const c=q[h],x=c%NX,y=(c/NX)|0,d=DC[c]+1;for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=NX||ny>=NY)continue;const n=ny*NX+nx;if(LM[n]&&DC[n]>d){DC[n]=d;q.push(n)}}}
+ for(let h=0;h<q.length;h++){if((h&8191)===0)yield .6+.3*Math.min(1,h/q.length);const c=q[h],x=c%NX,y=(c/NX)|0,d=DC[c]+1;for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=NX||ny>=NY)continue;const n=ny*NX+nx;if(LM[n]&&DC[n]>d){DC[n]=d;q.push(n)}}}
  LAND=[];LAND2=[];for(let c=0;c<LM.length;c++)if(LM[c]){LAND.push(c);if(c%F===0&&((c/NX)|0)%F===0)LAND2.push(c)}
  BL=[];DATA.forEach((d,i)=>DS[i].forEach((s,j)=>{let parts=[];
   if(typeof s==='string')parts=[sample(s,CVR['c:'+i+':'+j])];
   else if(i<=1)parts=[[[s[0],s[1]],[s[2],s[1]],[s[2],s[3]],[s[0],s[3]]]];
   else OUT[i].forEach((o,k)=>{const c=clipRect(sample(o,CVR['o:'+i+':'+k]),s[0],s[1],s[2],s[3]);if(c.length>2)parts.push(c)});
   if(!parts.length)return;let sx=0,sy=0,n=0;parts.forEach(P=>P.forEach(p=>{sx+=p[0];sy+=p[1];n++}));
-  const e=(d.entries&&d.entries[j])||{};BL.push({key:i+':'+j,i,j,parts,cx:sx/n,cy:sy/n,name:e.name||''})}))}
+  const e=(d.entries&&d.entries[j])||{};BL.push({key:i+':'+j,i,j,parts,cx:sx/n,cy:sy/n,name:e.name||''})}));yield 1}
+function buildGeo(){runSync(buildGeog())}
 /* ---------- colours ---------- */
 const CRGB={};for(const k in T.col)CRGB[k]=hex(T.col[k]);
 const cellSurf=c=>{const s=SF[c];if(s)return s;const x=c%NX,y=(c/NX)|0,i=y*VX+x,f=(HV[i]+HV[i+1]+HV[i+VX]+HV[i+VX+1])/1020;
  if(DC[c]<=T.beachW&&f<.14)return 2;if(f>=T.snow)return 5;if(f>=T.snow*.8)return 6;return T.base==='sand'?3:T.base==='snow'?5:4};
 let CF=[];
-function recolor(){CF=new Array(NX*NY);const L=[-.45,-.55,.7];
- for(const c of LAND){const x=c%NX,y=(c/NX)|0,i=y*VX+x,a=HV[i],b=HV[i+1],cc=HV[i+VX],d=HV[i+VX+1],sr=cellSurf(c),nm=SN[sr],col=CRGB[nm]||CRGB.grass;
+function* recolorg(){CF=new Array(NX*NY);const L=[-.45,-.55,.7];let nn=0;
+ for(const c of LAND){if((nn++&4095)===0)yield nn/LAND.length;const x=c%NX,y=(c/NX)|0,i=y*VX+x,a=HV[i],b=HV[i+1],cc=HV[i+VX],d=HV[i+VX+1],sr=cellSurf(c),nm=SN[sr],col=CRGB[nm]||CRGB.grass;
   const gx=eAt((b+d-a-cc)/2),gy=eAt((cc+d-a-b)/2),nx=-gx/GS*1.1,ny=-gy/GS*1.1,nl=Math.hypot(nx,ny,1),dot=(nx*L[0]+ny*L[1]+L[2])/nl,sh=nm==='water'?1:Math.max(.5,Math.min(1.32,.74+.66*dot));
   CF[c]=`rgb(${Math.min(255,col[0]*sh)|0},${Math.min(255,col[1]*sh)|0},${Math.min(255,col[2]*sh)|0})`}}
+function recolor(){runSync(recolorg())}
 const shade=(col,f)=>{const c=hex(col);return `rgb(${Math.min(255,c[0]*f)|0},${Math.min(255,c[1]*f)|0},${Math.min(255,c[2]*f)|0})`};
 /* ---------- canvas / camera ---------- */
 const cv=document.createElement('canvas');cv.id='t3d';cv.style.cssText='position:fixed;left:0;top:0;width:100vw;height:100vh;display:none;touch-action:none';
@@ -132,7 +136,7 @@ function bridgeItems(K,b,items,zf){const D=b.deck,n=D.length;if(n<2)return;const
  for(let i=1;i<n-1;i+=Math.max(2,Math.round(n/5))){if(Z[i]-g[i]<3)continue;const pg=pj(K,D[i][0],D[i][1],g[i]);items.push({pier:1,d:P[i][2]*2+GS*2.2,x0:P[i][0],y0:P[i][1],x1:pg[0],y1:pg[1],w:Math.max(2.5,w*.4)})}
  for(let i=0;i<n-1;i++)items.push({r:1,br:1,p:b,wx0:D[i][0],wy0:D[i][1],wx1:D[i+1][0],wy1:D[i+1][1],d:P[i][2]+P[i+1][2]+GS*2.8,x0:P[i][0],y0:P[i][1],x1:P[i+1][0],y1:P[i+1][1],w,col:'#eceff3',cas:'#4b5563'})}
 /* ---------- drawing ---------- */
-function draw(){raf=0;if(!T.on)return;ensureT();lod=performance.now()<lodUntil;updCompass();if(cv.width!==Math.round(innerWidth*dpr)||cv.height!==Math.round(innerHeight*dpr))fitCanvas();
+function draw(){raf=0;if(!T.on)return;if(TBUSY)return;ensureT();lod=performance.now()<lodUntil;updCompass();if(cv.width!==Math.round(innerWidth*dpr)||cv.height!==Math.round(innerHeight*dpr))fitCanvas();
  let busy=false;const ea=(k,t)=>{const d=T[t]-T[k];if(Math.abs(d)>.05){T[k]+=d*.2;busy=true}else T[k]=T[t]};ea('ph','phT');ea('th','thT');
  const st=(lod||busy)?F:1,OV=overlay();hitRoads=[];
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle=T.col.water;ctx.fillRect(0,0,W,H);
@@ -202,7 +206,7 @@ const b3=g3.firstChild,tip=document.createElement('div');tip.id='b3tip';document
 b3.addEventListener('pointerdown',e=>{e.stopPropagation();b3.setPointerCapture(e.pointerId);bd={y:e.clientY,kz:T.kz,moved:false,id:e.pointerId}});
 b3.addEventListener('pointermove',e=>{if(!bd||e.pointerId!==bd.id)return;const dy=bd.y-e.clientY;if(Math.abs(dy)>6)bd.moved=true;
  if(bd.moved){T.kz=Math.max(.2,Math.min(8,bd.kz*Math.exp(dy/140)));tip.textContent='Height ×'+T.kz.toFixed(1);const r=b3.getBoundingClientRect();tip.style.cssText=`display:block;top:${r.top+r.height/2-14}px;right:${innerWidth-r.left+8}px`;need()}});
-b3.addEventListener('pointerup',e=>{if(!bd||e.pointerId!==bd.id)return;const m=bd.moved;bd=null;tip.style.display='none';if(m){saveView();return}set3D(!(T.phT>.5&&T.on))});
+b3.addEventListener('pointerup',e=>{if(!bd||e.pointerId!==bd.id)return;const m=bd.moved;bd=null;tip.style.display='none';if(m){saveView();return}req3D()});
 b3.addEventListener('pointercancel',()=>{bd=null;tip.style.display='none'});
 function set3D(on){if(!on){selId=null;selPt=null}if(on&&!T.on){T.on=true}if(on)ensureT();T.phT=on?55:0;if(!on)T.thT=0;applyMode();saveView();need();refreshTile()}
 /* ---------- compass: tap = Reset view · drag = rotate/tilt 3D ---------- */
@@ -220,10 +224,39 @@ bc.addEventListener('pointercancel',()=>{cmpD=null});
 updCompass();
 /* ---------- terrain on/off (Layers → Terrain tile) ---------- */
 function refreshTile(){const t=document.querySelector('[data-lya="tile:terrain"]');if(t){t.classList.toggle('on',T.on);const s=t.querySelector('small');if(s)s.textContent=T.on?'On':'Off'}}
-function setTerrain(on){T.on=on;if(!on){selId=null;selPt=null}if(on)ensureT();else{T.phT=0;T.thT=0;T.ph=0;T.th=0}applyMode();saveView();need();refreshTile()}
+function setTerrain(on){T.on=on;if(!on){selId=null;selPt=null}if(on&&!TI0&&!TBUSY){t3Prog(0);t3Show('load');loadT(t3Prog,()=>{t3Hide();need()},true)}else if(on)ensureT();else{T.phT=0;T.thT=0;T.ph=0;T.th=0}applyMode();saveView();need();refreshTile()}
 window.trDebug=()=>({n:hitRoads.length,selId,all:hitRoads.map(r=>[r.x0,r.y0,r.x1,r.y1])});window.trToggle=()=>setTerrain(!T.on);window.trIsOn=()=>T.on;window.trOpen=()=>setTerrain(!T.on);
-let TI0=0;function ensureT(){if(TI0)return;TI0=1;initH();buildGeo();recolor()}
+let TI0=0,TBUSY=null,TB=3,TPcb=null;
+function ensureT(){if(TI0||TBUSY)return;TI0=1;initH();buildGeo();recolor()}
+/* โหลดข้อมูล 3D แบบแบ่งชิ้นเล็กๆ (ไม่บล็อกหน้าจอ) พร้อมรายงานความคืบหน้า · ใช้ได้ทั้งเตรียมล่วงหน้าเบื้องหลังและตอนผู้ใช้กดเปิด */
+function loadT(onP,done,fg){if(TI0){onP&&onP(1);done&&done();return}
+ if(fg)TB=12;if(onP)TPcb=onP;
+ if(TBUSY){done&&TBUSY.push(done);return}
+ TBUSY=done?[done]:[];const gens=[[initHg(),0,.2],[buildGeog(),.2,.5],[recolorg(),.7,.3]];let gi=0;
+ const step=()=>{const t0=performance.now();
+  while(performance.now()-t0<TB){const g=gens[gi],r=g[0].next();
+   if(r.done){gi++;if(gi>=gens.length){TI0=1;const cbs=TBUSY;TBUSY=null;TPcb&&TPcb(1);TPcb=null;cbs.forEach(fn=>{try{fn()}catch(e){console.error(e)}});if(T.on)need();return}TPcb&&TPcb(gens[gi][1])}
+   else if(typeof r.value==='number'&&TPcb)TPcb(g[1]+g[2]*Math.min(1,r.value))}
+  if(TB>=12)requestAnimationFrame(step);else setTimeout(step,30)};
+ step()}
+/* ---------- เตือนก่อนเปิด 3D บนมือถือ + แถบโหลด ---------- */
+const isMobile=()=>innerWidth<900||(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
+const t3m=document.createElement('div');t3m.id='t3m';t3m.hidden=true;
+t3m.innerHTML='<div class="t3c"><div id="t3w"><b>เปิดโหมด 3D</b><p>โหมด 3D ใช้หน่วยความจำและแบตเตอรี่มากกว่าปกติ และอาจช้าในมือถือบางรุ่น ระหว่างโหลดอาจรอสักครู่</p><label class="t3k"><input type="checkbox" id="t3n"> ไม่ต้องเตือนอีก</label><div class="t3b"><button id="t3x" type="button">ยกเลิก</button><button id="t3ok" type="button" class="p">OK</button></div></div><div id="t3l" hidden><b>กำลังเตรียม 3D…</b><div class="t3bar"><i id="t3f"></i></div><small id="t3p">0%</small></div></div>';
+document.body.appendChild(t3m);
+const t3w=t3m.querySelector('#t3w'),t3l=t3m.querySelector('#t3l'),t3f=t3m.querySelector('#t3f'),t3p=t3m.querySelector('#t3p');
+function t3Prog(p){const v=Math.max(0,Math.min(100,Math.round(p*100)));t3f.style.width=v+'%';t3p.textContent=v+'%'}
+function t3Show(mode){t3m.hidden=false;t3w.hidden=mode!=='warn';t3l.hidden=mode!=='load'}
+function t3Hide(){t3m.hidden=true}
+function startLoad3D(after){if(TI0){t3Hide();after();return}t3Prog(0);t3Show('load');loadT(t3Prog,()=>{t3Prog(1);setTimeout(()=>{t3Hide();after()},160)},true)}
+function req3D(){const on=!(T.phT>.5&&T.on);if(!on){set3D(false);return}
+ const go=()=>startLoad3D(()=>set3D(true));
+ let skip=false;try{skip=localStorage.getItem('t3skip')==='1'}catch(_){}
+ if(isMobile()&&!skip){t3Show('warn');t3m.querySelector('#t3ok').onclick=()=>{try{if(t3m.querySelector('#t3n').checked)localStorage.setItem('t3skip','1')}catch(_){}go()};t3m.querySelector('#t3x').onclick=t3Hide}
+ else if(TI0)set3D(true);else go()}
+/* เตรียมข้อมูล 3D ไว้ล่วงหน้าเบื้องหลังตอนเครื่องว่าง (เหมือนโหลดไว้ก่อน) เปิดแล้วไม่ต้องรอนาน */
+(window.requestIdleCallback||(f=>setTimeout(f,2500)))(()=>{if(!TI0&&!TBUSY)loadT(null,null,false)},{timeout:6000});
 fitCanvas();addEventListener('resize',()=>{fitCanvas();need()});
 const _upd=upd;upd=function(){const r=_upd.apply(this,arguments);if(T.on)bump();need();return r};
-if(T.on)ensureT();applyMode();if(T.on)need();
+if(T.on&&!TI0){t3Prog(0);t3Show('load');loadT(t3Prog,()=>{t3Hide();need()},true)}applyMode();if(T.on)need();
 })();
