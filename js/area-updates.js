@@ -1,6 +1,7 @@
+
 /*
  * Postal-area update for the main postal-code map.
- * Load this immediately after js/core.js and before js/places.js.
+ * Load immediately after js/core.js and before js/places.js.
  */
 (() => {
   const province = DATA.find(p => p.areaCode === '203');
@@ -8,35 +9,76 @@
 
   province.provName = 'ราษฎรบุรี';
 
-  // Split the former Mueang entry into the three requested subdistricts.
-  const oldEntries = province.entries;
-  const oldMueang = oldEntries.findIndex(entry => entry.zip === '20327');
+  // Update postal entries
+  const oldMueang = province.entries.findIndex(
+    entry => entry.zip === '20327'
+  );
+
   if (oldMueang < 0) return;
-  province.entries.splice(oldMueang, 1,
+
+  province.entries.splice(
+    oldMueang,
+    1,
     { zip: '20327', name: 'เมืองราษฎรบุรี' },
     { zip: '20332', name: 'สลัมคลองเจ๋ง' },
     { zip: '20333', name: 'วรวงศ์' }
   );
 
-  // Keep the new subdistricts inside the former Mueang cell. The shared
-  // boundaries follow the north-south road and the west-to-southeast road
-  // shown in the supplied reference map.
+  // Three new subdistrict boundaries
+  // Right: สลัมคลองเจ๋ง
+  const right = [
+    [1088, 309.7],
+    [1088, 410],
+    [1050.3, 410],
+    [1050.2, 316.9]
+  ];
+
+  // North: เมืองราษฎรบุรี
+  const north = [
+    [1050.2, 316.9],
+    [1050.2, 379.9],
+    [1010, 379.9],
+    [995, 364.9],
+    [985.1, 350],
+    [985.1, 329.5]
+  ];
+
+  // South: วรวงศ์
+  const south = [
+    [985, 329.6],
+    [985.1, 350],
+    [994.9, 364.9],
+    [1010.1, 380],
+    [1050.3, 379.9],
+    [1050.8, 409.9],
+    [967.9, 409.8],
+    [968.1, 332.8],
+    [984.9, 329.5]
+  ];
+
+  // Convert coordinates to SVG polygon strings
+  const toPolygon = points =>
+    points.map(([x, y]) => `${x},${y}`).join(' ');
+
   const oldCells = DS[2];
+
+  // Keep all other areas unchanged
   DS[2] = [
     oldCells[0],
-    '968,303 1050,303 1050,370 1025,370 1000,350 985,330 968,330',
-    '1050,303 1088,303 1088,410 1050,410',
-    '968,330 985,330 1000,350 1025,370 1050,370 1050,410 968,410',
+    toPolygon(north),
+    toPolygon(right),
+    toPolygon(south),
     ...oldCells.slice(2)
   ];
 
-  // Rebuild SVG polygons, labels, and hit-test geometry using the updated data.
+  // Rebuild map geometry, labels and hit areas
   rebuildBase();
 
-  // The old fixed notice describes an obsolete province/area rename.
+  // Mark the new province announcement as seen
   try {
     const key = 'rn_seen';
     const seen = JSON.parse(localStorage.getItem(key) || '[]');
+
     if (!seen.includes('rn-20327-v1')) {
       seen.push('rn-20327-v1');
       localStorage.setItem(key, JSON.stringify(seen));
