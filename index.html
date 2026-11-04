@@ -493,6 +493,22 @@ body.t3d #m{visibility:hidden}
 .brh{display:flex;gap:10px;align-items:center}.brh b{display:block;font-size:15px}.brh small{color:var(--mut);font-size:12px}
 .brs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}.brs div{padding:8px;border-radius:10px;background:var(--card);text-align:center}.brs small{display:block;color:var(--mut);font-size:10.5px}.brs b{font-size:14px}
 .brf{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut);margin-bottom:6px}.brf input{height:38px;padding:0 10px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font:inherit;font-size:14px}
+
+/* ===== v5: มือถือ — ไม่ให้ปุ่ม/แผงทับกัน แสดงสิ่งสำคัญก่อน ===== */
+#bcmp,#b3d{touch-action:none;user-select:none;-webkit-user-select:none}
+#bcmp.dim{opacity:.5}
+#rc #bcmp{width:46px;height:46px;border-radius:22px}
+@media(max-width:899px){
+#rc #bcmp{width:40px;height:40px;border-radius:20px}
+#mc,#tp,#xpk{left:calc(50% - 26px);max-width:calc(100vw - 84px)}
+#xpk{top:calc(76px + env(safe-area-inset-top,0px))}
+#mc,#tp{top:calc(76px + env(safe-area-inset-top,0px))}
+body.shfull #rc,body.shfull #sbar,body.shfull #tp,body.shfull #mc,body.shfull #xpk{opacity:0;pointer-events:none}
+body.gop #sbar,body:has(#mo:not([hidden])) #sbar,body:has(#hc:not([hidden])) #sbar,body:has(#lg:not([hidden])) #sbar,body:has(#sm:not([hidden])) #sbar{opacity:0}
+body:has(#mo:not([hidden])) #rc,body:has(#hc:not([hidden])) #rc{opacity:0;pointer-events:none}
+body:has(#lg:not([hidden])) #rc,body:has(#sm:not([hidden])) #rc,body:has(#ec:not([hidden])) #rc,body:has(#lye:not([hidden])) #rc{visibility:hidden}
+}
+@media(max-width:899px) and (max-height:560px){#rc .grp:has(#bcmp){display:none}}
 </style></head><body>
 <svg id="m"></svg><div id="pg"><div class="zh"><div class="zw"><div class="zt"><h1>Postal Codes</h1><button id="zmap" class="zbtn"><svg class="i" viewBox="0 0 24 24"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg>Map</button></div><label id="zsb"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input id="zq" placeholder="Search province, district or zip code" autocomplete="off"></label></div></div><div class="zw" id="zl"></div></div><div id="sm" hidden><div class="fl"><div class="smh"><h2>Share this map</h2><button id="smx" aria-label="Close"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><small id="sml" class="hint"></small>
 <div class="shr"><span><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><div class="t"><b>Link</b><small>Current area, pin &amp; zoom</small></div><button class="sb2" data-sa="link">Copy</button><button class="sb2 o" id="shnat" data-sa="native">Share</button></div>
@@ -614,11 +630,17 @@ function labels(){OCC=[];const s=sc(),o=[],E=(t,x,y,fs)=>{OCC.push([x-t.length*.
  FV.forEach(c=>{const z=Z[c];if(!z)return;const[i,j]=z,l=j==null?(LP[i]||[PB[i].x+PB[i].w/2,PB[i].y+PB[i].h/2]):[C[i][j].cx,C[i][j].cy];o.push(`<text class="st" x="${l[0]}" y="${l[1]-15/s}" font-size="${16/s}" stroke-width="${3/s}">★</text>`)});
  lb.innerHTML=o.join('')}
 /* ===== ระบบ render ลื่น: viewBox อัปเดตทันที (ถูกมาก) ส่วนงานหนักรวมเป็นเฟรมละครั้ง และข้ามได้ถ้ายังอยู่ในพื้นที่ที่วาดไว้แล้ว ===== */
-let rqF=0,idleT=0,forceR=0,CV=null,lastUpd=0;
+let rqF=0,idleT=0,forceR=0,CV=null,lastUpd=0,QK=0,fullT=0;
 const moving=()=>performance.now()-lastUpd<160;
 const setCov=()=>CV={x0:vb.x-vb.w*.3,y0:vb.y-vb.h*.3,x1:vb.x+vb.w*1.3,y1:vb.y+vb.h*1.3,vw:vb.w};
 const inCov=()=>CV&&vb.x>=CV.x0&&vb.y>=CV.y0&&vb.x+vb.w<=CV.x1&&vb.y+vb.h<=CV.y1&&Math.abs(Math.log(vb.w/CV.vw))<.22;
-function heavy(){forceR=0;setCov();labels();if(mp.length)drawMs();if(PL.length||pin||ED.pts.length||(ADDONS.fataekts&&fataekRoutes.length))drawPl()}
+function heavy(){forceR=0;setCov();labels();if(mp.length)drawMs();
+ if(PL.length||pin||ED.pts.length||(ADDONS.fataekts&&fataekRoutes.length)){
+  clearTimeout(fullT);
+  /* ข้อมูลเยอะ: วาดเฉพาะสิ่งสำคัญ (ถนนสายหลัก/จุดระดับใหญ่) ที่อยู่ในจอก่อน แล้วค่อยเติมรายละเอียดในเฟรมถัดไป ไม่ให้เบราว์เซอร์ค้าง */
+  if(PL.length>90&&!(ED.on&&ED.auth)){QK=1;try{drawPl()}finally{QK=0}fullT=setTimeout(function fullDraw(){fullT=0;if(performance.now()-lastUpd<90){fullT=setTimeout(fullDraw,60);return}try{drawPl()}catch(_){}try{window.trNeed&&window.trNeed()}catch(_){}},50)}
+  else drawPl()}
+ try{window.trNeed&&window.trNeed()}catch(_){}}
 function frame(){rqF=0;try{scaleBar()}catch(_){}if(forceR||!inCov()||gridOn())heavy()}
 function reqR(f){if(f)forceR=1;if(!rqF)rqF=requestAnimationFrame(frame)}
 function upd(){const r=R0();if(window.goScale)goScale();if(window.xScale)xScale();vb.h=vb.w*r.height/r.width;svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
@@ -959,9 +981,9 @@ function inCv(p,B,pad){if(p.id==='tmp'||(FORM&&FORM.p&&p.id===FORM.p.id))return 
 const FBX=new WeakMap();
 function fbox(i){let b=FBX.get(i);if(b)return b;let a=Infinity,c=Infinity,d=-Infinity,e=-Infinity;const f=(x,y)=>{if(x<a)a=x;if(x>d)d=x;if(y<c)c=y;if(y>e)e=y};
  (i.pts||[]).forEach(p=>f(p[0],p[1]));(i.stops||[]).forEach(p=>f(p.x,p.y));b=[a,c,d,e];FBX.set(i,b);return b}
-function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth),MAXM=130,MAXR=240,mo=[],rlo=[],isFm=p=>!!(FORM&&FORM.p&&FORM.p.id===p.id),seen=p=>inCv(p,CVB,PAD),occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]),zf=Math.min(2.6,Math.max(1,Math.pow(1380/W,.35))),RD={c:[],f:[],t:[]},WT={c:[],f:[],t:[]};let nm=0,nr=0,hl='',dn={},gr='',bay='',defs='',mk='',pv='',hs='',fataekHtml='';
+function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth),MOB=innerWidth<900,MAXM=MOB?64:130,MAXR=MOB?130:240,pillOcc=[],mo=[],rlo=[],isFm=p=>!!(FORM&&FORM.p&&FORM.p.id===p.id),seen=p=>inCv(p,CVB,PAD),occ=OCC.slice(),hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]),zf=Math.min(2.6,Math.max(1,Math.pow(1380/W,.35))),RD={c:[],f:[],t:[]},WT={c:[],f:[],t:[]};let nm=0,nr=0,hl='',dn={},gr='',bay='',defs='',mk='',pv='',hs='',fataekHtml='';
  const lab=(x,y,n,f0,r,style)=>{for(const k of[1,.78]){const f=f0*k,hw=n.length*.3*f,yy=y+r+f*.75,b=[x-hw,yy-f*.6,x+hw,yy+f*.6];if(!hit(b)){occ.push(b);return`<text x="${x}" y="${yy}" font-size="${f}" stroke-width="${3/sc()}" style="${style||''}">${n}</text>`}}return''};
- const pill=(x,y,t,f,bg,bd,col)=>{const w=(String(t).length*f*.58+16)/s,hh=(f+9)/s;return `<g pointer-events="none"><rect x="${x-w/2}" y="${y-hh/2}" width="${w}" height="${hh}" rx="${hh/2}" fill="${bg}" fill-opacity=".96" stroke="${bd}" stroke-width="${1.2/s}"/><text x="${x}" y="${y}" font-size="${f/s}" text-anchor="middle" dominant-baseline="central" font-weight="700" fill="${col}">${esc(t)}</text></g>`};
+ const pill=(x,y,t,f,bg,bd,col)=>{const w=(String(t).length*f*.58+16)/s,hh=(f+9)/s;{const pb=[x-w/2,y-hh/2,x+w/2,y+hh/2];if(MOB||FLT){if(pillOcc.some(o=>pb[0]<o[2]&&pb[2]>o[0]&&pb[1]<o[3]&&pb[3]>o[1]))return '';pillOcc.push(pb)}}return `<g pointer-events="none"><rect x="${x-w/2}" y="${y-hh/2}" width="${w}" height="${hh}" rx="${hh/2}" fill="${bg}" fill-opacity=".96" stroke="${bd}" stroke-width="${1.2/s}"/><text x="${x}" y="${y}" font-size="${f/s}" text-anchor="middle" dominant-baseline="central" font-weight="700" fill="${col}">${esc(t)}</text></g>`};
 
  if(gridOn()){const st=gstep(),x0=Math.floor(vb.x/st),y0=Math.floor(vb.y/st);for(let i=x0;i*st<=vb.x+vb.w;i++)gr+=`<line class="gl${i%5===0?' m':''}" x1="${i*st}" y1="${vb.y}" x2="${i*st}" y2="${vb.y+vb.h}"/>`;for(let i=y0;i*st<=vb.y+vb.h;i++)gr+=`<line class="gl${i%5===0?' m':''}" x1="${vb.x}" y1="${i*st}" x2="${vb.x+vb.w}" y2="${i*st}"/>`}
 
@@ -986,8 +1008,8 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
 
      if(i.pts && i.pts.length > 1) {
        const pl = i.pts.map(p => p.join(',')).join(' '), dash = i.type === 'boat' ? ` stroke-dasharray="${11/s} ${7/s}"` : '';
-       fataekHtml += `<g><polyline points="${pl}" fill="none" stroke="#fff" stroke-width="${8/s}" stroke-linecap="round" stroke-linejoin="round"/>`+
-         `<polyline points="${pl}" fill="none" stroke="${c}" stroke-width="${5/s}" stroke-linecap="round" stroke-linejoin="round"${dash}/></g>`;
+       fataekHtml += `<g><polyline points="${pl}" fill="none" stroke="#fff" stroke-opacity=".92" stroke-width="${4.2/s}" stroke-linecap="round" stroke-linejoin="round"/>`+
+         `<polyline points="${pl}" fill="none" stroke="${c}" stroke-width="${2/s}" stroke-linecap="round" stroke-linejoin="round"${dash}/></g>`;
        if(W < 1000 && i.name) {
          const m = i.pts[i.pts.length >> 1];
          fataekHtml += pill(m[0], m[1] - (16/s), i.name, 11, c, '#fff', '#fff');
@@ -995,11 +1017,11 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
      }
 
      if(i.stops) {
-       i.stops.forEach((st, n) => {
-         const end = n === 0 || n === i.stops.length - 1, r = (end ? 12.5 : 6) / s;
+       i.stops.map((s_,n_)=>[s_,n_]).sort((a_,b_)=>((b_[1]===0||b_[1]===i.stops.length-1)?1:0)-((a_[1]===0||a_[1]===i.stops.length-1)?1:0)).forEach(([st, n]) => {
+         const end = n === 0 || n === i.stops.length - 1, r = (end ? 9.5 : 4.2) / s;
          fataekHtml += `<g style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.38))"><circle cx="${st.x}" cy="${st.y}" r="${r+3/s}" fill="#fff"/>`+
-           `<circle cx="${st.x}" cy="${st.y}" r="${r}" fill="${end?c:'#fff'}" stroke="${c}" stroke-width="${(end?0:3)/s}"/>`+
-           (end ? `${window.emjG(T.e,st.x,st.y,14/s,c)||`<text x="${st.x}" y="${st.y}" font-size="${14/s}" text-anchor="middle" dominant-baseline="central" pointer-events="none">${T.e}</text>`}` : `<circle cx="${st.x}" cy="${st.y}" r="${r*.34}" fill="${c}"/>`) + `</g>`;
+           `<circle cx="${st.x}" cy="${st.y}" r="${r}" fill="${end?c:'#fff'}" stroke="${c}" stroke-width="${(end?0:2)/s}"/>`+
+           (end ? `${window.emjG(T.e,st.x,st.y,12/s,c)||`<text x="${st.x}" y="${st.y}" font-size="${12/s}" text-anchor="middle" dominant-baseline="central" pointer-events="none">${T.e}</text>`}` : `<circle cx="${st.x}" cy="${st.y}" r="${r*.34}" fill="${c}"/>`) + `</g>`;
          if(W < (end ? 900 : 650) && st.n) fataekHtml += pill(st.x, st.y + (end ? 25 : 19)/s, st.n, 10.5, '#fff', c, '#2a3a2a');
        });
      }
@@ -1011,7 +1033,7 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
  list.filter(p=>p.kind==='nature'&&p.nt==='bay'&&p.pts&&p.pts.length>=3&&seen(p)).forEach(p=>{const D=pathC(p.pts,p.curve),n=esc(p.name||''),col=p.color||'var(--wt)',st=p.color?`color-mix(in srgb,${p.color} 60%,#000)`:'var(--wtc)',cx=p.pts.reduce((a,q)=>a+q[0],0)/p.pts.length,cy=p.pts.reduce((a,q)=>a+q[1],0)/p.pts.length;
   bay+=`<g class="pm" data-id="${p.id}"><path d="${D}" style="fill:${col};fill-opacity:.78;stroke:${st};pointer-events:none" stroke-width="${2/s}" stroke-linejoin="round"/><path d="${D}" fill="none" stroke="transparent" stroke-width="${12/s}" style="pointer-events:stroke"/></g>`;
   if(n)mk+=lab(cx,cy,n,12*(p.size||1)/s,-6/s,'font-style:italic')});
- list.filter(p=>isLine(p)&&p.pts&&p.pts.length>1&&seen(p)).sort((a,b)=>tOf(b).k-tOf(a).k||(b.size||1)-(a.size||1)).forEach(p=>{const t=tOf(p)||RT.local,A=p.kind==='road'?RD:WT;if(W>t.vw&&!(FORM&&FORM.p.id===p.id))return;
+ list.filter(p=>isLine(p)&&p.pts&&p.pts.length>1&&seen(p)).sort((a,b)=>tOf(b).k-tOf(a).k||(b.size||1)-(a.size||1)).forEach(p=>{const t=tOf(p)||RT.local,A=p.kind==='road'?RD:WT;if(W>t.vw&&!(FORM&&FORM.p.id===p.id))return;if(QK&&t.k<3&&p.kind==='road'&&!isFm(p))return;
   const wpx=t.w*zf*(p.size||1),w=wpx/s,D=pathD(p.pts,p.curve),n=esc(p.name||''),pts=p.pts[p.pts.length-1][0]<p.pts[0][0]?p.pts.slice().reverse():p.pts,id='rp'+p.id;let L=0;for(let i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
   if(FLT&&!isFm(p)&&(L*s<4||++nr>MAXR))return;
   const cs=p.color?`color-mix(in srgb,${p.color} 55%,#000)`:t.cs,cf=p.color||t.c;
@@ -1019,9 +1041,9 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
   A.c.push(`<path d="${D}" fill="none" style="stroke:${cs}" stroke-width="${w+2.4/s}" stroke-linecap="round" stroke-linejoin="round"/>`);
   A.f.push(`<g class="pm" data-id="${p.id}"><path d="${D}" fill="none" stroke="transparent" stroke-width="${Math.max(wpx,16)/s}" stroke-linecap="round"/><path d="${D}" fill="none" style="stroke:${cf}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/></g>`);
   const fp=wpx*.62;if(n&&fp>=6&&L*s>=n.length*fp*.55+12&&!(p.grp&&dn[p.grp])&&(()=>{if(!FLT)return true;const m=pts[pts.length>>1],h=Math.max(n.length*fp*.3,fp)/s,b=[m[0]-h,m[1]-h,m[0]+h,m[1]+h];if(rlo.some(o=>b[0]<o[2]&&b[2]>o[0]&&b[1]<o[3]&&b[3]>o[1]))return false;rlo.push(b);return true})()){if(p.grp)dn[p.grp]=1;defs+=`<path id="${id}" d="${pathD(pts,p.curve)}" fill="none"/>`;A.t.push(`<text style="font-size:${fp/s}px;fill:${t.tc||'#3a3a3a'};stroke:none;font-weight:600"><textPath href="#${id}" startOffset="50%">${n}</textPath></text>`)}});
- PL.filter(p=>(p.kind==='place'||(p.kind==='nature'&&p.nt==='mountain'))&&W<=(LV[p.lvl]||LV.local).w&&seen(p)).sort((a,b)=>(LV[b.lvl]||LV.local).k-(LV[a.lvl]||LV.local).k||(b.size||1)-(a.size||1)).forEach(p=>{
+ PL.filter(p=>(p.kind==='place'||(p.kind==='nature'&&p.nt==='mountain'))&&W<=(LV[p.lvl]||LV.local).w&&(!QK||(LV[p.lvl]||LV.local).k>=3||isFm(p))&&seen(p)).sort((a,b)=>(LV[b.lvl]||LV.local).k-(LV[a.lvl]||LV.local).k||(b.size||1)-(a.size||1)).forEach(p=>{
   const L=LV[p.lvl]||LV.local,c=catOf(p.cat),sz=p.size||1,r=L.r*sz/s,n=esc(p.name||''),mt=p.kind==='nature';
-  if(FLT&&!isFm(p)){const bx=[p.x-r*.85,p.y-r*.85,p.x+r*.85,p.y+r*.85];if(++nm>MAXM||mo.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))return;mo.push(bx)}
+  if(FLT&&!isFm(p)){const kk_=MOB?1.3:.85,bx=[p.x-r*kk_,p.y-r*kk_,p.x+r*kk_,p.y+r*kk_];if(++nm>MAXM||mo.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))return;mo.push(bx)}
   occ.push([p.x-r,p.y-r,p.x+r,p.y+r]);
   if(mt){const q=r*1.25,col=p.color||'#8d6e63';mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${q+6/s}" fill="transparent"/><path d="M${p.x-q} ${p.y+q*.7}L${p.x} ${p.y-q}L${p.x+q} ${p.y+q*.7}Z" fill="${col}" stroke="#fff" stroke-width="${1.6/s}" stroke-linejoin="round"/><path d="M${p.x-q*.32} ${p.y-q*.35}L${p.x} ${p.y-q}L${p.x+q*.32} ${p.y-q*.35}L${p.x+q*.1} ${p.y-q*.2}L${p.x-q*.12} ${p.y-q*.3}Z" fill="#fff"/></g>`}
   else mk+=`<g class="pm" data-id="${p.id}"><circle cx="${p.x}" cy="${p.y}" r="${r+6/s}" fill="transparent"/><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${p.color||c[3]}" stroke="#fff" stroke-width="${2/s}"/>${r*s>=8?`${window.emjPin(p,r)||`<text x="${p.x}" y="${p.y}" font-size="${r*((icOf(p)&&icSeg(icOf(p)).length>1)?.8:1.15)}" style="stroke:none">${esc(pinIc(p))}</text>`}`:''}</g>`;
@@ -1030,7 +1052,7 @@ function drawPl(){const s=sc(),W=vb.w,CVB=setCov(),PAD=40/s,FLT=!(ED.on&&ED.auth
  if(pin)pv+=`<g transform="translate(${pin.x} ${pin.y}) scale(${1/s})"><path d="M0 0C-8-10-12-16-12-22a12 12 0 1 1 24 0c0 6-4 12-12 22z" fill="#1c7ed6" stroke="#fff" stroke-width="2"/><circle cy="-22" r="4.5" fill="#fff"/></g>`;
  if(roadEditing()&&FORM.p.pts&&FORM.p.pts.length>1){const P=FORM.p.pts,cl=FORM.p.kind==='nature'&&FORM.p.nt==='bay';P.forEach((a,i)=>{if(i<P.length-1||cl){const b=P[(i+1)%P.length];hs+=`<circle class="md" data-i="${i}" cx="${(a[0]+b[0])/2}" cy="${(a[1]+b[1])/2}" r="${5/s}" fill="#fff" stroke="#1c7ed6" stroke-width="${1.5/s}"/>`}});
   P.forEach((a,i)=>hs+=`<circle class="hd" data-i="${i}" cx="${a[0]}" cy="${a[1]}" r="${8/s}" fill="${i===0||i===P.length-1?'#1c7ed6':'#fff'}" stroke="#1c7ed6" stroke-width="${2.5/s}"/>`)}
- $('#pl').innerHTML=`<defs>${defs}</defs>`+fataekHtml+bay+gr+WT.c.reverse().join('')+WT.f.reverse().join('')+WT.t.join('')+hl+RD.c.reverse().join('')+RD.f.reverse().join('')+RD.t.join('')+mk+pv+hs}
+ $('#pl').innerHTML=`<defs>${defs}</defs>`+bay+gr+WT.c.reverse().join('')+WT.f.reverse().join('')+WT.t.join('')+hl+RD.c.reverse().join('')+RD.f.reverse().join('')+RD.t.join('')+mk+(fataekHtml?`<g id="ftl" pointer-events="none">${fataekHtml}</g>`:'')+pv+hs}
 function showPc(){const c=$('#pc');if(!pin){c.hidden=true;return}const w=whereAt(pin.x,pin.y),t=!w?'นอกพื้นที่':w[1]==null?DATA[w[0]].provName:DATA[w[0]].entries[w[1]].name+' · '+DATA[w[0]].provName;
  c.hidden=false;c.innerHTML=`<span style="padding-left:10px;line-height:1.25"><b>${pin.x}, ${pin.y}</b><br><small style="color:var(--mut)">${esc(t)}</small></span><button data-a="cp" aria-label="คัดลอกพิกัด">${I.cp}</button><button data-a="sh" aria-label="แชร์พิกัด">${I.link}</button>${ED.on&&ED.auth?'<button data-a="add" aria-label="เพิ่มสถานที่"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>':''}<button data-a="rm" aria-label="เอาหมุดออก"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`}
 function addPin(w){pin={x:w[0],y:w[1]};try{navigator.vibrate&&navigator.vibrate(15)}catch(_){}drawPl();showPc()}
@@ -1414,17 +1436,19 @@ function evalLeg(res,P,conn0,conn1){
  addConn(conn0,true);
  let lastHW=false,boardAt=null;
  res.path.forEach(st=>{
-  if(st.k==='board'){flush();const sv=G.svcs[st.layer-1];t+=sv.wait;boardAt=st.from;fareSvc[sv.id]=(fareSvc[sv.id]||0)+sv.base;cur={layer:st.layer,type:'ride',svc:sv,name:sv.name,km:0,t:sv.wait,geom:[],edges:[],from:st.from,to:st.from,wait:sv.wait};return}
+  if(st.k==='board'){flush();const sv=G.svcs[st.layer-1];t+=sv.wait;boardAt=st.from;fareSvc[sv.id]=fareSvc[sv.id]||0;cur={layer:st.layer,type:'ride',svc:sv,name:sv.name,km:0,t:sv.wait,geom:[],edges:[],from:st.from,to:st.from,wait:sv.wait};return}
   if(st.k==='alight'){if(cur){cur.to=st.from;flush()}return}
   const ed=G.E[st.e],m=stepMetrics(ed,st.layer,P),g=geomOf(ed,st.from);
   t+=m.t;km+=ed.km;
   let key=st.layer===0?(P.mode==='car'?'car':'walk')+'|'+(ed.name||ed.type):'ride';
-  if(st.layer>0){fareSvc[G.svcs[st.layer-1].id]=(fareSvc[G.svcs[st.layer-1].id]||0)+ed.km*G.svcs[st.layer-1].perKm;if(!cur||cur.layer!==st.layer){flush();cur={layer:st.layer,type:'ride',svc:G.svcs[st.layer-1],name:G.svcs[st.layer-1].name,km:0,t:0,geom:[],edges:[],from:st.from,to:st.to}}}
+  if(st.layer>0){fareSvc[G.svcs[st.layer-1].id]=fareSvc[G.svcs[st.layer-1].id]||0;if(!cur||cur.layer!==st.layer){flush();cur={layer:st.layer,type:'ride',svc:G.svcs[st.layer-1],name:G.svcs[st.layer-1].name,km:0,t:0,geom:[],edges:[],from:st.from,to:st.to}}cur.hops=(cur.hops||0)+1}
   else{if(!cur||cur.key!==key){flush();cur={layer:0,type:P.mode==='car'?'car':'walk',key,name:ed.name||(ed.type==='link'?'ทางเดินไปจุดขึ้นรถ/สถานี':'ถนนไม่มีชื่อ'),km:0,t:0,geom:[],edges:[],rt:ed.rt}}
    if(P.mode==='car'&&ed.gates)ed.gates.forEach(gt=>gateSet.set(gt.id,gt))}
   cur.km+=ed.km;cur.t+=m.t;cur.geom.push(...(cur.geom.length?g.slice(1):g));cur.edges.push(ed.orig);cur.to=st.to;cur.hw=cur.hw||ed.rt==='highway';
   if(ed.rt==='highway')cur.hw=1;cur.roads=cur.roads||new Set();if(ed.name)cur.roads.add(ed.name)});
  flush();addConn(conn1,false);
+ /* ค่าโดยสาร = ราคาสาย(API) ÷ จำนวนสถานีที่เดินทาง · เศษปัดเป็น .0 หรือ .5 เท่านั้น (เช่น 5 ÷ 2 = 2.5) */
+ segs.forEach(sg=>{if(sg.type==='ride'&&sg.svc){const h=Math.max(1,sg.hops||0),f=Math.round(((+sg.svc.base||0)/h)*2)/2;sg.stn=h;sg.fare=f;fareSvc[sg.svc.id]=(fareSvc[sg.svc.id]||0)+f}});
  const gl=[...gateSet.values()],tollTotal=gl.reduce((a,g)=>a+g.price,0);
  return{segs,t,km,fare:{toll:tollTotal,gates:gl,svc:fareSvc},edges:new Set(segs.flatMap(s=>s.edges))};
 }
@@ -1470,8 +1494,8 @@ function stepsOf(r){
   leg.segs.forEach(sg=>{const box=sg.geom.length?[Math.min(...sg.geom.map(a=>a[0])),Math.min(...sg.geom.map(a=>a[1])),Math.max(...sg.geom.map(a=>a[0])),Math.max(...sg.geom.map(a=>a[1]))]:null;
    const dv=sg.geom.length>1?dirv(sg.geom[0],sg.geom[Math.min(2,sg.geom.length-1)]):null;
    if(sg.type==='conn'){steps.push({i:'🚶',t:'เดินเข้า/ออกจากถนน',s:fmtD(sg.km)+' · '+fmtT(sg.t),box});return}
-   if(sg.layer>0){const sv=sg.svc;const a=stopName(sg.from),b=stopName(sg.to);const roads=sg.roads&&sg.roads.size?[...sg.roads].slice(0,3).join(' › '):'';const fare=sv.base+sg.km*sv.perKm;
-    steps.push({i:sv.emoji,t:`ขึ้น${sv.name}ที่ ${a} → ลงที่ ${b}`,s:`${fmtD(sg.km)} · ${fmtT(sg.t)} (รวมรอ ${sv.wait} นาที)${roads?' · ผ่าน '+roads:''} · ค่าโดยสาร ${fmtF(fare)}`,box});prevDir=null;return}
+   if(sg.layer>0){const sv=sg.svc;const a=stopName(sg.from),b=stopName(sg.to);const roads=sg.roads&&sg.roads.size?[...sg.roads].slice(0,3).join(' › '):'';const fare=sg.fare!=null?sg.fare:sv.base;
+    steps.push({i:sv.emoji,t:`ขึ้น${sv.name}ที่ ${a} → ลงที่ ${b}`,s:`${fmtD(sg.km)} · ${fmtT(sg.t)} (รวมรอ ${sv.wait} นาที)${roads?' · ผ่าน '+roads:''} · เดินทาง ${sg.stn||1} สถานี · ค่าโดยสาร ${fmtF(fare)}${(+sv.base>0&&(sg.stn||1)>0)?` (${sv.base} ÷ ${sg.stn||1})`:''}`,box});prevDir=null;return}
    const tw=prevDir&&dv?turnWord(prevDir,dv):'';const verb=sg.type==='car'?'ขับ':'เดิน';const hw=sg.hw?` · 🛣️ ทางด่วน/ทางหลวง`:'';
    steps.push({i:sg.type==='car'?(tw&&tw!=='ตรงไป'?(tw.indexOf('ซ้าย')>=0?'↰':tw.indexOf('ขวา')>=0?'↱':'↩'):'⬆️'):'🚶',t:`${tw&&tw!=='ตรงไป'?tw+' แล้ว':''}${verb}ตาม ${sg.name}`,s:`${fmtD(sg.km)} · ${fmtT(sg.t)}${hw}`,box});
    if(dv){const e=sg.geom.length;prevDir=dirv(sg.geom[Math.max(0,e-2)],sg.geom[e-1])}});
@@ -1593,9 +1617,9 @@ function renderPanel(){
  const head=t=>`<div class="go-ph"><b>${t}</b><button data-go="pclose" aria-label="ปิด">✕</button></div>`;
  if(S.panel==='fare'){
   const rows=[];r.fare.gates.forEach(gt=>rows.push(`<div><span>🛣️ ${esc(/^ด่าน/.test(gt.name)?gt.name:'ด่าน'+gt.name)}</span><b>${fmtF(gt.price)}</b></div>`));
-  Object.keys(r.fare.svc).forEach(k=>{const s=G.svcs.find(q=>q.id===k);if(s)rows.push(`<div><span>${s.emoji} ${esc(s.name)}</span><b>${fmtF(r.fare.svc[k])}</b></div>`)});
+  Object.keys(r.fare.svc).forEach(k=>{const s=G.svcs.find(q=>q.id===k);if(s){const dt=r.legs.flatMap(l=>l.segs).filter(sg=>sg.svc&&sg.svc.id===k).map(sg=>(sg.stn||1)+' สถานี').join(' + ');rows.push(`<div><span>${s.emoji} ${esc(s.name)}${dt?` <small style="color:var(--mut)">(${dt})</small>`:''}</span><b>${fmtF(r.fare.svc[k])}</b></div>`)}});
   const cmp=S.routes.map((x,i)=>`<button class="go-cmp ${i===S.sel?'on':''}" data-go="palt" data-v="${i}"><span>${x.mode==='car'?'🚗':x.mode==='walk'?'🚶':'🚌'} ${esc(x.label)}</span><small>${fmtT(x.t)} · ${fmtD(x.km)}</small><b>${x.total>0?fmtF(x.total):'ฟรี'}</b></button>`).join('');
-  p.innerHTML=head('💰 ค่าเดินทาง')+`<div class="go-pb"><div class="go-big"><small>${esc(r.label)}</small><b>${r.total>0?fmtF(r.total):'ฟรี'}</b></div><div class="go-fare"><h3>รายละเอียด</h3>${rows.length?rows.join('')+`<div class="go-tot"><span>รวม</span><span>${fmtF(r.total)}</span></div>`:`<div><span>ไม่ผ่านด่านเก็บเงิน และไม่ต้องจ่ายค่าโดยสาร</span><b>0 ${esc(CF.unit)}</b></div>`}</div><div class="go-note">ค่าทางด่วนเก็บเฉพาะด่านที่เส้นทางผ่าน · ค่าโดยสารรถไฟ/รถประจำทาง/เรือ ตามราคาของแต่ละสายใน fataekts</div><div class="go-l">เปรียบเทียบทุกเส้นทาง</div>${cmp}</div>`}
+  p.innerHTML=head('💰 ค่าเดินทาง')+`<div class="go-pb"><div class="go-big"><small>${esc(r.label)}</small><b>${r.total>0?fmtF(r.total):'ฟรี'}</b></div><div class="go-fare"><h3>รายละเอียด</h3>${rows.length?rows.join('')+`<div class="go-tot"><span>รวม</span><span>${fmtF(r.total)}</span></div>`:`<div><span>ไม่ผ่านด่านเก็บเงิน และไม่ต้องจ่ายค่าโดยสาร</span><b>0 ${esc(CF.unit)}</b></div>`}</div><div class="go-note">ค่าทางด่วนเก็บเฉพาะด่านที่เส้นทางผ่าน · ค่าโดยสารรถไฟ/รถประจำทาง/เรือ = ราคาของสายใน fataekts ÷ จำนวนสถานีที่เดินทาง (เศษปัดเป็น .0 หรือ .5)</div><div class="go-l">เปรียบเทียบทุกเส้นทาง</div>${cmp}</div>`}
  else{
   p.innerHTML=head('🧭 วิธีเดินทาง')+`<div class="go-pb">${summaryHtml(r)}<div class="go-s" style="margin:4px 2px">${esc(r.label)}</div><ol class="go-steps">${S._steps.map((s,i)=>`<li data-go="step" data-v="${i}"><i>${s.i}</i><div>${esc(s.t)}<small>${esc(s.s)}</small></div></li>`).join('')}</ol></div>`}}
 function selectRoute(i){if(i<0||i>=S.routes.length)return;S.sel=i;renderRes();goDraw(false);saveUrl()}
@@ -2358,13 +2382,14 @@ const pip=(x,y,P)=>{let c=false;for(let i=0,j=P.length-1;i<P.length;j=i++){const
 function nearOn(P,cum,x,y){let best=1e9,bs=0;for(let i=1;i<P.length;i++){const a=P[i-1],b=P[i],dx=b[0]-a[0],dy=b[1]-a[1],L2=dx*dx+dy*dy||1;let t=((x-a[0])*dx+(y-a[1])*dy)/L2;t=Math.max(0,Math.min(1,t));const px=a[0]+t*dx,py=a[1]+t*dy,d=Math.hypot(x-px,y-py);if(d<best){best=d;bs=cum[i-1]+t*Math.sqrt(L2)}}return{d:best,s:bs}}
 /* ---------- detection ---------- */
 const DR={};            // live drafts (not yet saved): key → {name,bz}
-const DEF_BZ={river:8,bay:8,canal:5};
+const BZ_MIN=.1,BZ_MAX=5,BZ_DEF=1.5,bzc=v=>{v=+v;return(isFinite(v)&&v>0)?Math.min(BZ_MAX,Math.max(BZ_MIN,Math.round(v*10)/10)):BZ_DEF};
+const DEF_BZ={river:BZ_DEF,bay:BZ_DEF,canal:BZ_DEF};
 let sig='',LST=[];
 function build(){const roads=PL.filter(p=>p.kind==='road'&&p.pts&&p.pts.length>1&&!p.br),waters=PL.filter(p=>p.kind==='nature'&&(p.nt==='river'||p.nt==='canal'||p.nt==='bay')&&p.pts&&p.pts.length>=(p.nt==='bay'?3:2)),recs=PL.filter(isBridgeRec),used=new Set(),out=[];
  const mk=(key,r,w,P,cum,s0,s1,wk)=>{const L=cum[cum.length-1];s0=Math.max(0,s0);s1=Math.min(L,s1);if(s1-s0<8)return;const deck=[];for(let s=s0;s<s1;s+=4)deck.push(at(P,cum,s));deck.push(at(P,cum,s1));const c=at(P,cum,(s0+s1)/2);
   let rec=recs.find(x=>!used.has(x.id)&&x.bk===key)||recs.find(x=>!used.has(x.id)&&Math.hypot(x.x-c[0],x.y-c[1])<16&&!String(x.bk||'').startsWith('m:'));if(rec)used.add(rec.id);
-  const dname=w.name?'สะพานข้าม'+w.name:('สะพาน'+(r.name?' '+r.name:'')),dz=DEF_BZ[wk]||6,d=DR[key];
-  out.push({key,isBr:true,rid:r.id,wid:w.id,wkind:wk,wname:w.name||'',rname:r.name||'',rrt:r.rt||'local',s0,s1,deck,cx:c[0],cy:c[1],len:s1-s0,def:{name:dname,bz:dz},rec:rec||null,off:!!(rec&&rec.br===2),name:(d&&d.name!=null)?d.name:(rec&&rec.br===1&&rec.name)||dname,bz:(d&&d.bz!=null)?d.bz:(rec&&rec.br===1&&rec.bz>0)?rec.bz:dz,manual:false})};
+  const dname=w.name?'สะพานข้าม'+w.name:('สะพาน'+(r.name?' '+r.name:'')),dz=DEF_BZ[wk]||BZ_DEF,d=DR[key];
+  out.push({key,isBr:true,rid:r.id,wid:w.id,wkind:wk,wname:w.name||'',rname:r.name||'',rrt:r.rt||'local',s0,s1,deck,cx:c[0],cy:c[1],len:s1-s0,def:{name:dname,bz:dz},rec:rec||null,off:!!(rec&&rec.br===2),name:(d&&d.name!=null)?d.name:(rec&&rec.br===1&&rec.name)||dname,bz:bzc((d&&d.bz!=null)?d.bz:(rec&&rec.br===1&&rec.bz>0)?rec.bz:dz),manual:false})};
  roads.forEach(r=>{const P=pathPts(r),cum=cumOf(P),L=cum[cum.length-1];
   waters.forEach(w=>{
    if(w.nt==='bay'){let inside=false,s0=0,n=0;for(let s=0;s<=L;s+=2){const q=at(P,cum,s),ins=pip(q[0],q[1],w.pts);if(ins&&!inside){inside=true;s0=s}if(!ins&&inside){inside=false;mk(r.id+'|'+w.id+'|'+(n++),r,w,P,cum,s0-7,s+5,'bay')}}if(inside)mk(r.id+'|'+w.id+'|'+n,r,w,P,cum,s0-7,L,'bay')}
@@ -2376,7 +2401,7 @@ function build(){const roads=PL.filter(p=>p.kind==='road'&&p.pts&&p.pts.length>1
   for(const r of roads){const P=pathPts(r),cum=cumOf(P),na=nearOn(P,cum,a[0],a[1]),nb=nearOn(P,cum,b[0],b[1]);if(na.d<6&&nb.d<6&&(!par||na.d+nb.d<par.e))par={r,P,cum,s0:Math.min(na.s,nb.s),s1:Math.max(na.s,nb.s),e:na.d+nb.d}}
   let deck;if(par){deck=[];for(let s=par.s0;s<par.s1;s+=4)deck.push(at(par.P,par.cum,s));deck.push(at(par.P,par.cum,par.s1))}else deck=[a,b];
   const d=DR[x.bk||x.id];let len=0;for(let i=1;i<deck.length;i++)len+=Math.hypot(deck[i][0]-deck[i-1][0],deck[i][1]-deck[i-1][1]);
-  out.push({key:x.bk||('m:'+x.id),isBr:true,rid:par?par.r.id:'',wid:'',wkind:'manual',wname:'',rname:par?par.r.name||'':'',rrt:par?par.r.rt||'local':'local',s0:par?par.s0:0,s1:par?par.s1:len,deck,cx:x.x,cy:x.y,len,def:{name:'สะพาน',bz:6},rec:x,off:false,name:(d&&d.name!=null)?d.name:(x.name||'สะพาน'),bz:(d&&d.bz!=null)?d.bz:(x.bz>0?x.bz:6),manual:true})});
+  out.push({key:x.bk||('m:'+x.id),isBr:true,rid:par?par.r.id:'',wid:'',wkind:'manual',wname:'',rname:par?par.r.name||'':'',rrt:par?par.r.rt||'local':'local',s0:par?par.s0:0,s1:par?par.s1:len,deck,cx:x.x,cy:x.y,len,def:{name:'สะพาน',bz:BZ_DEF},rec:x,off:false,name:(d&&d.name!=null)?d.name:(x.name||'สะพาน'),bz:bzc((d&&d.bz!=null)?d.bz:(x.bz>0?x.bz:BZ_DEF)),manual:true})});
  return out}
 function all(){const s=PL.length+':'+(typeof lastChg!=='undefined'?lastChg:0)+':'+Object.keys(DR).length+JSON.stringify(DR);if(s!==sig){sig=s;try{LST=build()}catch(_){LST=[]}}return LST}
 const active=()=>all().filter(b=>!b.off);
@@ -2399,7 +2424,7 @@ function card(b){const ed=canEdit(),d=b.name;
  let h=`<div class="brcard"><div class="brh"><span class="bri big">${SV(IB.bridge,26)}</span><div><b>${esc(b.name)}</b><small>${esc(b.wkind==='manual'?'Manual bridge':'Crossing '+(b.wname||({river:'river',canal:'canal',bay:'water'}[b.wkind]))+' · '+(b.rname||'road'))}</small></div></div>
  <div class="brs"><div><small>Length</small><b>${fmt(b.len)}</b></div><div><small>Height</small><b>${fmt(b.bz)}</b></div><div><small>Status</small><b>${b.off?'Road':b.rec?'Saved':'Auto'}</b></div></div>`;
  if(ed){h+=`<label class="brf">Name · ชื่อสะพาน<input id="br-n" value="${esc(b.name)}" maxlength="60" autocomplete="off"></label>
-  <label class="mes-r"><span>Height · ความสูง <b id="br-hv">${fmt(b.bz)}</b></span><input id="br-h" type="range" min="1" max="40" step="0.5" value="${b.bz}"></label>
+  <label class="mes-r"><span>Height · ความสูง <b id="br-hv">${fmt(b.bz)}</b></span><input id="br-h" type="range" min="0.1" max="5" step="0.1" value="${b.bz}"></label>
   <div class="act"><button data-br="save">${SV(IB.save,15)}Save</button><button data-br="toroad">${SV(IB.road,15)}Convert to road</button></div>
   <div class="act"><button data-br="zoom">${SV(IB.target,15)}Locate</button>${b.rec?`<button data-br="reset">${SV(IB.reset,15)}Reset to auto</button>`:''}${b.manual&&b.rec?`<button data-br="del">${SV(IB.trash,15)}Delete</button>`:''}</div>`}
  else h+=`<div class="hint">Sign in with edit mode to rename or change this bridge. · เข้าสู่ระบบโหมดแก้ไขเพื่อแก้ไขสะพาน</div><div class="act"><button data-br="login">Sign in · เข้าสู่ระบบ</button><button data-br="zoom">${SV(IB.target,15)}Locate</button></div>`;
@@ -2426,7 +2451,7 @@ function closeView(){if(!BV)return;BV=false;sel=null;for(const k in DR)delete DR
 const newId=()=>'br'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 function upsertLocal(it){const i=PL.findIndex(x=>x.id===it.id);if(i>=0)PL[i]=it;else PL.push(it);try{lastChg=Date.now()}catch(_){}}
 function recFor(b,br){const base=b.rec||{};const d=DR[b.key]||{};return{id:base.id||newId(),kind:'place',cat:'other',sub:'c:🌉',lvl:'local',rt:'local',nt:'',grp:'',curve:false,color:'',size:1,note:base.note||'',
- name:br===2?('ถนน (ไม่ใช่สะพาน) · '+(d.name||b.name)):((d.name!=null?d.name:b.name)||b.def.name),x:b.cx,y:b.cy,pts:[b.deck[0],b.deck[b.deck.length-1]],br,bz:br===1?(d.bz!=null?d.bz:b.bz):0,bk:b.key}}
+ name:br===2?('ถนน (ไม่ใช่สะพาน) · '+(d.name||b.name)):((d.name!=null?d.name:b.name)||b.def.name),x:b.cx,y:b.cy,pts:[b.deck[0],b.deck[b.deck.length-1]],br,bz:br===1?bzc(d.bz!=null?d.bz:b.bz):0,bk:b.key}}
 async function doSave(b,br){if(!canEdit()){$('#lg').hidden=false;return}const it=recFor(b,br);upsertLocal(it);delete DR[b.key];
  try{await push('upsert',it);msg=br===2?'Converted to road · เปลี่ยนเป็นถนนแล้ว':'Saved · บันทึกสะพานแล้ว'}catch(_){msg='Save failed · บันทึกไม่สำเร็จ'}
  sig='';try{drawPl()}catch(_){}render()}
@@ -2436,7 +2461,7 @@ function addHere(){const c=wpos(innerWidth/2,innerHeight/2),roads=PL.filter(p=>p
  roads.forEach(r=>{const P=pathPts(r),cum=cumOf(P),n=nearOn(P,cum,c[0],c[1]);if(!best||n.d<best.d)best={r,P,cum,...n}});
  if(!best||best.d*sc()>60){msg='No road near the map center · ไม่มีถนนใกล้กลางแผนที่';render();return}
  const s0=Math.max(0,best.s-12),s1=Math.min(best.cum[best.cum.length-1],best.s+12),a=at(best.P,best.cum,s0),b2=at(best.P,best.cum,s1),cc=at(best.P,best.cum,best.s),id=newId(),key='m:'+id;
- const it={id,kind:'place',cat:'other',sub:'c:🌉',lvl:'local',rt:'local',nt:'',grp:'',curve:false,color:'',size:1,note:'',name:'สะพาน'+(best.r.name?' '+best.r.name:''),x:cc[0],y:cc[1],pts:[a,b2],br:1,bz:6,bk:key};
+ const it={id,kind:'place',cat:'other',sub:'c:🌉',lvl:'local',rt:'local',nt:'',grp:'',curve:false,color:'',size:1,note:'',name:'สะพาน'+(best.r.name?' '+best.r.name:''),x:cc[0],y:cc[1],pts:[a,b2],br:1,bz:BZ_DEF,bk:key};
  if(!canEdit()){$('#lg').hidden=false;return}upsertLocal(it);push('upsert',it);sig='';sel=key;msg='Bridge added · เพิ่มสะพานแล้ว';render()}
 /* ---------- events ---------- */
 BD.addEventListener('click',e=>{const t=e.target.closest('[data-br]');if(!t||!BV)return;const[a,v]=t.dataset.br.split(/:(.*)/s),b=all().find(x=>x.key===sel);
@@ -2447,7 +2472,7 @@ BD.addEventListener('click',e=>{const t=e.target.closest('[data-br]');if(!t||!BV
  else if(a==='addhere')addHere();else if(a==='close')closeView()});
 BD.addEventListener('input',e=>{if(!BV)return;const t=e.target;
  if(t.id==='br-n'&&sel){(DR[sel]=DR[sel]||{}).name=t.value}
- else if(t.id==='br-h'&&sel){(DR[sel]=DR[sel]||{}).bz=+t.value;const h=$('#br-hv');if(h)h.textContent=fmt(+t.value);sig='';try{window.trNeed&&trNeed();drawPl()}catch(_){}}
+ else if(t.id==='br-h'&&sel){(DR[sel]=DR[sel]||{}).bz=bzc(t.value);const h=$('#br-hv');if(h)h.textContent=fmt(+t.value);sig='';try{window.trNeed&&trNeed();drawPl()}catch(_){}}
  else if(t.id==='br-q'){q=t.value;render();const n=$('#br-q');if(n){n.focus();n.setSelectionRange(q.length,q.length)}}});
 const _pn=panel;panel=function(){if(BV&&FORM)BV=false;
  if(!BV){if(SR)SR.style.display='none';return _pn.apply(this,arguments)}
@@ -2474,13 +2499,13 @@ const T={on:false,ph:0,th:0,phT:0,thT:0,kz:+FORCED.kz||2,bh:FORCED.bh||{},bc:FOR
 try{T.on=localStorage.getItem('terr_on')==='1';const k=parseFloat(localStorage.getItem('terr_kz'));if(k>=.2&&k<=8)T.kz=k}catch(_){}
 const saveView=()=>{try{localStorage.setItem('terr_on',T.on?'1':'0');localStorage.setItem('terr_kz',String(T.kz))}catch(_){}};
 /* ---------- finer height field: Catmull-Rom (bi-cubic) up-sampling of the stored grid ---------- */
-const HC=unrle(FORCED.hv,CVX*CVY),SC=unrle(FORCED.sf,CNX*CNY);
+let HC,SC;
 const cr=(p0,p1,p2,p3,t)=>.5*(2*p1+(p2-p0)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t);
 const HV=new Float32Array(VX*VY),SF=new Uint8Array(NX*NY);
-(function(){const tmp=new Float32Array(VX*CVY);
+function initH(){HC=unrle(FORCED.hv,CVX*CVY);SC=unrle(FORCED.sf,CNX*CNY);const tmp=new Float32Array(VX*CVY);
  for(let y=0;y<CVY;y++)for(let X=0;X<VX;X++){const fx=X/F,x1=Math.floor(fx),t=fx-x1,g=i=>HC[y*CVX+Math.max(0,Math.min(CVX-1,i))];tmp[y*VX+X]=cr(g(x1-1),g(x1),g(x1+1),g(x1+2),t)}
  for(let Y=0;Y<VY;Y++){const fy=Y/F,y1=Math.floor(fy),t=fy-y1;for(let X=0;X<VX;X++){const g=j=>tmp[Math.max(0,Math.min(CVY-1,j))*VX+X];HV[Y*VX+X]=Math.max(0,Math.min(255,cr(g(y1-1),g(y1),g(y1+1),g(y1+2),t)))}}
- for(let y=0;y<NY;y++)for(let x=0;x<NX;x++)SF[y*NX+x]=SC[Math.min(CNY-1,(y/F)|0)*CNX+Math.min(CNX-1,(x/F)|0)]})();
+ for(let y=0;y<NY;y++)for(let x=0;x<NX;x++)SF[y*NX+x]=SC[Math.min(CNY-1,(y/F)|0)*CNX+Math.min(CNX-1,(x/F)|0)]}
 const eAt=v=>v/255*MAXH;
 function hAt(x,y){const fx=Math.max(0,Math.min(NX-.001,x/GS)),fy=Math.max(0,Math.min(NY-.001,y/GS)),ix=fx|0,iy=fy|0,tx=fx-ix,ty=fy-iy;
  const a=HV[iy*VX+ix],b=HV[iy*VX+ix+1],c=HV[(iy+1)*VX+ix],d=HV[(iy+1)*VX+ix+1];return eAt((a*(1-tx)+b*tx)*(1-ty)+(c*(1-tx)+d*tx)*ty)}
@@ -2524,7 +2549,8 @@ const cv=document.createElement('canvas');cv.id='t3d';cv.style.cssText='position
 document.body.insertBefore(cv,document.getElementById('m').nextSibling);const ctx=cv.getContext('2d');
 let W=0,H=0,dpr=1,raf=0,lod=false,lodT=0,hitRoads=[],selId=null,selPt=null,selName='',selType='';
 const vx=new Float32Array(VX*VY),vy=new Float32Array(VX*VY),vd=new Float32Array(VX*VY);
-function fitCanvas(){dpr=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr}
+let lodUntil=0,lodT2=0;const bump=()=>{lodUntil=performance.now()+220;clearTimeout(lodT2);lodT2=setTimeout(()=>need(),260)};
+function fitCanvas(){dpr=Math.min(innerWidth<900?1.5:2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr}
 function cam(){const th=T.th*Math.PI/180,ph=T.ph*Math.PI/180;return{s:W/vb.w,cx:vb.x+vb.w/2,cy:vb.y+vb.h/2,c:Math.cos(th),sn:Math.sin(th),cp:Math.cos(ph),sp:Math.sin(ph),kz:T.kz}}
 const pj=(K,x,y,z)=>{const dx=x-K.cx,dy=y-K.cy,rx=dx*K.c-dy*K.sn,ry=dx*K.sn+dy*K.c;return[W/2+rx*K.s,H/2+ry*K.s*K.cp-z*K.s*K.sp*K.kz,ry]};
 function need(){if(!raf&&T.on)raf=requestAnimationFrame(draw)}
@@ -2540,27 +2566,62 @@ function roadPts(p){let r=RSC.get(p);if(r&&r.n===p.pts.length&&r.c===!!p.curve&&
    o.push([w*w*w*b[0]+3*w*w*u*x1+3*w*u*u*x2+u*u*u*c[0],w*w*w*b[1]+3*w*w*u*y1+3*w*u*u*y2+u*u*u*c[1]])}}}
  RSC.set(p,{n:P.length,c:!!p.curve,x:P[0][0],o});return o}
 const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-function roadItems(K,step){const items=[],src=window.lyFilt?window.lyFilt(PL):PL,Wv=vb.w,zf=Math.min(2.6,Math.max(1,Math.pow(1380/Wv,.35))),wt=cssv('--wt')||'#8ec9ee',wtc=cssv('--wtc')||'#5aa3d1';
+const CSSC={t:-1e9,wt:'#8ec9ee',wtc:'#5aa3d1',ff:'sans-serif'};function cssC(){const n=performance.now();if(n-CSSC.t>1500){CSSC.t=n;CSSC.wt=cssv('--wt')||'#8ec9ee';CSSC.wtc=cssv('--wtc')||'#5aa3d1';CSSC.ff=getComputedStyle(document.body).fontFamily}return CSSC}
+function roadItems(K,step){const items=[],src=window.lyFilt?window.lyFilt(PL):PL,Wv=vb.w,zf=Math.min(2.6,Math.max(1,Math.pow(1380/Wv,.35))),wt=cssC().wt,wtc=cssC().wtc;
  for(const p of src){if(!p.pts)continue;
   if(p.kind==='nature'&&p.nt==='bay'){if(p.pts.length<3)continue;const S=p.pts.map(q=>pj(K,q[0],q[1],hAt(q[0],q[1])+.5));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,dy=0;S.forEach(q=>{x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1]);dy+=q[2]});
    if(x1<-30||x0>W+30||y1<-30||y0>H+30)continue;items.push({b:1,d:2*dy/S.length+GS*.6,S,col:p.color||wt,cas:p.color?shade(p.color,.6):wtc});continue}
   const isRoad=p.kind==='road',isWater=p.kind==='nature'&&(p.nt==='river'||p.nt==='canal');if(!(isRoad||isWater)||p.pts.length<2)continue;
   const t=isRoad?(RT[p.rt]||RT.local):NT[p.nt];if(Wv>t.vw)continue;
+   if(isRoad&&FLYRE.test(p.name||'')&&p.pts.length>=2){flyItems(K,p,items,zf,t);continue}
   const wpx=t.w*zf*(p.size||1)*.8,col=p.color||(isRoad?t.c:wt),cas=p.color?shade(p.color,.55):(isRoad?t.cs:wtc),pts=window.BR?BR.pts(p):roadPts(p),zo=isRoad?.9:.5,eps=isRoad?GS*1.7:GS*1.4,skp=(isRoad&&window.BR)?BR.skip(p.id):[];let acc=0;
   for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1],L=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(1,Math.ceil(L/step)),a0=acc;acc+=L;
    for(let k=0;k<n;k++){if(skp.length){const ms=a0+L*(k+.5)/n;if(skp.some(r=>ms>=r[0]&&ms<=r[1]))continue}const x0=a[0]+(b[0]-a[0])*k/n,y0=a[1]+(b[1]-a[1])*k/n,x1=a[0]+(b[0]-a[0])*(k+1)/n,y1=a[1]+(b[1]-a[1])*(k+1)/n;
     const p0=pj(K,x0,y0,hAt(x0,y0)+zo),p1=pj(K,x1,y1,hAt(x1,y1)+zo);
     if(Math.max(p0[0],p1[0])<-30||Math.min(p0[0],p1[0])>W+30||Math.max(p0[1],p1[1])<-30||Math.min(p0[1],p1[1])>H+30)continue;
     items.push({r:1,p,wx0:x0,wy0:y0,wx1:x1,wy1:y1,d:p0[2]+p1[2]+eps,x0:p0[0],y0:p0[1],x1:p1[0],y1:p1[1],w:wpx,col,cas})}}}
+ try{transitItems(K,step,items,zf)}catch(_){}
  if(window.BR)BR.list().forEach(b=>bridgeItems(K,b,items,zf));
  return items}
-function bridgeItems(K,b,items,zf){const D=b.deck,n=D.length;if(n<2)return;const g=D.map(q=>hAt(q[0],q[1])),top=Math.max(...g)+.9+b.bz,t=RT[b.rrt]||RT.local,w=t.w*zf*1.3*.8;
+/* ----- Transit (fataekts: รถไฟ/รถเมล์/เรือ) วาดบนสุด เส้นบาง ----- */
+const trSvcOn=()=>{try{return !!(ADDONS&&ADDONS.fataekts&&fataekRoutes&&fataekRoutes.length)}catch(_){return false}};
+function transitItems(K,step,items,zf){if(!trSvcOn())return;
+ for(const i of fataekRoutes){if(!i||i.type==='toll'||!ADDONS.fataekTypes[i.type]||!i.pts||i.pts.length<2)continue;
+  const c=i.color||(FATAEK_TYPES[i.type]&&FATAEK_TYPES[i.type].c)||'#015caf',dash=i.type==='boat',w=Math.max(1.4,zf*1.35);
+  for(let a=0;a<i.pts.length-1;a++){const ax=+i.pts[a][0],ay=+i.pts[a][1],bx=+i.pts[a+1][0],by=+i.pts[a+1][1];if(!isFinite(ax+ay+bx+by))continue;
+   const L=Math.hypot(bx-ax,by-ay),n=Math.max(1,Math.ceil(L/step));
+   for(let k=0;k<n;k++){if(dash&&(k+a)%2)continue;const x0=ax+(bx-ax)*k/n,y0=ay+(by-ay)*k/n,x1=ax+(bx-ax)*(k+1)/n,y1=ay+(by-ay)*(k+1)/n,p0=pj(K,x0,y0,hAt(x0,y0)+1.6),p1=pj(K,x1,y1,hAt(x1,y1)+1.6);
+    if(Math.max(p0[0],p1[0])<-30||Math.min(p0[0],p1[0])>W+30||Math.max(p0[1],p1[1])<-30||Math.min(p0[1],p1[1])>H+30)continue;
+    items.push({tr:1,d:p0[2]+p1[2]+GS*4,x0:p0[0],y0:p0[1],x1:p1[0],y1:p1[1],w,col:c})}}}}
+function transitMarks(K,ff){if(!trSvcOn())return;const list=[],MOBL=innerWidth<900;
+ for(const i of fataekRoutes){if(!i||!ADDONS.fataekTypes[i.type])continue;const Tt=FATAEK_TYPES[i.type]||{c:'#015caf',e:'📍'},c=i.color||Tt.c;
+  if(i.type==='toll'){const q=i.pts&&i.pts[0];if(q)list.push({x:+q[0],y:+q[1],c,e:'E',r:8,end:1,n:i.name||'',txt:1});continue}
+  const sp=i.stops||[];sp.forEach((s,n)=>{const end=n===0||n===sp.length-1;list.push({x:+s.x,y:+s.y,c,e:Tt.e,r:end?10:3.6,end:end?1:0,n:s.n||''})})}
+ list.sort((a,b)=>b.end-a.end);const occ=[];let cnt=0;ctx.textAlign='center';ctx.textBaseline='middle';
+ for(const m of list){if(!isFinite(m.x+m.y)||cnt>400)break;const q=pj(K,m.x,m.y,hAt(m.x,m.y)+2.6);if(q[0]<-20||q[0]>W+20||q[1]<-20||q[1]>H+20)continue;
+  const pad=MOBL?m.r*1.8:m.r*1.1,bx=[q[0]-pad,q[1]-pad,q[0]+pad,q[1]+pad];if(!m.end&&occ.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))continue;occ.push(bx);cnt++;
+  ctx.beginPath();ctx.arc(q[0],q[1],m.r+2,0,7);ctx.fillStyle='#fff';ctx.fill();
+  ctx.beginPath();ctx.arc(q[0],q[1],m.r,0,7);ctx.fillStyle=m.end?m.c:'#fff';ctx.fill();ctx.lineWidth=m.end?0:2;if(!m.end){ctx.strokeStyle=m.c;ctx.stroke()}
+  if(m.end){ctx.font=m.txt?`800 ${m.r*1.3}px ${ff}`:`${m.r*1.35}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;ctx.fillStyle='#fff';ctx.fillText(m.e,q[0],q[1]+.5);
+   if(m.n&&K.s>=1.2){ctx.font=`700 11px ${ff}`;ctx.lineWidth=3;ctx.strokeStyle='rgba(255,255,255,.92)';ctx.strokeText(m.n,q[0],q[1]+m.r+10);ctx.fillStyle=m.c;ctx.fillText(m.n,q[0],q[1]+m.r+10)}}}}
+/* ----- ถนนที่มีคำว่า "ทางต่างระดับ" → ยกสูงเป็นทางยกระดับ ----- */
+const FLYRE=/ทางต่างระดับ/,BZK=4,FLYZ=2.5;
+function pathAt(P,cum,s){let i=1;while(i<cum.length-1&&cum[i]<s)i++;const L=cum[i]-cum[i-1]||1,t=Math.max(0,Math.min(1,(s-cum[i-1])/L));return[P[i-1][0]+(P[i][0]-P[i-1][0])*t,P[i-1][1]+(P[i][1]-P[i-1][1])*t]}
+function flyItems(K,p,items,zf,t){const P=roadPts(p),cum=[0];for(let i=1;i<P.length;i++)cum.push(cum[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));
+ const L=cum[cum.length-1];if(!(L>4))return;const stp=Math.max(4,L/120),D=[];for(let s=0;s<L;s+=stp)D.push(pathAt(P,cum,s));D.push([P[P.length-1][0],P[P.length-1][1]]);
+ const n=D.length;if(n<2)return;const lift=(p.bz>0?Math.min(5,p.bz):FLYZ)*BZK,g=D.map(q=>hAt(q[0],q[1])),
+  Z=D.map((q,i)=>{const u=i/(n-1),e=Math.min(u,1-u)/.22,r=e>=1?1:e*e*(3-2*e);return g[i]+.9+lift*r}),Q=D.map((q,i)=>pj(K,q[0],q[1],Z[i]));
+ let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;Q.forEach(q=>{x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1])});if(x1<-60||x0>W+60||y1<-120||y0>H+60)return;
+ const w=t.w*zf*(p.size||1)*.8*1.1,col=p.color||t.c,stepP=Math.max(2,Math.round(n/14));
+ for(let i=2;i<n-2;i+=stepP){if(Z[i]-g[i]<3)continue;const pg=pj(K,D[i][0],D[i][1],g[i]);items.push({pier:1,d:Q[i][2]*2+GS*2.2,x0:Q[i][0],y0:Q[i][1],x1:pg[0],y1:pg[1],w:Math.max(2.5,w*.4)})}
+ for(let i=0;i<n-1;i++)items.push({r:1,br:1,p,wx0:D[i][0],wy0:D[i][1],wx1:D[i+1][0],wy1:D[i+1][1],d:Q[i][2]+Q[i+1][2]+GS*2.8,x0:Q[i][0],y0:Q[i][1],x1:Q[i+1][0],y1:Q[i+1][1],w,col,cas:'#4b5563'})}
+function bridgeItems(K,b,items,zf){const D=b.deck,n=D.length;if(n<2)return;const g=D.map(q=>hAt(q[0],q[1])),top=Math.max(...g)+.9+b.bz*BZK,t=RT[b.rrt]||RT.local,w=t.w*zf*1.3*.8;
  const Z=D.map((q,i)=>{const u=i/(n-1),e=Math.min(u,1-u)/.3,r=e>=1?1:e*e*(3-2*e);return(g[i]+.9)*(1-r)+top*r}),P=D.map((q,i)=>pj(K,q[0],q[1],Z[i]));
  let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;P.forEach(p=>{x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1])});if(x1<-60||x0>W+60||y1<-120||y0>H+60)return;
  for(let i=1;i<n-1;i+=Math.max(2,Math.round(n/5))){if(Z[i]-g[i]<3)continue;const pg=pj(K,D[i][0],D[i][1],g[i]);items.push({pier:1,d:P[i][2]*2+GS*2.2,x0:P[i][0],y0:P[i][1],x1:pg[0],y1:pg[1],w:Math.max(2.5,w*.4)})}
  for(let i=0;i<n-1;i++)items.push({r:1,br:1,p:b,wx0:D[i][0],wy0:D[i][1],wx1:D[i+1][0],wy1:D[i+1][1],d:P[i][2]+P[i+1][2]+GS*2.8,x0:P[i][0],y0:P[i][1],x1:P[i+1][0],y1:P[i+1][1],w,col:'#eceff3',cas:'#4b5563'})}
 /* ---------- drawing ---------- */
-function draw(){raf=0;if(!T.on)return;if(cv.width!==Math.round(innerWidth*dpr)||cv.height!==Math.round(innerHeight*dpr))fitCanvas();
+function draw(){raf=0;if(!T.on)return;ensureT();lod=performance.now()<lodUntil;updCompass();if(cv.width!==Math.round(innerWidth*dpr)||cv.height!==Math.round(innerHeight*dpr))fitCanvas();
  let busy=false;const ea=(k,t)=>{const d=T[t]-T[k];if(Math.abs(d)>.05){T[k]+=d*.2;busy=true}else T[k]=T[t]};ea('ph','phT');ea('th','thT');
  const st=(lod||busy)?F:1,OV=overlay();hitRoads=[];
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle=T.col.water;ctx.fillRect(0,0,W,H);
@@ -2574,7 +2635,8 @@ function draw(){raf=0;if(!T.on)return;if(cv.width!==Math.round(innerWidth*dpr)||
  const slab=7,wallOn=K.sp>.03;ctx.lineCap='round';ctx.lineJoin='round';
  for(const it of items){
   if(it.b){ctx.beginPath();it.S.forEach((q,n)=>n?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.globalAlpha=.85;ctx.fillStyle=it.col;ctx.fill();ctx.globalAlpha=1;ctx.lineWidth=1.5;ctx.strokeStyle=it.cas;ctx.stroke();continue}
-  if(it.pier){ctx.lineCap='butt';ctx.lineWidth=it.w;ctx.strokeStyle='#8b919b';ctx.beginPath();ctx.moveTo(it.x0,it.y0);ctx.lineTo(it.x1,it.y1);ctx.stroke();continue}
+  if(it.tr){ctx.lineCap='round';ctx.lineWidth=it.w+2.2;ctx.strokeStyle='rgba(255,255,255,.92)';ctx.beginPath();ctx.moveTo(it.x0,it.y0);ctx.lineTo(it.x1,it.y1);ctx.stroke();ctx.lineWidth=it.w;ctx.strokeStyle=it.col;ctx.stroke();continue}
+if(it.pier){ctx.lineCap='butt';ctx.lineWidth=it.w;ctx.strokeStyle='#8b919b';ctx.beginPath();ctx.moveTo(it.x0,it.y0);ctx.lineTo(it.x1,it.y1);ctx.stroke();continue}
   if(it.r){const sel=selId&&(it.p.isBr?selId==='br:'+it.p.key:it.p.id===selId),w=it.w+(sel?3:0),ux=it.x1-it.x0,uy=it.y1-it.y0,L=Math.hypot(ux,uy)||1,ex=ux/L*.9,ey=uy/L*.9;
    hitRoads.push(it);ctx.lineCap='butt';
    ctx.lineWidth=w+2.4;ctx.strokeStyle=sel?'#e8590c':it.cas;ctx.beginPath();ctx.moveTo(it.x0-ex,it.y0-ey);ctx.lineTo(it.x1+ex,it.y1+ey);ctx.stroke();
@@ -2598,11 +2660,11 @@ function draw(){raf=0;if(!T.on)return;if(cv.width!==Math.round(innerWidth*dpr)||
     const pa=pj(K,a[0],a[1],base),pc=pj(K,c[0],c[1],base),ta=pj(K,a[0],a[1],base+hh),tc=pj(K,c[0],c[1],base+hh);
     ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pc[0],pc[1]);ctx.lineTo(tc[0],tc[1]);ctx.lineTo(ta[0],ta[1]);ctx.closePath();ctx.fillStyle=shade(col,.62+.25*nry);ctx.fill();ctx.strokeStyle='rgba(0,0,0,.18)';ctx.lineWidth=.8;ctx.stroke()}
    ctx.beginPath();P.forEach((p,n)=>{const q=pj(K,p[0],p[1],base+hh);n?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])});ctx.closePath();ctx.fillStyle=shade(col,1.04);ctx.fill();ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=.8;ctx.stroke()}}
- if(OV){const ff=getComputedStyle(document.body).fontFamily;ctx.textAlign='center';ctx.textBaseline='middle';
+ if(OV){const ff=cssC().ff;ctx.textAlign='center';ctx.textBaseline='middle';
   const lab=(t,x,y,z,sz)=>{const q=pj(K,x,y,z);if(q[0]<-50||q[0]>W+50||q[1]<-20||q[1]>H+20)return;ctx.font=`700 ${sz}px ${ff}`;ctx.lineWidth=3;ctx.strokeStyle='rgba(255,255,255,.85)';ctx.strokeText(t,q[0],q[1]);ctx.fillStyle='#17301b';ctx.fillText(t,q[0],q[1])};
   if(K.s<1.5)DATA.forEach((d,i)=>{if(!d.provName||i<2&&K.s>1)return;const P=OUT[i][0].split(' ').map(q=>q.split(',').map(Number));let sx=0,sy=0;P.forEach(p=>{sx+=p[0];sy+=p[1]});const x=sx/P.length,y=sy/P.length;lab(d.provName,x,y,hAt(x,y),Math.max(11,Math.min(15,12*K.s+4)))});
   if(K.s>=.95)BL.forEach(b=>{if(b.name)lab(b.name,b.cx,b.cy,hAt(b.cx,b.cy)+(T.bh[b.key]||0),11)});
-  if(window.PL)PL.forEach(p=>{if(p.kind&&p.kind!=='place'||p.x==null)return;const q=pj(K,p.x,p.y,hAt(p.x,p.y)+1);if(q[0]<-10||q[0]>W+10||q[1]<-10||q[1]>H+10)return;ctx.beginPath();ctx.arc(q[0],q[1],5,0,7);ctx.fillStyle=p.color||'#e8590c';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke()})}
+  if(window.PL)PL.forEach(p=>{if(p.kind&&p.kind!=='place'||p.x==null)return;const q=pj(K,p.x,p.y,hAt(p.x,p.y)+1);if(q[0]<-10||q[0]>W+10||q[1]<-10||q[1]>H+10)return;ctx.beginPath();ctx.arc(q[0],q[1],5,0,7);ctx.fillStyle=p.color||'#e8590c';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke()});try{transitMarks(K,ff)}catch(_){}}
  if(busy)raf=requestAnimationFrame(draw);else if((OV?'0':'-1')!==cv.style.zIndex)applyMode()}
 function pickRoad(sx,sy){let best=null,bd=1e9;for(const it of hitRoads){const dx=it.x1-it.x0,dy=it.y1-it.y0,L2=dx*dx+dy*dy||1;let u=((sx-it.x0)*dx+(sy-it.y0)*dy)/L2;u=Math.max(0,Math.min(1,u));const d=Math.hypot(sx-(it.x0+u*dx),sy-(it.y0+u*dy));
   const pri=it.br?-3:0;if(d-pri<bd&&d<=Math.max(9,it.w/2+7)){bd=d-pri;best=it}}
@@ -2617,11 +2679,11 @@ cv.addEventListener('contextmenu',e=>e.preventDefault());
 cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:Date.now()});rotMode=e.button===2||e.shiftKey||e.ctrlKey;
  if(ptr.size===2){const a=[...ptr.values()];gest={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),ang:Math.atan2(a[1].y-a[0].y,a[1].x-a[0].x),my:(a[0].y+a[1].y)/2}}});
 cv.addEventListener('pointermove',e=>{const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;
- if(ptr.size===1){if(rotMode){T.thT=T.th=T.th+dx*.4;T.phT=T.ph=Math.max(0,Math.min(75,T.ph-dy*.3));moving();return}moving();toVBpan(dx,dy)}
+ if(ptr.size===1){if(rotMode){T.thT=T.th=T.th+dx*.4;T.phT=T.ph=Math.max(0,Math.min(75,T.ph-dy*.3));bump();moving();return}bump();moving();toVBpan(dx,dy)}
  else if(ptr.size===2&&gest){const a=[...ptr.values()],d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),ang=Math.atan2(a[1].y-a[0].y,a[1].x-a[0].x),mx=(a[0].x+a[1].x)/2,my=(a[0].y+a[1].y)/2;
-  if(gest.d>0)zoomAt(d/gest.d,mx,my);T.thT=T.th=T.th-(ang-gest.ang)*180/Math.PI;T.phT=T.ph=Math.max(5,Math.min(75,T.ph-(my-gest.my)*.25));gest={d,ang,my};moving()}});
+  if(gest.d>0)zoomAt(d/gest.d,mx,my);T.thT=T.th=T.th-(ang-gest.ang)*180/Math.PI;T.phT=T.ph=Math.max(5,Math.min(75,T.ph-(my-gest.my)*.25));gest={d,ang,my};bump();moving()}});
 const up=e=>{const p=ptr.get(e.pointerId);ptr.delete(e.pointerId);if(ptr.size<2)gest=null;if(e.type==='pointerup'&&p&&ptr.size===0&&Math.hypot(e.clientX-p.sx,e.clientY-p.sy)<6&&!rotMode)pickRoad(e.clientX,e.clientY)};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
-cv.addEventListener('wheel',e=>{e.preventDefault();if(e.shiftKey)T.thT=T.th=T.th+e.deltaY*.1;else zoomAt(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);moving()},{passive:false});
+cv.addEventListener('wheel',e=>{e.preventDefault();if(e.shiftKey)T.thT=T.th=T.th+e.deltaY*.1;else zoomAt(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);bump();moving()},{passive:false});
 /* ---------- 3D button: tap = on/off, drag up/down = height ---------- */
 const rcg=document.querySelector('#zr').parentNode;rcg.style.display='none';
 const g3=document.createElement('div');g3.className='fl grp';g3.innerHTML='<button id="b3d" aria-label="3D view" aria-pressed="false" title="3D · tap to toggle, drag up/down to change height"><b class="cmp">3D</b></button>';rcg.parentNode.appendChild(g3);
@@ -2631,14 +2693,28 @@ b3.addEventListener('pointermove',e=>{if(!bd||e.pointerId!==bd.id)return;const d
  if(bd.moved){T.kz=Math.max(.2,Math.min(8,bd.kz*Math.exp(dy/140)));tip.textContent='Height ×'+T.kz.toFixed(1);const r=b3.getBoundingClientRect();tip.style.cssText=`display:block;top:${r.top+r.height/2-14}px;right:${innerWidth-r.left+8}px`;need()}});
 b3.addEventListener('pointerup',e=>{if(!bd||e.pointerId!==bd.id)return;const m=bd.moved;bd=null;tip.style.display='none';if(m){saveView();return}set3D(!(T.phT>.5&&T.on))});
 b3.addEventListener('pointercancel',()=>{bd=null;tip.style.display='none'});
-function set3D(on){if(!on){selId=null;selPt=null}if(on&&!T.on){T.on=true;recolor()}T.phT=on?55:0;if(!on)T.thT=0;applyMode();saveView();need();refreshTile()}
+function set3D(on){if(!on){selId=null;selPt=null}if(on&&!T.on){T.on=true}if(on)ensureT();T.phT=on?55:0;if(!on)T.thT=0;applyMode();saveView();need();refreshTile()}
+/* ---------- compass: tap = Reset view · drag = rotate/tilt 3D ---------- */
+const gc=document.createElement('div');gc.className='fl grp';
+gc.innerHTML='<button id="bcmp" aria-label="Reset view" title="Reset view · ลากเพื่อหมุนแผนที่ 3D"><svg class="i" viewBox="0 0 24 24" style="width:24px;height:24px"><circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-opacity=".28" stroke-width="1.2"/><g id="cmpn"><path d="M12 3.6l3.1 8.4H8.9z" fill="#e03131" stroke="none"/><path d="M12 20.4L8.9 12h6.2z" fill="currentColor" fill-opacity=".5" stroke="none"/></g><circle cx="12" cy="12" r="1.5" fill="var(--paper)" stroke="none"/></svg></button>';
+g3.parentNode.insertBefore(gc,g3);
+const bc=gc.firstChild,cmpN=bc.querySelector('#cmpn');let cmpA=null,cmpD=null;
+function updCompass(){const a=Math.round(T.th*10)/10;if(a!==cmpA){cmpA=a;cmpN.setAttribute('transform','rotate('+a+' 12 12)')}bc.classList.toggle('dim',!(T.on&&(T.phT>.5||T.ph>.5)))}
+function resetView(){if(!(T.on&&T.phT>.5)){T.thT=0;updCompass();toast('เปิดโหมด 3D ก่อน · Turn on 3D first');return}T.thT=0;T.phT=55;applyMode();need();toast('Reset view')}
+bc.addEventListener('pointerdown',e=>{e.stopPropagation();bc.setPointerCapture(e.pointerId);cmpD={x:e.clientX,y:e.clientY,th:T.thT,ph:T.phT,moved:false,id:e.pointerId}});
+bc.addEventListener('pointermove',e=>{if(!cmpD||e.pointerId!==cmpD.id)return;const dx=e.clientX-cmpD.x,dy=e.clientY-cmpD.y;if(Math.abs(dx)+Math.abs(dy)>6)cmpD.moved=true;
+ if(cmpD.moved&&T.on&&T.phT>.5){T.thT=T.th=cmpD.th+dx*.7;T.phT=T.ph=Math.max(5,Math.min(75,cmpD.ph-dy*.35));bump();need()}});
+bc.addEventListener('pointerup',e=>{if(!cmpD||e.pointerId!==cmpD.id)return;const m=cmpD.moved;cmpD=null;if(!m)resetView()});
+bc.addEventListener('pointercancel',()=>{cmpD=null});
+updCompass();
 /* ---------- terrain on/off (Layers → Terrain tile) ---------- */
 function refreshTile(){const t=document.querySelector('[data-lya="tile:terrain"]');if(t){t.classList.toggle('on',T.on);const s=t.querySelector('small');if(s)s.textContent=T.on?'On':'Off'}}
-function setTerrain(on){T.on=on;if(!on){selId=null;selPt=null}if(on)recolor();else{T.phT=0;T.thT=0;T.ph=0;T.th=0}applyMode();saveView();need();refreshTile()}
+function setTerrain(on){T.on=on;if(!on){selId=null;selPt=null}if(on)ensureT();else{T.phT=0;T.thT=0;T.ph=0;T.th=0}applyMode();saveView();need();refreshTile()}
 window.trDebug=()=>({n:hitRoads.length,selId,all:hitRoads.map(r=>[r.x0,r.y0,r.x1,r.y1])});window.trToggle=()=>setTerrain(!T.on);window.trIsOn=()=>T.on;window.trOpen=()=>setTerrain(!T.on);
-buildGeo();recolor();fitCanvas();addEventListener('resize',()=>{fitCanvas();need()});
-const _upd=upd;upd=function(){const r=_upd.apply(this,arguments);need();return r};
-applyMode();if(T.on)need();
+let TI0=0;function ensureT(){if(TI0)return;TI0=1;initH();buildGeo();recolor()}
+fitCanvas();addEventListener('resize',()=>{fitCanvas();need()});
+const _upd=upd;upd=function(){const r=_upd.apply(this,arguments);if(T.on)bump();need();return r};
+if(T.on)ensureT();applyMode();if(T.on)need();
 })();
 
 // ===== Share / export (PNG, SVG, HTML table, HTML embed) =====
