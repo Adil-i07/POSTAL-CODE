@@ -1,8 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "io.github.adil_i07.twa",
-        "sha256_cert_fingerprints": ["7F:D5:CD:1B:5B:8D:EB:14:23:80:C5:52:32:CE:A8:91:8F:55:25:A4:B5:FA:AE:46:26:F4:7B:9C:DA:BA:A5:71"]
-      }
-    }]
