@@ -145,7 +145,7 @@ const gsw=(id,en,th)=>`<div class="lygh2"><div class="lyt2"><b>${en}</b><small>$
 function title(){const h=SR&&SR.querySelector('h2');if(h)h.innerHTML=LYS==='more'?'More <small style="font-weight:400;color:var(--mut);font-size:13px">เพิ่มเติม</small>':'Layers <small style="font-weight:400;color:var(--mut);font-size:13px">เลเยอร์</small>'}
 function render(){if(!LYV)return;title();
  const[cnt,sg]=sigOf();lastSig=sg;
- if(LYS==='main'){BD.innerHTML=`<div class="lyw"><div class="lytiles">${tile('tile:terrain','mountain','Terrain',(window.trIsOn&&window.trIsOn())?'On':'Off',!!(window.trIsOn&&window.trIsOn()),false)}${tile('tile:traffic','road','Traffic','Soon',false,true)}${tile('tile:transit','train','Transit','fataekts',isOn('tr'),false)}${tile('tile:more','more','More','Data',false,false)}</div><p class="lynote">Traffic is coming soon. · การจราจรจะมาเร็ว ๆ นี้</p></div>`;return}
+ if(LYS==='main'){BD.innerHTML=`<div class="lyw"><div class="lytiles">${tile('tile:terrain','mountain','Terrain',(window.trIsOn&&window.trIsOn())?'On':'Off',!!(window.trIsOn&&window.trIsOn()),false)}${tile('tile:traffic','road','Traffic',(window.tfIsOn&&window.tfIsOn())?'On':'Off',!!(window.tfIsOn&&window.tfIsOn()),false)}${tile('tile:transit','train','Transit','fataekts',isOn('tr'),false)}${tile('tile:more','more','More','Data',false,false)}</div><p class="lynote">Traffic: แดง=หนาแน่น · เหลือง=ปานกลาง · เขียว=คล่องตัว · ไม่มีเส้น=ว่าง — เปิดพร้อม Transit ไม่ได้ และไม่แสดงใน 3D</p></div>`;return}
  const solo=LY.solo?LY.c.find(l=>l.i===LY.solo):null;
  let h='<div class="lyw">';
  if(solo)h+=`<div class="lysolo"><span>Isolated: <b>${esc(solo.n)}</b></span><button class="lyb2 a" data-lya="unsolo">Clear</button></div>`;
@@ -189,7 +189,7 @@ BD.addEventListener('input',e=>{if(e.target.id==='ly-s'){SQ=e.target.value;rende
 function addApi(){const i=BD.querySelector('#ly-api'),val=i?i.value.trim():'';if(!val)return;if(ADDONS.customApis.includes(val)){toast('API already added · มี API นี้อยู่แล้ว');return}
  ADDONS.customApis.push(val);saveAo();render();toast('API added · เพิ่ม API เรียบร้อยแล้ว');if(ADDONS.mapPlaces&&typeof pull==='function')pull()}
 BD.addEventListener('click',e=>{if(!e.target.closest('.lyw'))return;const b=e.target.closest('[data-lya]');if(!b)return;const[a,v]=b.dataset.lya.split(':');
- if(a==='tile'){if(v==='terrain'){if(window.trToggle)window.trToggle();render()}else if(v==='transit')toggle('tr',!isOn('tr'));else if(v==='more'){LYS='more';render()}}
+ if(a==='tile'){if(v==='terrain'){if(window.trToggle)window.trToggle();render()}else if(v==='traffic'){if(window.tfToggle)window.tfToggle();render()}else if(v==='transit'){toggle('tr',!isOn('tr'));render()}else if(v==='more'){LYS='more';render()}}
  else if(a==='medit'){closeView();if(window.meOpen)window.meOpen()}
  else if(a==='fold'){LY.fold[v]=!LY.fold[v];lsv();render()}
  else if(a==='gset'){const ids=gids(v),on=!ids.some(isOn);setMany(ids,on)}

@@ -188,6 +188,7 @@ let ADDONS = {
   fataekts: false,
   carFMRFT: false,
   houses: false,
+  traffic: false,
   fataekTypes: { train: true, bus: true, boat: true, toll: true },
   customApis: []
 };
